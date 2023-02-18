@@ -122,17 +122,17 @@ func Login() gin.HandlerFunc {
 			return
 		}
 
-		// err := userCollection.FindOne(ctx, bson.M{"email": user.Email}).Decode(&foundUser)
-		// if err != nil {
-		// 	c.JSON(http.StatusInternalServerError, gin.H{"error": "email or password is incorrect"})
-		// 	return
-		// }
-
-		errr := userCollection.FindOne(ctx, bson.M{"phone": user.PhoneNumber}).Decode(&foundUser)
-		if errr != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "phone number or password is incorrect"})
+		err := userCollection.FindOne(ctx, bson.M{"email": user.Email}).Decode(&foundUser)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "email or password is incorrect"})
 			return
 		}
+
+		// errr := userCollection.FindOne(ctx, bson.M{"phone": user.PhoneNumber}).Decode(&foundUser)
+		// if errr != nil {
+		// 	c.JSON(http.StatusInternalServerError, gin.H{"error": "phone number or password is incorrect"})
+		// 	return
+		// }
 
 		passwordIsValid, msg := VerifyPassword(*user.Password, *foundUser.Password)
 		defer cancel()
@@ -141,23 +141,22 @@ func Login() gin.HandlerFunc {
 			return
 		}
 
-		// if foundUser.Email == nil {
-		// 	c.JSON(http.StatusInternalServerError, gin.H{"error": "user not found"})
-		// }
-
-		if foundUser.PhoneNumber == nil {
+		if foundUser.Email == nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "user not found"})
 		}
 
+		// if foundUser.PhoneNumber == nil {
+		// 	c.JSON(http.StatusInternalServerError, gin.H{"error": "user not found"})
+		// }
+
 		token, refreshToken, _ := helpers.GenerateAllTokens(*foundUser.PhoneNumber, *foundUser.FullName, *foundUser.PhoneNumber, *foundUser.ProfilePhoto, *foundUser.UserRole, foundUser.UserId)
 		helpers.UpdateAllTokens(token, refreshToken, foundUser.UserId)
-		err := userCollection.FindOne(ctx, bson.M{"userId": foundUser.UserId}).Decode(&foundUser)
+		err = userCollection.FindOne(ctx, bson.M{"userId": foundUser.UserId}).Decode(&foundUser)
 
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
-		c.JSON(200, gin.H{"success": "working"})
 		c.JSON(http.StatusOK, foundUser)
 	}
 }
