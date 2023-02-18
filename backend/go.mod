@@ -1,11 +1,8 @@
-module sanchari-backend
+module jaunnt-backend
 
 go 1.19
 
-require (
-	github.com/joho/godotenv v1.5.1
-	go.mongodb.org/mongo-driver v1.11.2
-)
+require go.mongodb.org/mongo-driver v1.11.2
 
 require (
 	github.com/gin-contrib/sse v0.1.0 // indirect

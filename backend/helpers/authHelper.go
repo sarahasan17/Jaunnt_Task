@@ -2,11 +2,12 @@ package helpers
 
 import (
 	"errors"
+
 	"github.com/gin-gonic/gin"
 )
 
 func CheckUserRole(c *gin.Context, role string) (err error) {
-	userRole := c.GetString("user_role")
+	userRole := c.GetString("userRole")
 	err = nil
 	if userRole != role {
 		err = errors.New("unautozied to access this resouces")
@@ -16,7 +17,7 @@ func CheckUserRole(c *gin.Context, role string) (err error) {
 }
 
 func MatchUserTypetoUid(c *gin.Context, userId string) (err error) {
-	userRole := c.GetString("user_role")
+	userRole := c.GetString("userRole")
 	uid := c.GetString("uid")
 	err = nil
 	if userRole == "USER" && uid != userId {

@@ -3,39 +3,41 @@ package helpers
 import (
 	"context"
 	"fmt"
+	"jaunnt-backend/database"
+	"log"
+	"time"
+
 	jwt "github.com/dgrijalva/jwt-go"
+	constants "jaunnt-backend/constants"
+
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"log"
-	"os"
-	"sanchari-backend/database"
-	"time"
 )
 
 type SignedDetails struct {
-	Email         string
-	First_name    string
-	Last_name     string
-	Uid           string
-	Profile_photo string
-	User_role     string
+	Email        string
+	FullName     string
+	PhoneNumber  string
+	Uid          string
+	ProfilePhoto string
+	UserRole     string
 	jwt.StandardClaims
 }
 
 var userCollection *mongo.Collection = database.OpenCollection(database.Client, "user")
 
-var SECRET_KEY string = os.Getenv("SECRET_KEY")
+var SECRET_KEY string = constants.SECRETKEY
 
-func GenerateAllTokens(email string, firstName string, lastName string, userRole string, profile_photo string, uid string) (signedToken string, signedRefreshToken string, err error) {
+func GenerateAllTokens(email string, fullName string, phoneNumber string, userRole string, profilePhoto string, uid string) (signedToken string, signedRefreshToken string, err error) {
 	claims := &SignedDetails{
-		Email:         email,
-		First_name:    firstName,
-		Last_name:     lastName,
-		Profile_photo: profile_photo,
-		Uid:           uid,
-		User_role:     userRole,
+		Email:        email,
+		FullName:     fullName,
+		PhoneNumber:  phoneNumber,
+		ProfilePhoto: profilePhoto,
+		Uid:          uid,
+		UserRole:     userRole,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Local().Add(time.Hour * time.Duration(24)).Unix(),
 		},
@@ -93,13 +95,13 @@ func UpdateAllTokens(signedToken string, signedRefreshToken string, userId strin
 	var updateObj primitive.D
 
 	updateObj = append(updateObj, bson.E{"token", signedToken})
-	updateObj = append(updateObj, bson.E{"refresh_token", signedRefreshToken})
+	updateObj = append(updateObj, bson.E{"refreshToken", signedRefreshToken})
 
-	Updated_at, _ := time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
-	updateObj = append(updateObj, bson.E{"updated_at", Updated_at})
+	UpdatedAt, _ := time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+	updateObj = append(updateObj, bson.E{"updatedAt", UpdatedAt})
 
 	upsert := true
-	filter := bson.M{"user_id": userId}
+	filter := bson.M{"userId": userId}
 	opt := options.UpdateOptions{
 		Upsert: &upsert,
 	}

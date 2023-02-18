@@ -1,26 +1,29 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
+	constants "jaunnt-backend/constants"
+	routes "jaunnt-backend/routes"
 	"os"
-	routes "sanchari-backend/routes"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	port := os.Getenv("PORT")
 
 	if port == "" {
-		port = "8080"
+		port = constants.PORT
 	}
 
 	router := gin.New()
 
 	router.Use(gin.Logger())
+
 	routes.AuthRoutes(router)
 	routes.UserRoutes(router)
 
 	router.GET("/v1", func(c *gin.Context) {
-		c.JSON(200, gin.H{"success": "v1 working"})
+		c.JSON(200, gin.H{"success": "v111111111 working"})
 	})
 
 	router.Run(":" + port)

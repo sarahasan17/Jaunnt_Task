@@ -2,9 +2,10 @@ package middleware
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
+	helper "jaunnt-backend/helpers"
 	"net/http"
-	helper "sanchari-backend/helpers"
+
+	"github.com/gin-gonic/gin"
 )
 
 func Authenticate() gin.HandlerFunc {
@@ -23,11 +24,11 @@ func Authenticate() gin.HandlerFunc {
 			return
 		}
 		c.Set("email", claims.Email)
-		c.Set("first_name", claims.First_name)
-		c.Set("last_name", claims.Last_name)
-		c.Set("profile_photo", claims.Profile_photo)
+		c.Set("fullName", claims.FullName)
+		c.Set("phoneNumber", claims.PhoneNumber)
+		c.Set("profilePhoto", claims.ProfilePhoto)
 		c.Set("uid", claims.Uid)
-		c.Set("user_role", claims.User_role)
+		c.Set("userRole", claims.UserRole)
 		c.Next()
 	}
 }
