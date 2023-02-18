@@ -19,4 +19,11 @@ type User struct {
 	CreatedAt    time.Time          `json:"createdTime"`
 	UpdatedAt    time.Time          `json:"updatedTime"`
 	UserId       string             `json:"userId"`
+	VerifyUser   bool               `json:"verifyUser"`
+	VerifyOtp    *string            `json:"verifyOtp"`
+}
+
+type UpdateUserOtp struct {
+	PhoneNumber string `json:"phonenumber"`
+	VerifyOtp   string `json:"verifyotp"`
 }
