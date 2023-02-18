@@ -70,24 +70,24 @@ func Signup() gin.HandlerFunc {
 		}
 		if count > 0 {
 
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "this email or phone number already exsits"})
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "this email already exsits"})
 			return
 		}
 
 		password := HashPassword(*user.Password)
 		user.Password = &password
 
-		count, err = userCollection.CountDocuments(ctx, bson.M{"phone": user.PhoneNumber})
+		countt, errr := userCollection.CountDocuments(ctx, bson.M{"phonenumber": user.PhoneNumber})
 		defer cancel()
-		if err != nil {
-			log.Panic(err)
+		if errr != nil {
+			log.Panic(errr)
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "error occured while checking for phone"})
 			return
 		}
 
-		if count > 0 {
+		if countt > 0 {
 
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "this email or phone number already exsits"})
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "phone number already exsits"})
 			return
 		}
 
@@ -123,16 +123,12 @@ func Login() gin.HandlerFunc {
 		}
 
 		err := userCollection.FindOne(ctx, bson.M{"email": user.Email}).Decode(&foundUser)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "email or password is incorrect"})
+
+		errr := userCollection.FindOne(ctx, bson.M{"phonenumber": user.PhoneNumber}).Decode(&foundUser)
+		if errr !=nil || err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "phone number or email or password is incorrect"})
 			return
 		}
-
-		// errr := userCollection.FindOne(ctx, bson.M{"phone": user.PhoneNumber}).Decode(&foundUser)
-		// if errr != nil {
-		// 	c.JSON(http.StatusInternalServerError, gin.H{"error": "phone number or password is incorrect"})
-		// 	return
-		// }
 
 		passwordIsValid, msg := VerifyPassword(*user.Password, *foundUser.Password)
 		defer cancel()
@@ -141,13 +137,10 @@ func Login() gin.HandlerFunc {
 			return
 		}
 
-		if foundUser.Email == nil {
+		if foundUser.PhoneNumber == nil || foundUser.Email == nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "user not found"})
 		}
 
-		// if foundUser.PhoneNumber == nil {
-		// 	c.JSON(http.StatusInternalServerError, gin.H{"error": "user not found"})
-		// }
 
 		token, refreshToken, _ := helpers.GenerateAllTokens(*foundUser.PhoneNumber, *foundUser.FullName, *foundUser.PhoneNumber, *foundUser.ProfilePhoto, *foundUser.UserRole, foundUser.UserId)
 		helpers.UpdateAllTokens(token, refreshToken, foundUser.UserId)
