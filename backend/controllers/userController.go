@@ -198,6 +198,7 @@ func Login() gin.HandlerFunc {
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 		var user models.User
 		var foundUser models.User
+
 		defer cancel()
 
 		if err := c.BindJSON(&user); err != nil {
@@ -226,12 +227,27 @@ func Login() gin.HandlerFunc {
 
 		token, refreshToken, _ := helpers.GenerateAllTokens(*foundUser.PhoneNumber, *foundUser.FullName, *foundUser.PhoneNumber, *foundUser.ProfilePhoto, *foundUser.UserRole, foundUser.UserId)
 		helpers.UpdateAllTokens(token, refreshToken, foundUser.UserId)
-		err = userCollection.FindOne(ctx, bson.M{"userId": foundUser.UserId}).Decode(&foundUser)
+		err = userCollection.FindOne(ctx, bson.M{"userid": foundUser.UserId}).Decode(&foundUser)
 
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
+		// vusers := userCollection.FindOne(ctx, bson.M{"userId": foundUser.UserId}).Decode(&foundUser.VerifyUser)
+
+		err = userCollection.FindOne(ctx, bson.M{"userid": foundUser.UserId}).Decode(&foundUser)
+		defer cancel()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		fmt.Print(foundUser.VerifyUser)
+		if !foundUser.VerifyUser {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "user not verified"})
+			return
+		}
+
 		c.JSON(200, gin.H{"success": "verified"})
 		c.JSON(http.StatusOK, foundUser)
 	}
