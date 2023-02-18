@@ -120,14 +120,15 @@ func Signup() gin.HandlerFunc {
 		user.RefreshToken = &refreshToken
 
 		resultInsertionNumber, insertErr := userCollection.InsertOne(ctx, user)
-		if err := utils.SendOtp(randomOtp); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}
 
 		if insertErr != nil {
 			msg := fmt.Sprintf("User item was not created")
 			c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
+			return
+		}
+
+		if err := utils.SendOtp(randomOtp, *user.PhoneNumber); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
 		defer cancel()

@@ -6,13 +6,12 @@ import (
 	"github.com/twilio/twilio-go"
 	twilioApi "github.com/twilio/twilio-go/rest/api/v2010"
 	constants "jaunnt-backend/constants"
-	
 )
 
-func SendOtp(randomOtp string) (err error) {
+func SendOtp(randomOtp string, toPhone string) (err error) {
 
 	from := constants.FROMPHONE
-	to := constants.TOPHONE
+	to := toPhone
 	accountSid := constants.ACCOUNTSID
 	authToken := constants.AUTHTOKEN
 	client := twilio.NewRestClientWithParams(twilio.ClientParams{
@@ -25,7 +24,7 @@ func SendOtp(randomOtp string) (err error) {
 	params.SetFrom(from)
 
 	fmt.Print(randomOtp)
-	
+
 	params.SetBody("Your OTP is " + randomOtp)
 
 	resp, err := client.Api.CreateMessage(params)
