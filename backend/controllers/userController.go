@@ -14,15 +14,18 @@ import (
 	database "jaunnt-backend/database"
 	helpers "jaunnt-backend/helpers"
 	"jaunnt-backend/models"
-	utils "jaunnt-backend/utils"
-	"math/rand"
-	"strconv"
-	"time"
 
+	"crypto/rand"
+	utils "jaunnt-backend/utils"
+	"math/big"
+
+	"github.com/ucarion/redact"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"strconv"
+	"time"
 )
 
 var userCollection *mongo.Collection = database.OpenCollection(database.Client, "user")
@@ -47,6 +50,24 @@ func VerifyPassword(userPassword string, providedPassword string) (bool, string)
 	}
 	return check, msg
 }
+
+func GenerateOTPCode(length int) (string, error) {
+	seed := "012345679"
+	byteSlice := make([]byte, length)
+
+	for i := 0; i < length; i++ {
+		max := big.NewInt(int64(len(seed)))
+		num, err := rand.Int(rand.Reader, max)
+		if err != nil {
+			return "", err
+		}
+
+		byteSlice[i] = seed[num.Int64()]
+	}
+
+	return string(byteSlice), nil
+}
+
 func VerifyUserOtp(userOtp string, providedOtp string) (bool, string) {
 
 	valid := reflect.DeepEqual(userOtp, providedOtp)
@@ -70,7 +91,9 @@ func Signup() gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
+		role := "USER"
 
+		user.UserRole = &role
 		validationErr := validate.Struct(user)
 		if validationErr != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": validationErr.Error()})
@@ -106,9 +129,12 @@ func Signup() gin.HandlerFunc {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "phone number already exsits"})
 			return
 		}
-		num := (rand.Intn(999999))
-		randomOtp := strconv.Itoa(num)
-
+		randomOtp, err := GenerateOTPCode(6)
+		if err != nil {
+			c.JSON(500, gin.H{"error": "otp number didnt generate"})
+			return
+		}
+		// randomOtp := strconv.Itoa(num)
 		user.CreatedAt, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 		user.UpdatedAt, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 		user.Id = primitive.NewObjectID()
@@ -165,14 +191,14 @@ func VerifyUser() gin.HandlerFunc {
 		user.VerifyUser = true
 		var updateObj primitive.D
 		if user.VerifyUser {
-			updateObj = append(updateObj, bson.E{"verifyuser", user.VerifyUser})
+			updateObj = append(updateObj, bson.E{Key: "verifyuser", Value: user.VerifyUser})
 		}
 		if user.VerifyOtp != nil {
-			updateObj = append(updateObj, bson.E{"verifyotp", user.VerifyOtp})
+			updateObj = append(updateObj, bson.E{Key: "verifyotp", Value: user.VerifyOtp})
 		}
 
 		user.UpdatedAt, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
-		updateObj = append(updateObj, bson.E{"updatedat", user.UpdatedAt})
+		updateObj = append(updateObj, bson.E{Key: "updatedat", Value: user.UpdatedAt})
 		upsert := true
 		opt := options.UpdateOptions{
 			Upsert: &upsert,
@@ -210,7 +236,7 @@ func Login() gin.HandlerFunc {
 		err := userCollection.FindOne(ctx, bson.M{"email": user.Email}).Decode(&foundUser)
 
 		errr := userCollection.FindOne(ctx, bson.M{"phonenumber": user.PhoneNumber}).Decode(&foundUser)
-		if errr != nil || err != nil {
+		if errr != nil && err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "phone number or email or password is incorrect"})
 			return
 		}
@@ -234,7 +260,6 @@ func Login() gin.HandlerFunc {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
-		// vusers := userCollection.FindOne(ctx, bson.M{"userId": foundUser.UserId}).Decode(&foundUser.VerifyUser)
 
 		err = userCollection.FindOne(ctx, bson.M{"userid": foundUser.UserId}).Decode(&foundUser)
 		defer cancel()
@@ -249,7 +274,7 @@ func Login() gin.HandlerFunc {
 			return
 		}
 
-		c.JSON(200, gin.H{"success": "verified"})
+		redact.Redact([]string{"Password"}, &foundUser)
 		c.JSON(http.StatusOK, foundUser)
 	}
 }
@@ -291,6 +316,7 @@ func GetUsers() gin.HandlerFunc {
 			log.Fatal(err)
 		}
 
+		redact.Redact([]string{"password"}, &allusers)
 		c.JSON(200, gin.H{"success": "working"})
 
 		c.JSON(http.StatusOK, allusers[0])
@@ -314,7 +340,7 @@ func GetUser() gin.HandlerFunc {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
-		c.JSON(200, gin.H{"success": "working"})
+		redact.Redact([]string{"password"}, &user)
 		c.JSON(http.StatusOK, user)
 	}
 }

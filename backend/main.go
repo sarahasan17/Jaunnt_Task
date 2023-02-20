@@ -23,7 +23,7 @@ func main() {
 	routes.UserRoutes(router)
 
 	router.GET("/v1", func(c *gin.Context) {
-		c.JSON(200, gin.H{"success": "v111111111 working"})
+		c.JSON(200, gin.H{"success": "itworks"})
 	})
 
 	router.Run(":" + port)

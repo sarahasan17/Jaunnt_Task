@@ -38,5 +38,6 @@ require (
 	github.com/gin-gonic/gin v1.8.2
 	github.com/go-playground/validator/v10 v10.11.2
 	github.com/twilio/twilio-go v1.3.3
+	github.com/ucarion/redact v0.0.0-20190527210305-5ee85e474909
 	golang.org/x/crypto v0.5.0
 )

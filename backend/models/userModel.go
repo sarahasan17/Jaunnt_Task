@@ -8,13 +8,13 @@ import (
 
 type User struct {
 	Id           primitive.ObjectID `bson:"_id"`
-	FullName     *string            `json:"fullName" validate:"required"`
-	Password     *string            `json:"password" validate:"required"`
-	Email        *string            `json:"email" validate:"required"`
-	PhoneNumber  *string            `json:"phoneNumber" validate:"required"`
+	FullName     *string            `json:"fullName" validate:"required,min=3,max=20"`
+	Password     *string            `json:"password" validate:"required,min=6,max=30"`
+	Email        *string            `json:"email" validate:"required,email"`
+	PhoneNumber  *string            `json:"phoneNumber" validate:"required,e164,min=10,max=13"`
 	Token        *string            `json:"token"`
 	ProfilePhoto *string            `json:"profilePhoto"`
-	UserRole     *string            `json:"userRole" validate:"required"`
+	UserRole     *string            `json:"userRole" validate:"eq=ADMIN|eq=USER|eq=SUPERUSER"`
 	RefreshToken *string            `json:"refreshToken"`
 	CreatedAt    time.Time          `json:"createdTime"`
 	UpdatedAt    time.Time          `json:"updatedTime"`
@@ -24,6 +24,6 @@ type User struct {
 }
 
 type UpdateUserOtp struct {
-	PhoneNumber string `json:"phonenumber"`
+	PhoneNumber string `json:"phonenumber" validate:"required,e164,min=10,max=13"`
 	VerifyOtp   string `json:"verifyotp"`
 }
