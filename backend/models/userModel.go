@@ -20,11 +20,11 @@ type User struct {
 	UserId       string             `json:"userId"`
 	VerifyUser   bool               `json:"verifyUser"`
 	VerifyOtp    *string            `json:"verifyOtp"`
-	Active       *string            `json:"active"`
+	Active       bool               `json:"active"`
 	Bio          *string            `json:"bio"`
 	ProfilePhoto *string            `json:"profilePhoto"`
 }
 
 type UpdateUserOtp struct {
-	VerifyOtp   string `json:"verifyotp"`
+	VerifyOtp string `json:"verifyotp"`
 }

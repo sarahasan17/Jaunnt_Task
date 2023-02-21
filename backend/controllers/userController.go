@@ -18,7 +18,7 @@ import (
 	"jaunnt-backend/models"
 
 	"crypto/rand"
-	utils "jaunnt-backend/utils"
+	// utils "jaunnt-backend/utils"
 	"math/big"
 
 	"github.com/ucarion/redact"
@@ -145,6 +145,7 @@ func Signup() gin.HandlerFunc {
 		user.Token = &token
 		user.VerifyUser = false
 		user.VerifyOtp = &randomOtp
+		user.Active = true
 		user.RefreshToken = &refreshToken
 
 		resultInsertionNumber, insertErr := userCollection.InsertOne(ctx, user)
@@ -155,10 +156,10 @@ func Signup() gin.HandlerFunc {
 			return
 		}
 
-		if err := utils.SendOtp(randomOtp, *user.PhoneNumber); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}
+		// if err := utils.SendOtp(randomOtp, *user.PhoneNumber); err != nil {
+		// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		// 	return
+		// }
 		defer cancel()
 		c.JSON(200, gin.H{"token": user.Token})
 		c.JSON(http.StatusOK, resultInsertionNumber)
@@ -242,6 +243,10 @@ func Login() gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
+		if !user.Active {
+			c.JSON(200, gin.H{"error": "user is already deleted"})
+			return
+		}
 
 		err := userCollection.FindOne(ctx, bson.M{"email": user.Email}).Decode(&foundUser)
 
@@ -293,10 +298,17 @@ func Login() gin.HandlerFunc {
 
 func GetUsers() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		var user models.User
+		if !user.Active {
+			c.JSON(200, gin.H{"error": "user is deleted"})
+			return
+		}
+
 		if err := helpers.CheckUserRole(c, "ADMIN"); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
+
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 
 		recordPerPage, err := strconv.Atoi(c.Query("recordPerPage"))
@@ -312,7 +324,7 @@ func GetUsers() gin.HandlerFunc {
 		startIndex, err = strconv.Atoi(c.Query("startIndex"))
 
 		matchStage := bson.D{{"$match", bson.D{{}}}}
-		groupStage := bson.D{{"$group", bson.D{
+		groupStage := bson.D{{Key: "$group", Value: bson.D{
 			{"_id", bson.D{{"_id", "null"}}},
 			{"totalCount", bson.D{{"$sum", 1}}},
 			{"data", bson.D{{"$push", "$$ROOT"}}}}}}
@@ -329,15 +341,15 @@ func GetUsers() gin.HandlerFunc {
 		}
 
 		redact.Redact([]string{"password"}, &allusers)
-		c.JSON(200, gin.H{"success": "working"})
 
+		c.JSON(200, gin.H{"success": "working"})
 		c.JSON(http.StatusOK, allusers[0])
 	}
 }
 
 func GetUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		tok := c.Request.Header.Get("token")		
+		tok := c.Request.Header.Get("token")
 		token, err := jwt.Parse(tok, nil)
 		if token == nil {
 			c.JSON(http.StatusInternalServerError, err.Error())
@@ -345,9 +357,14 @@ func GetUser() gin.HandlerFunc {
 		claims, _ := token.Claims.(jwt.MapClaims)
 		userID := claims["Uid"]
 		userId := fmt.Sprint(userID)
-		
+
 		fmt.Printf(userId)
 
+		var userr models.User
+		if !userr.Active {
+			c.JSON(200, gin.H{"error": "user is deleted"})
+			return
+		}
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 
 		var user models.User
@@ -361,9 +378,53 @@ func GetUser() gin.HandlerFunc {
 	}
 }
 
-// func DeleteUser() gin.HandlerFunc {
-// 	return func(c *gin.Context) {
-// 		token := strings.Split(c.Request.Header["Authorization"][0], " ")[1]
-// 		c.JSON(200, gin.H{"result": "get product", "token": token})
-// 	}
-// }
+func DeleteUser() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		tok := c.Request.Header.Get("token")
+		token, err := jwt.Parse(tok, nil)
+		if token == nil {
+			c.JSON(http.StatusInternalServerError, err.Error())
+		}
+		claims, _ := token.Claims.(jwt.MapClaims)
+		userID := claims["Uid"]
+		userId := fmt.Sprint(userID)
+		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+		
+		fmt.Printf(userId)
+		
+		// active := false
+		var user models.User
+		if !user.Active {
+			c.JSON(200, gin.H{"error": "user is already deleted"})
+			return
+		}
+		defer cancel()
+
+		var updateObj primitive.D
+
+		updateObj = append(updateObj, bson.E{Key: "active", Value: false})
+		filter := bson.M{"userid": userId}
+		user.UpdatedAt, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		updateObj = append(updateObj, bson.E{Key: "updatedat", Value: user.UpdatedAt})
+		upsert := true
+		opt := options.UpdateOptions{
+			Upsert: &upsert,
+		}
+		result, err := userCollection.UpdateOne(
+			ctx,
+			filter,
+			bson.D{{"$set", updateObj}},
+			&opt,
+		)
+		// errr := userCollection.FindOneAndUpdate(ctx, query, update, options.FindOneAndUpdate().SetReturnDocument(1))
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		defer cancel()
+		c.JSON(http.StatusOK, result)
+		c.JSON(200, gin.H{"success": "user deleted"})
+
+	}
+
+}
