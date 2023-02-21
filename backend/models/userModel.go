@@ -13,7 +13,6 @@ type User struct {
 	Email        *string            `json:"email" validate:"required,email"`
 	PhoneNumber  *string            `json:"phoneNumber" validate:"required,e164,min=10,max=13"`
 	Token        *string            `json:"token"`
-	ProfilePhoto *string            `json:"profilePhoto"`
 	UserRole     *string            `json:"userRole" validate:"eq=ADMIN|eq=USER|eq=SUPERUSER"`
 	RefreshToken *string            `json:"refreshToken"`
 	CreatedAt    time.Time          `json:"createdTime"`
@@ -21,9 +20,11 @@ type User struct {
 	UserId       string             `json:"userId"`
 	VerifyUser   bool               `json:"verifyUser"`
 	VerifyOtp    *string            `json:"verifyOtp"`
+	Active       *string            `json:"active"`
+	Bio          *string            `json:"bio"`
+	ProfilePhoto *string            `json:"profilePhoto"`
 }
 
 type UpdateUserOtp struct {
-	PhoneNumber string `json:"phonenumber" validate:"required,e164,min=10,max=13"`
 	VerifyOtp   string `json:"verifyotp"`
 }

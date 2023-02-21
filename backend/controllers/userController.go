@@ -4,9 +4,11 @@ import (
 	"context"
 	"fmt"
 	"log"
+
 	"net/http"
 	"reflect"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"golang.org/x/crypto/bcrypt"
@@ -158,6 +160,7 @@ func Signup() gin.HandlerFunc {
 			return
 		}
 		defer cancel()
+		c.JSON(200, gin.H{"token": user.Token})
 		c.JSON(http.StatusOK, resultInsertionNumber)
 	}
 }
@@ -168,17 +171,24 @@ func VerifyUser() gin.HandlerFunc {
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 		var user models.User
 		var foundUser models.User
-		userId := c.Param("userId")
-		filter := bson.M{"userid": userId}
+		// userId := c.Param("userId")
+		token := c.Request.Header.Get("token")
+
+		filter := bson.M{"token": token}
 		defer cancel()
 
 		if err := c.BindJSON(&user); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		errr := userCollection.FindOne(ctx, bson.M{"phonenumber": user.PhoneNumber}).Decode(&foundUser)
+		// errr := userCollection.FindOne(ctx, bson.M{"phonenumber": user.PhoneNumber}).Decode(&foundUser)
+		// if errr != nil {
+		// 	c.JSON(http.StatusInternalServerError, gin.H{"error": "user or otp doesnt exist"})
+		// 	return
+		// }
+		errr := userCollection.FindOne(ctx, bson.M{"token": token}).Decode(&foundUser)
 		if errr != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "user or otp doesnt exist"})
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "user doesnt exists"})
 			return
 		}
 
@@ -275,7 +285,9 @@ func Login() gin.HandlerFunc {
 		}
 
 		redact.Redact([]string{"Password"}, &foundUser)
+
 		c.JSON(http.StatusOK, foundUser)
+
 	}
 }
 
@@ -325,22 +337,33 @@ func GetUsers() gin.HandlerFunc {
 
 func GetUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		userId := c.Param("userId")
-
-		if err := helpers.MatchUserTypetoUid(c, userId); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
+		tok := c.Request.Header.Get("token")		
+		token, err := jwt.Parse(tok, nil)
+		if token == nil {
+			c.JSON(http.StatusInternalServerError, err.Error())
 		}
+		claims, _ := token.Claims.(jwt.MapClaims)
+		userID := claims["Uid"]
+		userId := fmt.Sprint(userID)
+		
+		fmt.Printf(userId)
+
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 
 		var user models.User
-		err := userCollection.FindOne(ctx, bson.M{"userId": userId}).Decode(&user)
+		errr := userCollection.FindOne(ctx, bson.M{"userid": userId}).Decode(&user)
 		defer cancel()
-		if err != nil {
+		if errr != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
-		redact.Redact([]string{"password"}, &user)
 		c.JSON(http.StatusOK, user)
 	}
 }
+
+// func DeleteUser() gin.HandlerFunc {
+// 	return func(c *gin.Context) {
+// 		token := strings.Split(c.Request.Header["Authorization"][0], " ")[1]
+// 		c.JSON(200, gin.H{"result": "get product", "token": token})
+// 	}
+// }

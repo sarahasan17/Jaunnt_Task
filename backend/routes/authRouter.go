@@ -9,5 +9,6 @@ import (
 func AuthRoutes(incomingRoutes *gin.Engine) {
 	incomingRoutes.POST("users/signup", controller.Signup())
 	incomingRoutes.POST("users/login", controller.Login())
-	incomingRoutes.PATCH("users/verify/:userId", controller.VerifyUser())
-}
+	// incomingRoutes.POST("users/verify",controller.Verify())
+	incomingRoutes.PATCH("users/verify", controller.VerifyUser())
+}	
