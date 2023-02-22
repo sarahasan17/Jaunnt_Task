@@ -18,7 +18,7 @@ import (
 	"jaunnt-backend/models"
 
 	"crypto/rand"
-	// utils "jaunnt-backend/utils"
+	utils "jaunnt-backend/utils"
 	"math/big"
 
 	"github.com/ucarion/redact"
@@ -156,13 +156,41 @@ func Signup() gin.HandlerFunc {
 			return
 		}
 
-		// if err := utils.SendOtp(randomOtp, *user.PhoneNumber); err != nil {
-		// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		// 	return
-		// }
 		defer cancel()
 		c.JSON(200, gin.H{"token": user.Token})
 		c.JSON(http.StatusOK, resultInsertionNumber)
+	}
+}
+
+func RequestOtp() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+		tok := c.Request.Header.Get("token")
+		token, err := jwt.Parse(tok, nil)
+		if token == nil {
+			c.JSON(http.StatusInternalServerError, err.Error())
+		}
+		defer cancel()
+		claims, _ := token.Claims.(jwt.MapClaims)
+		userID := claims["Uid"]
+		userId := fmt.Sprint(userID)
+
+		fmt.Printf(userId)
+
+		var user models.User
+		if err = userCollection.FindOne(ctx, bson.M{"userid": userId}).Decode(&user); err != nil {
+			log.Fatal(err)
+		}
+		
+		defer cancel()
+		
+		if err := utils.SendOtp(*user.VerifyOtp, *user.PhoneNumber); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		fmt.Print("otp sent")
+		c.JSON(200, gin.H{"sucess": "otp sent successfully"})
+
 	}
 }
 
@@ -236,63 +264,65 @@ func Login() gin.HandlerFunc {
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 		var user models.User
 		var foundUser models.User
-
+		
 		defer cancel()
-
+		
+		
 		if err := c.BindJSON(&user); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		if !user.Active {
-			c.JSON(200, gin.H{"error": "user is already deleted"})
-			return
-		}
-
+		
 		err := userCollection.FindOne(ctx, bson.M{"email": user.Email}).Decode(&foundUser)
-
+		
 		errr := userCollection.FindOne(ctx, bson.M{"phonenumber": user.PhoneNumber}).Decode(&foundUser)
 		if errr != nil && err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "phone number or email or password is incorrect"})
 			return
 		}
-
+		
 		passwordIsValid, msg := VerifyPassword(*user.Password, *foundUser.Password)
 		defer cancel()
 		if !passwordIsValid {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
 			return
 		}
-
+		
 		if foundUser.PhoneNumber == nil || foundUser.Email == nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "user not found"})
 		}
-
+		
 		token, refreshToken, _ := helpers.GenerateAllTokens(*foundUser.PhoneNumber, *foundUser.FullName, *foundUser.PhoneNumber, *foundUser.ProfilePhoto, *foundUser.UserRole, foundUser.UserId)
 		helpers.UpdateAllTokens(token, refreshToken, foundUser.UserId)
 		err = userCollection.FindOne(ctx, bson.M{"userid": foundUser.UserId}).Decode(&foundUser)
-
+		
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
-
+		
 		err = userCollection.FindOne(ctx, bson.M{"userid": foundUser.UserId}).Decode(&foundUser)
 		defer cancel()
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
-
+		
 		fmt.Print(foundUser.VerifyUser)
 		if !foundUser.VerifyUser {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "user not verified"})
 			return
 		}
-
+		//bug here 1
+		if user.Active {
+			c.JSON(200, gin.H{"error": "user is already deleted"})
+			return
+		}
+		
 		redact.Redact([]string{"Password"}, &foundUser)
-
+		
 		c.JSON(http.StatusOK, foundUser)
-
+		
 	}
 }
 
@@ -303,12 +333,12 @@ func GetUsers() gin.HandlerFunc {
 			c.JSON(200, gin.H{"error": "user is deleted"})
 			return
 		}
-
+		
 		if err := helpers.CheckUserRole(c, "ADMIN"); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-
+		
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 
 		recordPerPage, err := strconv.Atoi(c.Query("recordPerPage"))
@@ -389,9 +419,9 @@ func DeleteUser() gin.HandlerFunc {
 		userID := claims["Uid"]
 		userId := fmt.Sprint(userID)
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
-		
+
 		fmt.Printf(userId)
-		
+
 		// active := false
 		var user models.User
 		if !user.Active {
