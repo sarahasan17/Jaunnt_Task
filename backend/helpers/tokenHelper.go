@@ -30,14 +30,13 @@ var userCollection *mongo.Collection = database.OpenCollection(database.Client, 
 
 var SECRET_KEY string = constants.SECRETKEY
 
-func GenerateAllTokens(email string, fullName string, phoneNumber string, userRole string, profilePhoto string, uid string) (signedToken string, signedRefreshToken string, err error) {
+func GenerateAllTokens(email string, fullName string, phoneNumber string, userRole string, uid string) (signedToken string, signedRefreshToken string, err error) {
 	claims := &SignedDetails{
-		Email:        email,
-		FullName:     fullName,
-		PhoneNumber:  phoneNumber,
-		ProfilePhoto: profilePhoto,
-		Uid:          uid,
-		UserRole:     userRole,
+		Email:       email,
+		FullName:    fullName,
+		PhoneNumber: phoneNumber,
+		Uid:         uid,
+		UserRole:    userRole,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Local().Add(time.Hour * time.Duration(64)).Unix(),
 		},

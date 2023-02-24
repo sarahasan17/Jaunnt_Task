@@ -141,7 +141,7 @@ func Signup() gin.HandlerFunc {
 		user.UpdatedAt, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 		user.Id = primitive.NewObjectID()
 		user.UserId = user.Id.Hex()
-		token, refreshToken, _ := helpers.GenerateAllTokens(*user.Email, *user.FullName, *user.PhoneNumber, *user.UserRole, *user.ProfilePhoto, user.UserId)
+		token, refreshToken, _ := helpers.GenerateAllTokens(*user.Email, *user.FullName, *user.PhoneNumber, *user.UserRole, user.UserId)
 		user.Token = &token
 		user.VerifyUser = false
 		user.VerifyOtp = &randomOtp
@@ -181,9 +181,9 @@ func RequestOtp() gin.HandlerFunc {
 		if err = userCollection.FindOne(ctx, bson.M{"userid": userId}).Decode(&user); err != nil {
 			log.Fatal(err)
 		}
-		
+
 		defer cancel()
-		
+
 		if err := utils.SendOtp(*user.VerifyOtp, *user.PhoneNumber); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
@@ -264,65 +264,65 @@ func Login() gin.HandlerFunc {
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 		var user models.User
 		var foundUser models.User
-		
+
 		defer cancel()
-		
-		
+
 		if err := c.BindJSON(&user); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		
+
 		err := userCollection.FindOne(ctx, bson.M{"email": user.Email}).Decode(&foundUser)
-		
+
 		errr := userCollection.FindOne(ctx, bson.M{"phonenumber": user.PhoneNumber}).Decode(&foundUser)
 		if errr != nil && err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "phone number or email or password is incorrect"})
 			return
 		}
-		
+
 		passwordIsValid, msg := VerifyPassword(*user.Password, *foundUser.Password)
 		defer cancel()
 		if !passwordIsValid {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
 			return
 		}
-		
+
 		if foundUser.PhoneNumber == nil || foundUser.Email == nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "user not found"})
 		}
-		
-		token, refreshToken, _ := helpers.GenerateAllTokens(*foundUser.PhoneNumber, *foundUser.FullName, *foundUser.PhoneNumber, *foundUser.ProfilePhoto, *foundUser.UserRole, foundUser.UserId)
+
+		token, refreshToken, _ := helpers.GenerateAllTokens(*foundUser.PhoneNumber, *foundUser.FullName, *foundUser.PhoneNumber, *foundUser.ProfilePhoto, foundUser.UserId)
 		helpers.UpdateAllTokens(token, refreshToken, foundUser.UserId)
 		err = userCollection.FindOne(ctx, bson.M{"userid": foundUser.UserId}).Decode(&foundUser)
-		
+
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
-		
+
 		err = userCollection.FindOne(ctx, bson.M{"userid": foundUser.UserId}).Decode(&foundUser)
 		defer cancel()
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
-		
+
 		fmt.Print(foundUser.VerifyUser)
 		if !foundUser.VerifyUser {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "user not verified"})
 			return
 		}
-		//bug here 1
-		if user.Active {
+
+		if !foundUser.Active {
 			c.JSON(200, gin.H{"error": "user is already deleted"})
 			return
 		}
-		
+		//bug here 1
+
 		redact.Redact([]string{"Password"}, &foundUser)
-		
+
 		c.JSON(http.StatusOK, foundUser)
-		
+
 	}
 }
 
@@ -333,12 +333,12 @@ func GetUsers() gin.HandlerFunc {
 			c.JSON(200, gin.H{"error": "user is deleted"})
 			return
 		}
-		
+
 		if err := helpers.CheckUserRole(c, "ADMIN"); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		
+
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 
 		recordPerPage, err := strconv.Atoi(c.Query("recordPerPage"))
@@ -390,11 +390,7 @@ func GetUser() gin.HandlerFunc {
 
 		fmt.Printf(userId)
 
-		var userr models.User
-		if !userr.Active {
-			c.JSON(200, gin.H{"error": "user is deleted"})
-			return
-		}
+		// var userr models.User
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 
 		var user models.User
@@ -402,6 +398,10 @@ func GetUser() gin.HandlerFunc {
 		defer cancel()
 		if errr != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		if !user.Active {
+			c.JSON(200, gin.H{"error": "user is deleted"})
 			return
 		}
 		c.JSON(http.StatusOK, user)
@@ -424,17 +424,21 @@ func DeleteUser() gin.HandlerFunc {
 
 		// active := false
 		var user models.User
+		if err = userCollection.FindOne(ctx, bson.M{"userid": userId}).Decode(&user); err != nil {
+			log.Fatal(err)
+		}
+		fmt.Print(user.Active)
+		defer cancel()
 		if !user.Active {
 			c.JSON(200, gin.H{"error": "user is already deleted"})
 			return
-		}
-		defer cancel()
 
+		}
 		var updateObj primitive.D
 
 		updateObj = append(updateObj, bson.E{Key: "active", Value: false})
-		filter := bson.M{"userid": userId}
 		user.UpdatedAt, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		filter := bson.M{"userid": userId}
 		updateObj = append(updateObj, bson.E{Key: "updatedat", Value: user.UpdatedAt})
 		upsert := true
 		opt := options.UpdateOptions{
@@ -446,7 +450,6 @@ func DeleteUser() gin.HandlerFunc {
 			bson.D{{"$set", updateObj}},
 			&opt,
 		)
-		// errr := userCollection.FindOneAndUpdate(ctx, query, update, options.FindOneAndUpdate().SetReturnDocument(1))
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
@@ -457,4 +460,61 @@ func DeleteUser() gin.HandlerFunc {
 
 	}
 
+}
+
+func UpdateUser() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		tok := c.Request.Header.Get("token")
+		token, err := jwt.Parse(tok, nil)
+		if token == nil {
+			c.JSON(http.StatusInternalServerError, err.Error())
+		}
+		claims, _ := token.Claims.(jwt.MapClaims)
+		userID := claims["Uid"]
+		userId := fmt.Sprint(userID)
+		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+
+		fmt.Printf(userId)
+
+		var user models.User
+		errr := c.BindJSON(&user)
+		defer cancel()
+		if errr != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		if err = userCollection.FindOne(ctx, bson.M{"userid": userId}).Decode(&user); err != nil {
+			log.Fatal(err)
+		}
+		filter := bson.M{"userid": userId}
+		fmt.Print(user.Active)
+		defer cancel()
+		if !user.Active {
+			c.JSON(200, gin.H{"error": "user is already deleted"})
+			return
+		}
+		var updateObj primitive.D
+		updateObj = append(updateObj, bson.E{Key: "bio", Value: user.Bio})
+		updateObj = append(updateObj, bson.E{Key: "profilephoto", Value: user.ProfilePhoto})
+
+		user.UpdatedAt, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		updateObj = append(updateObj, bson.E{Key: "updatedat", Value: user.UpdatedAt})
+		upsert := true
+		opt := options.UpdateOptions{
+			Upsert: &upsert,
+		}
+		result, err := userCollection.UpdateOne(
+			ctx,
+			filter,
+			bson.D{{Key: "$set", Value: updateObj}},
+			&opt,
+		)
+		if err != nil {
+			msg := fmt.Sprintf("user update failed")
+			c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
+			return
+		}
+		defer cancel()
+		c.JSON(http.StatusOK, result)
+	}
 }
