@@ -15,7 +15,7 @@ func Authenticate() gin.HandlerFunc {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("No Authorization header provided")})
 			c.Abort()
 			return
-		}	
+		}
 
 		claims, err := helper.ValidateToken(clientToken)
 		if err != "" {

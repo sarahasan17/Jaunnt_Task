@@ -328,11 +328,7 @@ func Login() gin.HandlerFunc {
 
 func GetUsers() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var user models.User
-		if !user.Active {
-			c.JSON(200, gin.H{"error": "user is deleted"})
-			return
-		}
+		// var user models.User
 
 		if err := helpers.CheckUserRole(c, "ADMIN"); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

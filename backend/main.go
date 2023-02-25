@@ -19,6 +19,7 @@ func main() {
 
 	router.Use(gin.Logger())
 
+	routes.TravelPlanRoutes(router)
 	routes.AuthRoutes(router)
 	routes.UserRoutes(router)
 
