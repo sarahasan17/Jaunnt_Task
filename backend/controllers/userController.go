@@ -157,6 +157,13 @@ func Signup() gin.HandlerFunc {
 		}
 
 		defer cancel()
+		if err := utils.SendOtp(*user.VerifyOtp, *user.PhoneNumber); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		fmt.Print("otp sent")
+		c.JSON(200, gin.H{"sucess": "otp sent successfully"})
+
 		c.JSON(200, gin.H{"token": user.Token})
 		c.JSON(http.StatusOK, resultInsertionNumber)
 	}
@@ -254,7 +261,16 @@ func VerifyUser() gin.HandlerFunc {
 			return
 		}
 		defer cancel()
+
+		err = userCollection.FindOne(ctx, bson.M{"userid": foundUser.UserId}).Decode(&foundUser)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		defer cancel()
+
 		c.JSON(http.StatusOK, result)
+		c.JSON(http.StatusOK, foundUser)
 	}
 
 }
@@ -291,7 +307,7 @@ func Login() gin.HandlerFunc {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "user not found"})
 		}
 
-		token, refreshToken, _ := helpers.GenerateAllTokens(*foundUser.PhoneNumber, *foundUser.FullName, *foundUser.PhoneNumber, *foundUser.ProfilePhoto, foundUser.UserId)
+		token, refreshToken, _ := helpers.GenerateAllTokens(*foundUser.PhoneNumber, *foundUser.FullName, *foundUser.PhoneNumber, *foundUser.UserRole, foundUser.UserId)
 		helpers.UpdateAllTokens(token, refreshToken, foundUser.UserId)
 		err = userCollection.FindOne(ctx, bson.M{"userid": foundUser.UserId}).Decode(&foundUser)
 
@@ -312,12 +328,11 @@ func Login() gin.HandlerFunc {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "user not verified"})
 			return
 		}
-
-		if !foundUser.Active {
+		//bug here 1
+		if user.Active {
 			c.JSON(200, gin.H{"error": "user is already deleted"})
 			return
 		}
-		//bug here 1
 
 		redact.Redact([]string{"Password"}, &foundUser)
 

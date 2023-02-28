@@ -21,7 +21,6 @@ type SignedDetails struct {
 	FullName     string
 	PhoneNumber  string
 	Uid          string
-	ProfilePhoto string
 	UserRole     string
 	jwt.StandardClaims
 }
