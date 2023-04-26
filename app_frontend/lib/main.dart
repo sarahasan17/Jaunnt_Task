@@ -1,5 +1,7 @@
+import 'package:app_frontend/screen/ImagePickerScreen/ImagePickerScreen.dart';
 import 'package:app_frontend/screen/share_experience_screen/share_experience_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'constant/theme/themehelper.dart';
 
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget {
     ThemeHelper theme = ThemeHelper();
     return MaterialApp(
       theme: ThemeData(scaffoldBackgroundColor: theme.backgroundColor),
-      home: const AddExperienceScreen(),
+      home: const ImagePickerScreen(),
     );
   }
 }
