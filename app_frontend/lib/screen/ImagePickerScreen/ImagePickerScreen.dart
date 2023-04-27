@@ -7,6 +7,9 @@ import 'package:app_frontend/screen/ImagePickerScreen/filemodel_call.dart';
 import 'package:flutter_storage_path/flutter_storage_path.dart';
 import 'package:flutter/material.dart';
 
+import '../../constant/get_constant.dart';
+import '../share_experience_screen/share_experience_screen.dart';
+
 class ImagePickerScreen extends StatefulWidget {
   const ImagePickerScreen({Key? key}) : super(key: key);
 
@@ -23,7 +26,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
   }
 
   FileModel? selectedModel;
-  List<FileModel>? files;
+  late List<FileModel> files;
   getImagePath() async {
     var imagepath = await StoragePath.imagesPath;
     var images = jsonDecode(imagepath!) as List;
@@ -72,15 +75,27 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                         SizedBox(
                           width: s.width / 7,
                         ),
-                        Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 15),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.0),
-                                color: theme.buttoncolor),
-                            child: Text('Next',
-                                style:
-                                    theme.font2.copyWith(color: theme.white)))
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              detail.write("key1", image);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const AddExperienceScreen()));
+                            });
+                          },
+                          child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 15),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  color: theme.buttoncolor),
+                              child: Text('Next',
+                                  style: theme.font2
+                                      .copyWith(color: theme.white))),
+                        )
                       ],
                     ),
                   ],
@@ -136,7 +151,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
   }
 
   List<DropdownMenuItem> getItems() {
-    return files!
+    return files
             .map((e) => DropdownMenuItem(
                   value: e,
                   child: Text(e.folder),

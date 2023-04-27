@@ -1,8 +1,11 @@
 import 'package:app_frontend/constant/screen_width.dart';
+import 'package:app_frontend/screen/ImagePickerScreen/ImagePickerScreen.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../constant/get_constant.dart';
 import '../../constant/theme/themehelper.dart';
+import 'dart:io';
 
 class AddExperienceScreen extends StatefulWidget {
   const AddExperienceScreen({Key? key}) : super(key: key);
@@ -95,16 +98,35 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            padding: const EdgeInsets.all(10.0),
-                            height: s.height / 8,
-                            width: 100,
-                            alignment: Alignment.bottomRight,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8.0),
-                                color: theme.backgroundColor),
-                            child: const Icon(Icons.copy),
-                          ),
+                          if (detail.read("key1") != null)
+                            GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: SizedBox(
+                                  height: 100,
+                                  width: 100,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: Image.file(
+                                      File(
+                                        detail.read("key1"),
+                                      ),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ))
+                          else
+                            Container(
+                              padding: const EdgeInsets.all(10.0),
+                              height: s.height / 8,
+                              width: 100,
+                              alignment: Alignment.bottomRight,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  color: theme.backgroundColor),
+                              child: const Icon(Icons.copy),
+                            ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
