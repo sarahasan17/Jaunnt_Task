@@ -1,22 +1,25 @@
 import 'package:app_frontend/constant/screen_width.dart';
-import 'package:app_frontend/screen/ImagePickerScreen/ImagePickerScreen.dart';
+import 'package:app_frontend/screen/AddExperienceScreen/planner.dart';
+import 'package:app_frontend/screen/AddExperienceScreen/textfieldwidget.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../constant/get_constant.dart';
+import '../../constant/hive.dart';
 import '../../constant/theme/themehelper.dart';
 import 'dart:io';
 
 class AddExperienceScreen extends StatefulWidget {
-  const AddExperienceScreen({Key? key}) : super(key: key);
+  const AddExperienceScreen({Key key}) : super(key: key);
 
   @override
   State<AddExperienceScreen> createState() => _AddExperienceScreenState();
 }
 
 class _AddExperienceScreenState extends State<AddExperienceScreen> {
-  TextEditingController place = TextEditingController();
-  String? dropdownvalue = 'Item 1';
+  TextEditingController hour = TextEditingController();
+  TextEditingController members = TextEditingController();
+  TextEditingController budget = TextEditingController();
+  String dropdownvalue = 'Item 1';
   int count1 = 2;
   int count2 = 2;
   int count3 = 2;
@@ -31,8 +34,17 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
     'Item7',
     'Item8',
   ];
-  DateTime selectedDate = DateTime.now();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    datepicker();
+    image = mybox.get(1);
+  }
 
+  String searchdata;
+  DateTime selectedDate = DateTime.now();
+  String image;
   datepicker() async {
     showDatePicker(
       context: context,
@@ -53,12 +65,12 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
               ),
             ),
           ),
-          child: child!,
+          child: child,
         );
       },
     ).then((value) {
       setState(() {
-        selectedDate = value!;
+        selectedDate = value;
       });
     });
   }
@@ -98,7 +110,7 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          if (detail.read("key1") != null)
+                          if (image != null)
                             GestureDetector(
                                 onTap: () {
                                   Navigator.pop(context);
@@ -110,22 +122,27 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                                     borderRadius: BorderRadius.circular(8.0),
                                     child: Image.file(
                                       File(
-                                        detail.read("key1"),
+                                        image,
                                       ),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
                                 ))
                           else
-                            Container(
-                              padding: const EdgeInsets.all(10.0),
-                              height: s.height / 8,
-                              width: 100,
-                              alignment: Alignment.bottomRight,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  color: theme.backgroundColor),
-                              child: const Icon(Icons.copy),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(10.0),
+                                height: s.height / 8,
+                                width: 100,
+                                alignment: Alignment.bottomRight,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    color: theme.backgroundColor),
+                                child: const Icon(Icons.copy),
+                              ),
                             ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -142,7 +159,7 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                                     onTap: () => datepicker(),
                                     child: Container(
                                       height: s.height / 25,
-                                      width: s.width / 2.3,
+                                      width: s.width / 2.28,
                                       padding: const EdgeInsets.all(5),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(5),
@@ -154,7 +171,7 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                              '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
+                                              '${selectedDate.day}th ${selectedDate.month == 1 ? 'January' : selectedDate.month == 2 ? 'February' : selectedDate.month == 3 ? 'March' : selectedDate.month == 4 ? 'April' : selectedDate.month == '5' ? 'May' : selectedDate.month == '6' ? 'June' : selectedDate.month == '7' ? 'July' : selectedDate.month == '8' ? 'August' : selectedDate.month == '9' ? 'Septembar' : selectedDate.month == '10' ? 'October' : selectedDate.month == '11' ? 'November' : 'December'},${selectedDate.year}',
                                               style: theme.font2),
                                           const Icon(Icons.arrow_drop_down)
                                         ],
@@ -174,42 +191,18 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                                   ),
                                   Container(
                                     height: s.height / 25,
-                                    width: s.width / 2.3,
+                                    width: s.width / 2.28,
                                     padding: const EdgeInsets.all(4),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       border: Border.all(
                                           width: 1, color: theme.borderColor),
                                     ),
-                                    child: TextFormField(
-                                      textAlign: TextAlign.start,
-                                      cursorColor: theme.borderColor,
-                                      controller: place,
-                                      decoration: const InputDecoration(
-                                        border: InputBorder.none,
-                                      ),
-                                    ),
-                                  )
+                                    child: TextFieldWidget(theme: theme),
+                                  ),
                                 ],
                               ),
                               SizedBox(height: s.height / 200),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  SizedBox(
-                                    width: s.width / 8,
-                                  ),
-                                  Text(
-                                    'Could\'nt find?',
-                                    style: theme.font2.copyWith(fontSize: 12),
-                                  ),
-                                  Text(
-                                    '  Add Place',
-                                    style: theme.font2.copyWith(
-                                        color: theme.placeColor, fontSize: 12),
-                                  ),
-                                ],
-                              ),
                             ],
                           )
                         ],
@@ -268,6 +261,7 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                       child: Column(
                         children: [
                           Planner(
+                              controller: hour,
                               s: s,
                               theme: theme,
                               unit: 'hours',
@@ -278,6 +272,7 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                             height: s.height / 50,
                           ),
                           Planner(
+                              controller: members,
                               s: s,
                               theme: theme,
                               unit: 'people',
@@ -288,6 +283,7 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                             height: s.height / 50,
                           ),
                           Planner(
+                              controller: budget,
                               s: s,
                               theme: theme,
                               unit: 'Thousand',
@@ -414,85 +410,5 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
             )),
       ),
     ));
-  }
-}
-
-class Planner extends StatefulWidget {
-  Planner(
-      {super.key,
-      required this.s,
-      required this.theme,
-      required this.asset,
-      required this.question,
-      required this.count,
-      required this.unit});
-
-  final ScreenWidth s;
-  final ThemeHelper theme;
-  int count;
-  String unit;
-  String asset;
-  String question;
-
-  @override
-  State<Planner> createState() => _PlannerState();
-}
-
-class _PlannerState extends State<Planner> {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: widget.s.width / 2.5,
-          child: Row(
-            children: [
-              Image.asset(widget.asset),
-              SizedBox(
-                width: widget.s.width / 18,
-              ),
-              Text(
-                widget.question,
-                style: widget.theme.font2,
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          width: widget.s.width / 12,
-        ),
-        Container(
-            child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            GestureDetector(
-                onTap: () {
-                  setState(() {
-                    widget.count = widget.count - 1;
-                  });
-                },
-                child: const Icon(CupertinoIcons.minus_circle)),
-            SizedBox(width: widget.s.width / 50),
-            Text(
-              widget.count.toString(),
-              style: widget.theme.font2,
-            ),
-            SizedBox(width: widget.s.width / 50),
-            GestureDetector(
-                onTap: () {
-                  setState(() {
-                    widget.count = widget.count + 1;
-                  });
-                },
-                child: const Icon(CupertinoIcons.plus_circle)),
-            SizedBox(width: widget.s.width / 50),
-            Text(
-              widget.unit,
-              style: widget.theme.font2,
-            ),
-          ],
-        ))
-      ],
-    );
   }
 }
