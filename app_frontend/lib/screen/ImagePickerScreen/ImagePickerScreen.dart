@@ -23,6 +23,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
     // TODO: implement initState
     super.initState();
     getImagePath();
+    tick = List.filled(10000, false);
   }
 
   FileModel selectedModel;
@@ -39,8 +40,10 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
     }
   }
 
+  bool multiple = false;
   String image;
-
+  List<bool> tick;
+  List<String> multipleimage = [];
   Widget build(BuildContext context) {
     ScreenWidth s = ScreenWidth(context);
     ThemeHelper theme = ThemeHelper();
@@ -70,6 +73,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                               setState(() {
                                 selectedModel = d;
                                 image = d.files[0];
+                                tick = List.filled(10000, false);
                               });
                             },
                           )),
@@ -79,6 +83,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                           GestureDetector(
                             onTap: () {
                               mybox.put(1, image);
+                              mybox.put(2, multiple);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -100,18 +105,54 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                     ],
                   ),
                 ),
-                Container(
-                  height: s.height / 2.3,
-                  width: s.width,
-                  child: image != null
-                      ? Image.file(
-                          File(image),
-                          fit: BoxFit.cover,
-                          height: s.height / 2.3,
-                          width: s.width,
-                        )
-                      : Container(),
-                ),
+                Stack(children: [
+                  Container(
+                    height: s.height / 2.3,
+                    width: s.width,
+                    child: image != null
+                        ? Image.file(
+                            File(image),
+                            fit: BoxFit.cover,
+                            height: s.height / 2.3,
+                            width: s.width,
+                          )
+                        : Container(),
+                  ),
+                  Positioned(
+                      bottom: 10,
+                      right: 10,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            multiple = !multiple;
+                          });
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: theme.buttoncolor.withOpacity(0.5)),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.copy,
+                                color: theme.white,
+                                size: 20,
+                              ),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                'SELECT MULTIPLE',
+                                style: theme.font1
+                                    .copyWith(color: theme.white, fontSize: 12),
+                              )
+                            ],
+                          ),
+                        ),
+                      ))
+                ]),
                 SizedBox(
                   height: s.height / 150,
                 ),
@@ -127,12 +168,46 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                           itemBuilder: (_, i) {
                             var file = selectedModel.files[i];
                             return GestureDetector(
-                              child: Image.file(
-                                File(file),
-                                fit: BoxFit.cover,
-                              ),
+                              child: Stack(children: [
+                                Positioned(
+                                  top: 0,
+                                  bottom: 0,
+                                  right: 0,
+                                  left: 0,
+                                  child: Image.file(
+                                    File(file),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                if (multiple == true)
+                                  Positioned(
+                                      top: 2,
+                                      right: 2,
+                                      child: GestureDetector(
+                                        child: CircleAvatar(
+                                          backgroundColor: theme.white,
+                                          radius: 8,
+                                          child: (tick[i] == true)
+                                              ? Icon(
+                                                  Icons.circle,
+                                                  color: theme.buttoncolor,
+                                                  size: 11,
+                                                )
+                                              : Container(),
+                                        ),
+                                      ))
+                                else
+                                  Container()
+                              ]),
                               onTap: () {
                                 setState(() {
+                                  tick[i] = !tick[i];
+                                  if (tick[i] == true) {
+                                    multipleimage.add(file);
+                                  }
+                                  if (tick[i] == false) {
+                                    multipleimage.remove(file);
+                                  }
                                   image = file;
                                 });
                               },

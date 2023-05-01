@@ -33,7 +33,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
 
   @override
   static List<String> items = [
-    'Item1',
+    'Nandi Fallsssss',
     'Item2',
     'Item3',
     'Item4',
@@ -116,8 +116,9 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                     );
                   })
               : Container(
+                  padding: const EdgeInsets.only(top: 5, bottom: 10, left: 10),
                   child: Text(
-                    'Add Places',
+                    'Add Places \'${place.text}\'',
                     style: ThemeHelper().font2,
                   ),
                 ),

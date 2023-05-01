@@ -40,8 +40,10 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
     super.initState();
     datepicker();
     image = mybox.get(1);
+    multiple = mybox.get(2);
   }
 
+  bool multiple;
   String searchdata;
   DateTime selectedDate = DateTime.now();
   String image;
@@ -116,17 +118,35 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                                   Navigator.pop(context);
                                 },
                                 child: SizedBox(
-                                  height: 100,
-                                  width: 100,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    child: Image.file(
-                                      File(
-                                        image,
+                                  height: s.height / 8.5,
+                                  width: s.width / 4,
+                                  child: Stack(children: [
+                                    Positioned(
+                                      top: 0,
+                                      bottom: 0,
+                                      left: 0,
+                                      right: 0,
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        child: Image.file(
+                                          File(
+                                            image,
+                                          ),
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
-                                      fit: BoxFit.cover,
                                     ),
-                                  ),
+                                    if (multiple == true)
+                                      Positioned(
+                                          bottom: 5,
+                                          right: 5,
+                                          child: Icon(
+                                            Icons.copy_rounded,
+                                            color: theme.white,
+                                            size: 18,
+                                          ))
+                                  ]),
                                 ))
                           else
                             GestureDetector(
@@ -136,7 +156,7 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                               child: Container(
                                 padding: const EdgeInsets.all(10.0),
                                 height: s.height / 8,
-                                width: 100,
+                                width: s.width / 4,
                                 alignment: Alignment.bottomRight,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8.0),
@@ -171,7 +191,7 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                              '${selectedDate.day}th ${selectedDate.month == 1 ? 'January' : selectedDate.month == 2 ? 'February' : selectedDate.month == 3 ? 'March' : selectedDate.month == 4 ? 'April' : selectedDate.month == '5' ? 'May' : selectedDate.month == '6' ? 'June' : selectedDate.month == '7' ? 'July' : selectedDate.month == '8' ? 'August' : selectedDate.month == '9' ? 'Septembar' : selectedDate.month == '10' ? 'October' : selectedDate.month == '11' ? 'November' : 'December'},${selectedDate.year}',
+                                              '${selectedDate.day}th ${selectedDate.month == 1 ? 'January' : selectedDate.month == 2 ? 'February' : selectedDate.month == 3 ? 'March' : selectedDate.month == 4 ? 'April' : selectedDate.month == 5 ? 'May' : selectedDate.month == 6 ? 'June' : selectedDate.month == 7 ? 'July' : selectedDate.month == 8 ? 'August' : selectedDate.month == 9 ? 'Septembar' : selectedDate.month == 10 ? 'October' : selectedDate.month == 11 ? 'November' : 'December'},${selectedDate.year}',
                                               style: theme.font2),
                                           const Icon(Icons.arrow_drop_down)
                                         ],
@@ -382,28 +402,27 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                   ],
                 ),
                 SizedBox(
-                  height: s.height / 5.5,
+                  height: s.height / 30,
                 ),
                 Container(
-                  height: s.height / 14,
+                  padding: const EdgeInsets.only(
+                      top: 8, bottom: 8, left: 20, right: 20),
                   decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
                           color: theme.buttoncolor.withOpacity(0.2),
-                          spreadRadius: 3,
-                          blurRadius: 3,
+                          spreadRadius: 1,
+                          blurRadius: 1,
                           offset:
                               const Offset(0, 0), // changes position of shadow
                         ),
                       ],
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(7.0),
                       color: theme.buttoncolor),
-                  child: Center(
-                    child: Text(
-                      'Save Experience',
-                      style: theme.font2
-                          .copyWith(color: theme.white, fontSize: 16),
-                    ),
+                  child: Text(
+                    'Save Experience',
+                    style:
+                        theme.font2.copyWith(color: theme.white, fontSize: 16),
                   ),
                 )
               ],

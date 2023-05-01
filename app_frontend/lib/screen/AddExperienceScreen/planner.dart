@@ -54,9 +54,10 @@ class _PlannerState extends State<Planner> {
             child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              width: s.width / 6.3,
+            SizedBox(
+              width: s.width / 6.5,
               child: TextFormField(
+                style: ThemeHelper().font2,
                 textAlign: TextAlign.start,
                 cursorColor: widget.theme.borderColor,
                 controller: widget.controller,
