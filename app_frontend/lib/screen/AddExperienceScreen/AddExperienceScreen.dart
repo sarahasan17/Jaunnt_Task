@@ -41,8 +41,10 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
     datepicker();
     image = mybox.get(1);
     multiple = mybox.get(2);
+    multipleimage = mybox.get(3);
   }
 
+  List<String> multipleimage = [];
   bool multiple;
   String searchdata;
   DateTime selectedDate = DateTime.now();
@@ -131,7 +133,9 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                                             BorderRadius.circular(8.0),
                                         child: Image.file(
                                           File(
-                                            image,
+                                            multiple && multipleimage.length > 0
+                                                ? multipleimage[0]
+                                                : image,
                                           ),
                                           fit: BoxFit.cover,
                                         ),
@@ -178,7 +182,7 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                                   GestureDetector(
                                     onTap: () => datepicker(),
                                     child: Container(
-                                      height: s.height / 25,
+                                      height: s.height / 23,
                                       width: s.width / 2.28,
                                       padding: const EdgeInsets.all(5),
                                       decoration: BoxDecoration(

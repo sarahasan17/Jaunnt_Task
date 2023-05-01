@@ -23,7 +23,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
     // TODO: implement initState
     super.initState();
     getImagePath();
-    tick = List.filled(10000, false);
+    tick = List.filled(100, List.filled(10000, false));
   }
 
   FileModel selectedModel;
@@ -36,13 +36,16 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
       setState(() {
         selectedModel = files[0];
         image = files[0].files[0];
+        index = 0;
       });
     }
   }
 
+  int index = 0;
+  int count = 0;
   bool multiple = false;
   String image;
-  List<bool> tick;
+  List<List<bool>> tick = [[]];
   List<String> multipleimage = [];
   Widget build(BuildContext context) {
     ScreenWidth s = ScreenWidth(context);
@@ -59,49 +62,50 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          const Icon(Icons.clear),
-                          SizedBox(
-                            width: s.width / 20,
-                          ),
-                          DropdownButtonHideUnderline(
-                              child: DropdownButton(
-                            value: selectedModel,
-                            items: getItems(),
-                            onChanged: (d) {
-                              setState(() {
-                                selectedModel = d;
-                                image = d.files[0];
-                                tick = List.filled(10000, false);
-                              });
-                            },
-                          )),
-                          SizedBox(
-                            width: s.width / 7,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              mybox.put(1, image);
-                              mybox.put(2, multiple);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const AddExperienceScreen()));
-                            },
-                            child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 15),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    color: theme.buttoncolor),
-                                child: Text('Next',
-                                    style: theme.font2
-                                        .copyWith(color: theme.white))),
-                          )
-                        ],
+                      const Icon(Icons.clear),
+                      SizedBox(
+                        width: s.width / 20,
                       ),
+                      DropdownButtonHideUnderline(
+                          child: DropdownButton(
+                        value: selectedModel,
+                        items: getItems(),
+                        onChanged: (d) {
+                          setState(() {
+                            selectedModel = d;
+                            image = d.files[0];
+                            for (int i = 0; i < files.length; i++) {
+                              if (selectedModel == files[i]) {
+                                index = i;
+                              }
+                            }
+                          });
+                        },
+                      )),
+                      SizedBox(
+                        width: s.width / 7,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          mybox.put(1, image);
+                          mybox.put(2, multiple);
+                          mybox.put(3, multipleimage);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const AddExperienceScreen()));
+                        },
+                        child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 15),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.0),
+                                color: theme.buttoncolor),
+                            child: Text('Next',
+                                style:
+                                    theme.font2.copyWith(color: theme.white))),
+                      )
                     ],
                   ),
                 ),
@@ -156,7 +160,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                 SizedBox(
                   height: s.height / 150,
                 ),
-                selectedModel != null && selectedModel.files.length >= 1
+                selectedModel != null && selectedModel.files.isNotEmpty
                     ? SizedBox(
                         height: s.height / 2.5,
                         child: GridView.builder(
@@ -165,7 +169,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                                   crossAxisCount: 4,
                                   crossAxisSpacing: 1.5,
                                   mainAxisSpacing: 1.5),
-                          itemBuilder: (_, i) {
+                          itemBuilder: (context, i) {
                             var file = selectedModel.files[i];
                             return GestureDetector(
                               child: Stack(children: [
@@ -187,7 +191,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                                         child: CircleAvatar(
                                           backgroundColor: theme.white,
                                           radius: 8,
-                                          child: (tick[i] == true)
+                                          child: (tick[index][i] == true)
                                               ? Icon(
                                                   Icons.circle,
                                                   color: theme.buttoncolor,
@@ -201,11 +205,12 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                               ]),
                               onTap: () {
                                 setState(() {
-                                  tick[i] = !tick[i];
-                                  if (tick[i] == true) {
+                                  print(index);
+                                  tick[index][i] = !tick[index][i];
+                                  if (tick[index][i] == true) {
                                     multipleimage.add(file);
                                   }
-                                  if (tick[i] == false) {
+                                  if (tick[index][i] == false) {
                                     multipleimage.remove(file);
                                   }
                                   image = file;
