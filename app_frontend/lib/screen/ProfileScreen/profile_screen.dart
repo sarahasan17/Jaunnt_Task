@@ -20,7 +20,7 @@ class _ProfileScreenState extends State<ProfileScreen>
     return Scaffold(
       body: SafeArea(
         child: Container(
-            padding: const EdgeInsets.only(top: 20, left: 20, bottom: 0),
+            padding: const EdgeInsets.only(top: 20, left: 10, bottom: 0),
             child: ListView(
               children: [
                 Container(
@@ -108,7 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       height: s.height / 200,
                                     ),
                                     Text(
-                                      'share',
+                                      'Share',
                                       style: theme.font4,
                                     )
                                   ],
@@ -141,7 +141,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     ],
                   ),
                 ),
-                SizedBox(height: s.height / 200),
+                SizedBox(height: s.height / 180),
                 Container(
                   padding: EdgeInsets.only(right: 20),
                   child: Center(
@@ -163,6 +163,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ),
                 SizedBox(height: s.height / 150),
                 Container(
+                  padding: EdgeInsets.only(right: 10),
                   height: s.height / 1.5,
                   child: TabBarView(
                     controller: tabcontroller,
@@ -191,27 +192,37 @@ class TabBars extends StatelessWidget {
         scrollDirection: Axis.vertical,
         itemBuilder: (BuildContext context, int index) {
           return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               GestureDetector(
                 onTap: () {},
                 child: Container(
                   decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.4),
+                          spreadRadius: 3,
+                          blurRadius: 3,
+                          offset:
+                              const Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
                       borderRadius: BorderRadius.circular(20.0),
                       color: theme.white,
                       image: const DecorationImage(
                           image: AssetImage("assets/images/profile.png"),
                           fit: BoxFit.cover)),
-                  margin: EdgeInsets.all(7),
-                  width: s.width / 2.4,
-                  height: s.height / 7,
+                  margin: const EdgeInsets.all(7),
+                  width: s.width / 2.28,
+                  height: s.height / 6.5,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-                        width: s.width / 2.4,
-                        height: s.height / 37,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 3, horizontal: 8),
+                        width: s.width / 2.2,
+                        height: s.height / 35,
                         decoration: BoxDecoration(
                             color: theme.buttoncolor.withOpacity(0.5),
                             borderRadius: const BorderRadius.only(
@@ -231,22 +242,31 @@ class TabBars extends StatelessWidget {
                 onTap: () {},
                 child: Container(
                   decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.4),
+                          spreadRadius: 3,
+                          blurRadius: 3,
+                          offset:
+                              const Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
                       borderRadius: BorderRadius.circular(20.0),
                       color: theme.white,
                       image: const DecorationImage(
                           image: AssetImage("assets/images/profile.png"),
                           fit: BoxFit.cover)),
-                  margin: EdgeInsets.all(7),
-                  width: s.width / 2.4,
-                  height: s.height / 7,
+                  margin: const EdgeInsets.all(7),
+                  width: s.width / 2.3,
+                  height: s.height / 6.5,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-                        width: s.width / 2.4,
-                        height: s.height / 37,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 3, horizontal: 8),
+                        width: s.width / 2.3,
+                        height: s.height / 35,
                         decoration: BoxDecoration(
                             color: theme.buttoncolor.withOpacity(0.5),
                             borderRadius: const BorderRadius.only(

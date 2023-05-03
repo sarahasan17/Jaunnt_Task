@@ -52,8 +52,8 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2022),
-      lastDate: DateTime(2024),
+      firstDate: DateTime(2020),
+      lastDate: DateTime.now(),
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(

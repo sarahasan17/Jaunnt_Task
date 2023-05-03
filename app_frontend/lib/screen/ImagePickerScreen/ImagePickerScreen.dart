@@ -205,13 +205,14 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                               ]),
                               onTap: () {
                                 setState(() {
-                                  print(index);
-                                  tick[index][i] = !tick[index][i];
-                                  if (tick[index][i] == true) {
-                                    multipleimage.add(file);
-                                  }
-                                  if (tick[index][i] == false) {
-                                    multipleimage.remove(file);
+                                  if (multiple == true) {
+                                    tick[index][i] = !tick[index][i];
+                                    if (tick[index][i] == true) {
+                                      multipleimage.add(file);
+                                    }
+                                    if (tick[index][i] == false) {
+                                      multipleimage.remove(file);
+                                    }
                                   }
                                   image = file;
                                 });
