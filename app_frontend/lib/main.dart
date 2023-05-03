@@ -1,5 +1,6 @@
 import 'package:app_frontend/screen/ImagePickerScreen/ImagePickerScreen.dart';
 import 'package:app_frontend/screen/AddExperienceScreen/AddExperienceScreen.dart';
+import 'package:app_frontend/screen/ProfileScreen/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
     ThemeHelper theme = ThemeHelper();
     return MaterialApp(
       theme: ThemeData(scaffoldBackgroundColor: theme.backgroundColor),
-      home: const ImagePickerScreen(),
+      home: const ProfileScreen(),
     );
   }
 }

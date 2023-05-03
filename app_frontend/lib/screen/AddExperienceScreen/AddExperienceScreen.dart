@@ -2,7 +2,6 @@ import 'package:app_frontend/constant/screen_width.dart';
 import 'package:app_frontend/screen/AddExperienceScreen/planner.dart';
 import 'package:app_frontend/screen/AddExperienceScreen/textfieldwidget.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../constant/hive.dart';
 import '../../constant/theme/themehelper.dart';
@@ -133,7 +132,7 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                                             BorderRadius.circular(8.0),
                                         child: Image.file(
                                           File(
-                                            multiple && multipleimage.length > 0
+                                            multiple && multipleimage.isNotEmpty
                                                 ? multipleimage[0]
                                                 : image,
                                           ),
@@ -293,7 +292,7 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                               question: 'Total trip time?',
                               asset: 'assets/images/Inner Plugin Iframe.png'),
                           SizedBox(
-                            height: s.height / 50,
+                            height: s.height / 40,
                           ),
                           Planner(
                               controller: members,
@@ -304,7 +303,7 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                               question: 'Group size?',
                               asset: 'assets/images/Vector.png'),
                           SizedBox(
-                            height: s.height / 50,
+                            height: s.height / 40,
                           ),
                           Planner(
                               controller: budget,
@@ -315,7 +314,7 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                               question: 'Total budget?',
                               asset: 'assets/images/circle-coin-vertical.png'),
                           SizedBox(
-                            height: s.height / 50,
+                            height: s.height / 40,
                           ),
                           Row(
                             children: [

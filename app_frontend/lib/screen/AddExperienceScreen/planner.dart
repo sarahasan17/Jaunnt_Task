@@ -1,19 +1,18 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../constant/screen_width.dart';
 import '../../constant/theme/themehelper.dart';
 
 class Planner extends StatefulWidget {
   Planner(
-      {key,
+      {Key key,
       this.s,
       this.theme,
       this.asset,
       this.question,
       this.count,
       this.unit,
-      this.controller});
+      this.controller})
+      : super(key: key);
 
   final ScreenWidth s;
   final ThemeHelper theme;
@@ -32,7 +31,7 @@ class _PlannerState extends State<Planner> {
     ScreenWidth s = ScreenWidth(context);
     return Row(
       children: [
-        Container(
+        SizedBox(
           width: widget.s.width / 2.5,
           child: Row(
             children: [
@@ -50,18 +49,29 @@ class _PlannerState extends State<Planner> {
         SizedBox(
           width: widget.s.width / 12,
         ),
-        Container(
-            child: Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
               width: s.width / 6.5,
-              child: TextFormField(
-                style: ThemeHelper().font2,
-                textAlign: TextAlign.start,
-                cursorColor: widget.theme.borderColor,
-                controller: widget.controller,
-              ),
+              child: Column(children: [
+                TextField(
+                  style: ThemeHelper().font2,
+                  textAlign: TextAlign.start,
+                  cursorColor: widget.theme.borderColor,
+                  controller: widget.controller,
+                  decoration: const InputDecoration(
+                    isDense: true,
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                    border: InputBorder.none,
+                  ),
+                ),
+                Divider(
+                  thickness: 1,
+                  color: ThemeHelper().buttoncolor,
+                )
+              ]),
             ),
             SizedBox(width: widget.s.width / 30),
             Text(
@@ -69,7 +79,7 @@ class _PlannerState extends State<Planner> {
               style: widget.theme.font2,
             ),
           ],
-        ))
+        )
       ],
     );
   }
