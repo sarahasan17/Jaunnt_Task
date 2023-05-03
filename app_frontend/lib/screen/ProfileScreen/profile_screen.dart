@@ -1,6 +1,6 @@
 import 'package:app_frontend/constant/screen_width.dart';
 import 'package:app_frontend/constant/theme/themehelper.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:app_frontend/screen/Profile_followers/ProfileFollowersScreen.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -68,21 +68,30 @@ class _ProfileScreenState extends State<ProfileScreen>
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      '100',
-                                      style: theme.font3,
-                                    ),
-                                    SizedBox(
-                                      height: s.height / 300,
-                                    ),
-                                    Text(
-                                      'Following',
-                                      style: theme.font4,
-                                    )
-                                  ],
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ProfileFollowersScreen()));
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        '100',
+                                        style: theme.font3,
+                                      ),
+                                      SizedBox(
+                                        height: s.height / 300,
+                                      ),
+                                      Text(
+                                        'Following',
+                                        style: theme.font4,
+                                      )
+                                    ],
+                                  ),
                                 ),
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
