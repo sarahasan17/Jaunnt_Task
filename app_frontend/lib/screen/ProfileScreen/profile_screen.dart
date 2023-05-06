@@ -1,7 +1,11 @@
+import 'dart:io';
 import 'package:app_frontend/constant/screen_width.dart';
 import 'package:app_frontend/constant/theme/themehelper.dart';
+import 'package:app_frontend/screen/ProfileScreen/ImagePickerScreen2/ImagePickerScreen.dart';
 import 'package:app_frontend/screen/Profile_followers/ProfileFollowersScreen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../constant/hive.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key key}) : super(key: key);
@@ -12,7 +16,23 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen>
     with TickerProviderStateMixin {
+  bool edit = false;
+  final GlobalKey<FormFieldState> _edit_nameFormKey =
+      GlobalKey<FormFieldState>();
+  final GlobalKey<FormFieldState> _edit_bioFormKey =
+      GlobalKey<FormFieldState>();
+  TextEditingController edit_name = TextEditingController();
+  TextEditingController edit_bio = TextEditingController();
   @override
+  String edit_name1 = "Romanch Bygari";
+  String edit_bio1 = "Travel enthusiast who loves coffee and dogs!";
+  @override
+  String image;
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     TabController tabcontroller = TabController(length: 2, vsync: this);
     ThemeHelper theme = ThemeHelper();
@@ -23,34 +43,100 @@ class _ProfileScreenState extends State<ProfileScreen>
             padding: const EdgeInsets.only(top: 20, left: 10, bottom: 0),
             child: ListView(
               children: [
-                Container(
+                SizedBox(
                   height: s.height / 4.8,
                   child: Stack(
                     children: [
                       Positioned(
                           top: 10,
                           left: 0,
-                          child: CircleAvatar(
-                              backgroundColor: theme.white,
-                              radius: s.width / 8)),
-                      Positioned(
-                          top: 20,
-                          left: s.width / 3.5,
-                          child: Text(
-                            'Romanch Bygari',
-                            style: theme.font1.copyWith(
-                                fontSize: 20, fontWeight: FontWeight.w700),
-                          )),
-                      Positioned(
-                          top: 50,
-                          left: s.width / 3.5,
-                          child: Container(
-                            width: s.width / 1.7,
-                            child: Text(
-                              'Travel enthusiast who loves coffee and dogs!',
-                              style: theme.font2,
+                          child: GestureDetector(
+                            onTap: () {
+                              if (edit == true) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ImagePickerScreen2()));
+                              }
+                            },
+                            child: Container(
+                              height: 100,
+                              width: 100,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(50),
+                                child: mybox.get(4) != null
+                                    ? Image.file(
+                                        File(mybox.get(4)),
+                                        fit: BoxFit.cover,
+                                      )
+                                    : Image.asset(
+                                        "assets/images/User image.png"),
+                              ),
                             ),
                           )),
+                      Positioned(
+                          top: s.height / 70,
+                          left: s.width / 3.5,
+                          child: edit == true
+                              ? SizedBox(
+                                  height: s.height / 25,
+                                  width: s.width / 2,
+                                  child: TextFormField(
+                                    style: theme.font1.copyWith(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w700),
+                                    controller: edit_name,
+                                    key: _edit_nameFormKey,
+                                    textAlign: TextAlign.start,
+                                    cursorColor: theme.buttoncolor,
+                                    decoration: InputDecoration(
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 0, vertical: 0),
+                                      hintText: edit_name1,
+                                      hintStyle: theme.font1.copyWith(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ),
+                                )
+                              : Text(
+                                  edit_name1,
+                                  style: theme.font1.copyWith(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700),
+                                )),
+                      Positioned(
+                          top: s.height / 20,
+                          left: s.width / 3.5,
+                          child: edit == true
+                              ? SizedBox(
+                                  height: s.height / 25,
+                                  width: s.width / 1.7,
+                                  child: Container(
+                                    child: TextFormField(
+                                      style: theme.font2,
+                                      controller: edit_bio,
+                                      key: _edit_bioFormKey,
+                                      textAlign: TextAlign.start,
+                                      cursorColor: theme.buttoncolor,
+                                      decoration: InputDecoration(
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 0, vertical: 0),
+                                          hintText: edit_bio1,
+                                          hintStyle: theme.font2),
+                                    ),
+                                  ),
+                                )
+                              : Container(
+                                  width: s.width / 1.7,
+                                  child: Text(
+                                    edit_bio1,
+                                    style: theme.font2,
+                                  ),
+                                )),
                       Positioned(
                           right: 0,
                           bottom: 0,
@@ -128,31 +214,54 @@ class _ProfileScreenState extends State<ProfileScreen>
                       Positioned(
                           bottom: s.height / 50,
                           left: s.width / 50,
-                          child: Container(
-                            padding: const EdgeInsets.all(10.0),
-                            decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.4),
-                                    spreadRadius: 1,
-                                    blurRadius: 1,
-                                    offset: const Offset(
-                                        0, 1), // changes position of shadow
-                                  ),
-                                ],
-                                color: theme.profilebuttoncolor,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Text(
-                              'Edit Profile',
-                              style: theme.font2,
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                if (edit == true) {
+                                  edit_bio1 = edit_bio.text;
+                                  edit_name1 = edit_name.text;
+                                  image = mybox.get(4);
+                                }
+                                edit = !edit;
+                              });
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(10.0),
+                              decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.4),
+                                      spreadRadius: 1,
+                                      blurRadius: 1,
+                                      offset: const Offset(
+                                          0, 1), // changes position of shadow
+                                    ),
+                                  ],
+                                  color: edit == true
+                                      ? theme.savechangescolor
+                                      : theme.profilebuttoncolor,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Text(
+                                edit == true ? "Save changes" : 'Edit Profile',
+                                style: theme.font2,
+                              ),
                             ),
-                          ))
+                          )),
+                      Positioned(
+                          top: 12,
+                          left: s.width / 5,
+                          child: edit == true
+                              ? const Icon(
+                                  CupertinoIcons.pencil,
+                                  size: 30,
+                                )
+                              : Container()),
                     ],
                   ),
                 ),
                 SizedBox(height: s.height / 180),
                 Container(
-                  padding: EdgeInsets.only(right: 20),
+                  padding: const EdgeInsets.only(right: 20),
                   child: Center(
                     child: TabBar(
                         controller: tabcontroller,

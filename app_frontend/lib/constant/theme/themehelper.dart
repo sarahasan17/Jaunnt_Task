@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class ThemeHelper {
   Color backgroundColor = const Color(0xFFD8E9EB);
   Color white = const Color(0xFFFFFFFF);
+  Color savechangescolor = const Color(0xFFCBEBA3);
   Color borderColor = const Color(0xFF3D405B);
   Color placeColor = Colors.blue;
   Color followbackgroundcolor = const Color(0xFFACACAC);
