@@ -11,7 +11,8 @@ class Planner extends StatefulWidget {
       this.question,
       this.count,
       this.unit,
-      this.controller})
+      this.controller,
+      this.globalKey})
       : super(key: key);
 
   final ScreenWidth s;
@@ -21,6 +22,8 @@ class Planner extends StatefulWidget {
   String asset;
   String question;
   TextEditingController controller;
+  GlobalKey<FormFieldState> globalKey;
+
   @override
   State<Planner> createState() => _PlannerState();
 }
@@ -55,7 +58,8 @@ class _PlannerState extends State<Planner> {
             SizedBox(
               width: s.width / 6.5,
               child: Column(children: [
-                TextField(
+                TextFormField(
+                  key: widget.globalKey,
                   style: ThemeHelper().font2,
                   textAlign: TextAlign.start,
                   cursorColor: widget.theme.borderColor,

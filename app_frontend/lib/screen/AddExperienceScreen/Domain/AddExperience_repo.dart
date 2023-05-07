@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:app_frontend/screen/AddExperienceScreen/Data/AddExperience_request.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import '../../../constant/errors/failures.dart';
@@ -8,14 +9,15 @@ import '../../../constant/network_info.dart';
 class AddExperienceRepo {
   final Dio _dio = Dio();
   final NetworkInfoImpl _networkInfo = NetworkInfoImpl();
-  Future<Either<Failure, Map<String, dynamic>>> addexp(String email) async {
+  Future<Either<Failure, Map<String, dynamic>>> addexp(
+      AddExperienceRequest request) async {
     String url = "";
 
     if (await _networkInfo.isConnected()) {
       try {
         final Response response = await _dio.post(
           url,
-          data: jsonEncode({'email': email}),
+          data: jsonEncode({request.toJson()}),
         );
 
         var body = response.data as Map<String, dynamic>;
