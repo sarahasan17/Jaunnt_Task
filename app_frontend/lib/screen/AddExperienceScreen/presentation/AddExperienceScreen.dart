@@ -1,10 +1,10 @@
 import 'package:app_frontend/constant/screen_width.dart';
-import 'package:app_frontend/screen/AddExperienceScreen/planner.dart';
-import 'package:app_frontend/screen/AddExperienceScreen/textfieldwidget.dart';
+import 'package:app_frontend/screen/AddExperienceScreen/presentation/planner.dart';
+import 'package:app_frontend/screen/AddExperienceScreen/presentation/textfieldwidget.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import '../../constant/hive.dart';
-import '../../constant/theme/themehelper.dart';
+import '../../../constant/hive.dart';
+import '../../../constant/theme/themehelper.dart';
 import 'dart:io';
 
 class AddExperienceScreen extends StatefulWidget {

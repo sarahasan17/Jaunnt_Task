@@ -1,5 +1,4 @@
-import 'package:app_frontend/screen/ImagePickerScreen/ImagePickerScreen.dart';
-import 'package:app_frontend/screen/AddExperienceScreen/AddExperienceScreen.dart';
+import 'package:app_frontend/screen/AddExperienceScreen/presentation/AddExperienceScreen.dart';
 import 'package:app_frontend/screen/ProfileScreen/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';

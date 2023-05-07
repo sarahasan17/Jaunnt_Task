@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../constant/screen_width.dart';
-import '../../constant/theme/themehelper.dart';
+import '../../../constant/screen_width.dart';
+import '../../../constant/theme/themehelper.dart';
 
 class Planner extends StatefulWidget {
   Planner(

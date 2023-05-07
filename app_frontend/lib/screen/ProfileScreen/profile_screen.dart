@@ -76,8 +76,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                             ),
                           )),
                       Positioned(
-                          top: s.height / 70,
-                          left: s.width / 3.5,
+                          top: s.height / 40,
+                          left: s.width / 3.3,
                           child: edit == true
                               ? SizedBox(
                                   height: s.height / 25,
@@ -104,12 +104,12 @@ class _ProfileScreenState extends State<ProfileScreen>
                               : Text(
                                   edit_name1,
                                   style: theme.font1.copyWith(
-                                      fontSize: 20,
+                                      fontSize: 22,
                                       fontWeight: FontWeight.w700),
                                 )),
                       Positioned(
-                          top: s.height / 20,
-                          left: s.width / 3.5,
+                          top: s.height / 16,
+                          left: s.width / 3.3,
                           child: edit == true
                               ? SizedBox(
                                   height: s.height / 25,
@@ -134,7 +134,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   width: s.width / 1.7,
                                   child: Text(
                                     edit_bio1,
-                                    style: theme.font2,
+                                    style: theme.font2.copyWith(fontSize: 14),
                                   ),
                                 )),
                       Positioned(

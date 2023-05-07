@@ -3,12 +3,11 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:app_frontend/constant/screen_width.dart';
 import 'package:app_frontend/constant/theme/themehelper.dart';
-import 'package:app_frontend/screen/ImagePickerScreen/filemodel_call.dart';
 import 'package:app_frontend/screen/ProfileScreen/profile_screen.dart';
 import 'package:flutter_storage_path/flutter_storage_path.dart';
 import 'package:flutter/material.dart';
-
 import '../../../constant/hive.dart';
+import '../../AddExperienceScreen/presentation/ImagePickerScreen/filemodel_call.dart';
 
 class ImagePickerScreen2 extends StatefulWidget {
   const ImagePickerScreen2({Key key}) : super(key: key);
@@ -84,13 +83,7 @@ class _ImagePickerScreen2State extends State<ImagePickerScreen2> {
                       GestureDetector(
                         onTap: () {
                           mybox.put(4, image);
-                          Navigator.pushReplacement<void, void>(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (BuildContext context) =>
-                                  const ProfileScreen(),
-                            ),
-                          );
+                          Navigator.pop(context);
                         },
                         child: Container(
                             padding: const EdgeInsets.symmetric(

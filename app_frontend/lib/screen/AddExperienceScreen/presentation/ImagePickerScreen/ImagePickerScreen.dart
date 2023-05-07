@@ -3,12 +3,11 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:app_frontend/constant/screen_width.dart';
 import 'package:app_frontend/constant/theme/themehelper.dart';
-import 'package:app_frontend/screen/ImagePickerScreen/filemodel_call.dart';
 import 'package:flutter_storage_path/flutter_storage_path.dart';
 import 'package:flutter/material.dart';
-import '../../constant/get_constant.dart';
-import '../../constant/hive.dart';
-import '../AddExperienceScreen/AddExperienceScreen.dart';
+import '../../../../constant/hive.dart';
+import '../../../ProfileScreen/ImagePickerScreen2/filemodel_call.dart';
+import '../AddExperienceScreen.dart';
 
 class ImagePickerScreen extends StatefulWidget {
   const ImagePickerScreen({Key key}) : super(key: key);

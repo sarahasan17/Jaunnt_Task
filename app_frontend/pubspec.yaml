@@ -13,8 +13,16 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.2
+  auto_route: ^3.2.2
+  bloc: ^8.0.2
+  connectivity: ^3.0.6
+  cupertino_icons:
+  dartz: ^0.10.1
+  dio: ^4.0.4
+  get_it: ^7.2.0
+  injectable: ^1.5.3
   dropdown_button2: ^2.1.0
+  flutter_bloc: ^8.0.1
   flutter_storage_path: ^1.0.4
   image_picker:
   get: ^4.6.5
