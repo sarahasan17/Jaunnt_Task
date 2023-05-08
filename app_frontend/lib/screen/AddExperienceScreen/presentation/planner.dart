@@ -62,6 +62,7 @@ class _PlannerState extends State<Planner> {
                   key: widget.globalKey,
                   style: ThemeHelper().font2,
                   textAlign: TextAlign.start,
+                  keyboardType: TextInputType.number,
                   cursorColor: widget.theme.borderColor,
                   controller: widget.controller,
                   decoration: const InputDecoration(

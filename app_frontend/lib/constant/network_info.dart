@@ -1,10 +1,10 @@
 import 'package:connectivity/connectivity.dart';
 
-abstract class NetwrokInfo {
+abstract class NetworkInfo {
   Future<bool> isConnected();
 }
 
-class NetworkInfoImpl implements NetwrokInfo {
+class NetworkInfoImpl implements NetworkInfo {
   @override
   Future<bool> isConnected() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
