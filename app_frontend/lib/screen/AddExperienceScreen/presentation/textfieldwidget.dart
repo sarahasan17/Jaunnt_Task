@@ -1,13 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../constant/theme/themehelper.dart';
 
 class TextFieldWidget extends StatefulWidget {
-  const TextFieldWidget({
+  TextFieldWidget({
     Key key,
+    @required this.place,
     @required this.theme,
   }) : super(key: key);
-
+  TextEditingController place;
   final ThemeHelper theme;
 
   @override
@@ -15,7 +15,6 @@ class TextFieldWidget extends StatefulWidget {
 }
 
 class _TextFieldWidgetState extends State<TextFieldWidget> {
-  TextEditingController place = TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
@@ -94,7 +93,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
               ),
             ],
           ),
-          child: getItems.length > 0
+          child: getItems.isNotEmpty
               ? ListView.builder(
                   padding: const EdgeInsets.only(top: 5.0),
                   itemCount: getItems.length,
@@ -104,7 +103,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                           const EdgeInsets.only(top: 5, bottom: 10, left: 10),
                       child: GestureDetector(
                         onTap: () {
-                          place.text = getItems[index];
+                          widget.place.text = getItems[index];
                           hideOverlay();
                           focusnode.unfocus();
                         },
@@ -118,7 +117,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
               : Container(
                   padding: const EdgeInsets.only(top: 5, bottom: 10, left: 10),
                   child: Text(
-                    'Add Places \'${place.text}\'',
+                    'Add Places \'${widget.place.text}\'',
                     style: ThemeHelper().font2,
                   ),
                 ),
@@ -139,7 +138,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         focusNode: focusnode,
         textAlign: TextAlign.start,
         cursorColor: widget.theme.borderColor,
-        controller: place,
+        controller: widget.place,
         decoration: const InputDecoration(
           border: InputBorder.none,
         ),

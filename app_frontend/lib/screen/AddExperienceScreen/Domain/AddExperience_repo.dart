@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:app_frontend/screen/AddExperienceScreen/Data/AddExperience_request.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import '../../../constant/errors/failures.dart';
+import '../../../constant/errors/Failure.dart';
 import '../../../constant/network_info.dart';
 
 class AddExperienceRepo {

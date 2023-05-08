@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Failure {
   final String message;
   Failure({this.message});
@@ -8,7 +10,7 @@ class InternetFailure extends Failure {
 }
 
 class UserExistFailure extends Failure {
-  UserExistFailure() : super(message: "Player exists");
+  UserExistFailure() : super(message: "User already exists");
 }
 
 class ServerFailure extends Failure {
