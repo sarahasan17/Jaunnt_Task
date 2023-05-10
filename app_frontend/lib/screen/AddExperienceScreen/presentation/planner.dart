@@ -66,11 +66,9 @@ class _PlannerState extends State<Planner> {
                   cursorColor: widget.theme.borderColor,
                   controller: widget.controller,
                   decoration: const InputDecoration(
-                    isDense: true,
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                    border: InputBorder.none,
-                  ),
+                      isDense: true,
+                      contentPadding: EdgeInsets.only(top: 15, left: 5),
+                      border: InputBorder.none),
                 ),
                 Divider(
                   thickness: 1,

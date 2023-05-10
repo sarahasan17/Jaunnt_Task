@@ -3,16 +3,17 @@ import 'package:app_frontend/screen/AddExperienceScreen/Data/AddExperience_reque
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/cubits/AddExperience_Cubit.dart';
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/planner.dart';
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/textfieldwidget.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import '../../../constant/errors/error_popup.dart';
 import '../../../constant/hive.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../constant/loading_widget.dart';
+import '../../../constant/navigation/autorouter.dart';
 import '../../../constant/theme/themehelper.dart';
 import 'dart:io';
 
-import '../../ProfileScreen/profile_screen.dart';
 import 'cubits/EditExperience/EditExperience_cubit.dart';
 
 class AddExperienceScreen extends StatefulWidget {
@@ -416,7 +417,7 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                                               asset:
                                                   'assets/images/Vector.png'),
                                           SizedBox(
-                                            height: s.height / 40,
+                                            height: s.height / 60,
                                           ),
                                           Planner(
                                               controller: budget,
@@ -429,7 +430,7 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                                               asset:
                                                   'assets/images/circle-coin-vertical.png'),
                                           SizedBox(
-                                            height: s.height / 40,
+                                            height: s.height / 60,
                                           ),
                                           Row(
                                             children: [
@@ -548,13 +549,10 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                                 SizedBox(
                                   height: s.height / 30,
                                 ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const ProfileScreen()));
+                                TextButton(
+                                  onPressed: () {
+                                    context.router.push(const ProfileScreen());
+
                                     BlocProvider.of<EditExperienceCubit>(
                                             context)
                                         .editexp(File(image));

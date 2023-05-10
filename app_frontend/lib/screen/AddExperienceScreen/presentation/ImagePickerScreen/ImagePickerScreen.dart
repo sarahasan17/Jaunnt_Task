@@ -60,48 +60,52 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Icon(Icons.clear),
-                    SizedBox(
-                      width: s.width / 20,
-                    ),
-                    DropdownButtonHideUnderline(
-                        child: DropdownButton(
-                      value: selectedModel,
-                      items: getItems(),
-                      onChanged: (d) {
-                        setState(() {
-                          selectedModel = d;
-                          image = d.files[0];
-                          for (int i = 0; i < files.length; i++) {
-                            if (selectedModel == files[i]) {
-                              index = i;
+                    const Expanded(child: Icon(Icons.clear)),
+                    Expanded(
+                      flex: 6,
+                      child: DropdownButtonHideUnderline(
+                          child: DropdownButton(
+                        value: selectedModel,
+                        items: getItems(),
+                        onChanged: (d) {
+                          setState(() {
+                            selectedModel = d;
+                            image = d.files[0];
+                            for (int i = 0; i < files.length; i++) {
+                              if (selectedModel == files[i]) {
+                                index = i;
+                              }
                             }
-                          }
-                        });
-                      },
-                    )),
-                    SizedBox(
-                      width: s.width / 7,
+                          });
+                        },
+                      )),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        mybox.put(1, image);
-                        mybox.put(2, multiple);
-                        mybox.put(3, multipleimage);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const AddExperienceScreen()));
-                      },
-                      child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 15),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0),
-                              color: theme.buttoncolor),
-                          child: Text('Next',
-                              style: theme.font2.copyWith(color: theme.white))),
+                    const Expanded(child: SizedBox()),
+                    Expanded(
+                      flex: 2,
+                      child: GestureDetector(
+                        onTap: () {
+                          mybox.put(1, image);
+                          mybox.put(2, multiple);
+                          mybox.put(3, multipleimage);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const AddExperienceScreen()));
+                        },
+                        child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 15),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.0),
+                                color: theme.buttoncolor),
+                            child: Center(
+                              child: Text('Next',
+                                  style:
+                                      theme.font2.copyWith(color: theme.white)),
+                            )),
+                      ),
                     )
                   ],
                 ),

@@ -1,5 +1,6 @@
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/cubits/AddExperience_Cubit.dart';
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/cubits/EditExperience/EditExperience_cubit.dart';
+import 'package:app_frontend/screen/ProfileScreen/presentation/Profilecubit/ProfileCubit.dart';
 import 'package:app_frontend/screen/ProfileScreen/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,6 +26,9 @@ class MyApp extends StatelessWidget {
     ThemeHelper theme = ThemeHelper();
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+          create: (context) => ProfileCubit(),
+        ),
         BlocProvider(
           create: (context) => AddExperienceCubit(),
         ),
