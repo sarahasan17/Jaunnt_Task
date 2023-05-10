@@ -12,6 +12,7 @@ import '../../../constant/loading_widget.dart';
 import '../../../constant/theme/themehelper.dart';
 import 'dart:io';
 
+import '../../ProfileScreen/profile_screen.dart';
 import 'cubits/EditExperience/EditExperience_cubit.dart';
 
 class AddExperienceScreen extends StatefulWidget {
@@ -549,8 +550,14 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ProfileScreen()));
                                     BlocProvider.of<EditExperienceCubit>(
-                                            context).editexp(image);
+                                            context)
+                                        .editexp(File(image));
                                     BlocProvider.of<AddExperienceCubit>(context)
                                         .addexp(AddExperienceRequest(
                                             location: place.text,

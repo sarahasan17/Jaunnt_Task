@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:app_frontend/constant/screen_width.dart';
 import 'package:app_frontend/constant/theme/themehelper.dart';
-import 'package:app_frontend/screen/ProfileScreen/ImagePickerScreen2/ImagePickerScreen.dart';
-import 'package:app_frontend/screen/Profile_followers/ProfileFollowersScreen.dart';
+import 'package:app_frontend/screen/ProfileScreen/presentation/ImagePickerScreen2/ImagePickerScreen.dart';
+import 'package:app_frontend/screen/Profile_followers/presentation/ProfileFollowersScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../constant/hive.dart';
@@ -27,6 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   String edit_name1 = "Romanch Bygari";
   String edit_bio1 = "Travel enthusiast who loves coffee and dogs!";
   @override
+  int val = 10;
   String image;
   void initState() {
     // TODO: implement initState
@@ -48,7 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                   child: Stack(
                     children: [
                       Positioned(
-                          top: 10,
+                          top: s.height / 60,
                           left: 0,
                           child: GestureDetector(
                             onTap: () {
@@ -248,7 +249,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             ),
                           )),
                       Positioned(
-                          top: 12,
+                          top: s.height / 40,
                           left: s.width / 5,
                           child: edit == true
                               ? const Icon(
@@ -273,9 +274,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                         labelStyle: theme.font2,
                         isScrollable: true,
                         indicatorColor: theme.buttoncolor,
-                        tabs: const [
-                          Tab(text: "Experiences (11)"),
-                          Tab(text: "Saved places"),
+                        tabs: [
+                          Tab(text: "Experiences ${val * 2}"),
+                          const Tab(text: "Saved places"),
                         ]),
                   ),
                 ),

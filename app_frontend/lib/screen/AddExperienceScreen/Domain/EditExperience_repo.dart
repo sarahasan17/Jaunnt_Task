@@ -1,35 +1,35 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:developer';
-import 'dart:html';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:path/path.dart';
 import 'package:async/async.dart';
 import '../../../constant/errors/Failure.dart';
 import '../../../constant/network_info.dart';
+import 'package:http/http.dart' as http;
 
 class EditExperienceRepo {
   final Dio _dio = Dio();
   final NetworkInfoImpl _networkInfo = NetworkInfoImpl();
   Future<Either<Failure, Map<String, dynamic>>> editexperience(
-      String files) async {
+      File files) async {
     String url = "";
 
     if (await _networkInfo.isConnected()) {
       try {
-        FormData formData = FormData.fromMap({
-          "files": await MultipartFile.fromFile(
-            './upload.jpg',
-            filename: files,
-          ),
-        });
+        var request = http.MultipartRequest('PUT', Uri.parse(url));
+        request.headers["Content-Type"] = 'multipart/form-data';
+        request.files.add(
+          http.MultipartFile.fromBytes("files", (await files.readAsBytes()),
+              filename: 'git commits.jpg'),
+        );
 
-        Response response = await _dio.post("/info", data: formData);
+        http.StreamedResponse response = await request.send();
 
-        var body = response.data as Map<String, dynamic>;
         switch (response.statusCode) {
           case 200:
-            return Right(body);
+            return Right(json.decode(await response.stream.bytesToString()));
           case 404:
             return Left(UserNotFound());
           default:

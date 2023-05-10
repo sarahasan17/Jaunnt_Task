@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         routeInformationParser:
             router.defaultRouteParser(includePrefixMatches: true),
         routerDelegate: router.delegate(
-          initialRoutes: [AddExperienceScreen()],
+          initialRoutes: [ImagePickerScreen()],
         ),
       ),
     );

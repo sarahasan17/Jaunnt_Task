@@ -29,6 +29,8 @@ dependencies:
   get_storage:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  http:
+  modal_progress_hud_nsn:
 
 
 dev_dependencies:

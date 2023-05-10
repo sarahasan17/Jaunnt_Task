@@ -6,8 +6,8 @@ import 'package:app_frontend/constant/theme/themehelper.dart';
 import 'package:app_frontend/screen/ProfileScreen/profile_screen.dart';
 import 'package:flutter_storage_path/flutter_storage_path.dart';
 import 'package:flutter/material.dart';
-import '../../../constant/hive.dart';
-import '../../AddExperienceScreen/presentation/ImagePickerScreen/filemodel_call.dart';
+import '../../../../constant/hive.dart';
+import '../../../AddExperienceScreen/presentation/ImagePickerScreen/filemodel_call.dart';
 
 class ImagePickerScreen2 extends StatefulWidget {
   const ImagePickerScreen2({Key key}) : super(key: key);
