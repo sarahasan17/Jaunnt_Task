@@ -1,0 +1,30 @@
+<!Doctype html>
+<html>
+
+<head>
+  <title>Socket IO Test</title>
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  <script>
+    const socket = io("http://localhost:8080/chat", {
+      extraHeaders: {
+        Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYWM0NDFjMjhmMWI5OTdkNDM1MWRhNyIsImlhdCI6MTY3MjIzNDA1MywiZXhwIjoxNjcyMzIwNDUzfQ._GAcBFjjNKd3Cp2I6-3cQVzXFuo0KOKc-5CDz7GDmVI"
+      }
+    });
+
+    socket.on("connect", () => {
+      document.getElementById("status").innerHTML = "Connected to socket.io server";
+    });
+
+    socket.on("disconnect", () => {
+      document.getElementById("status").innerHTML = "Disconnected from socket.io server";
+    });
+    socket.on("test", (data) => {
+      console.log('test');
+      console.log(data);
+    })
+    socket.on("newOrder", (data) => {
+      console.log(data);
+    });
+  </script>
+
+</html>

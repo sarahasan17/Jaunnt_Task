@@ -1,0 +1,1028 @@
+{
+    "info": {
+        "_postman_id": "2b2862b7-ee63-471b-aee6-12511f259a3f",
+        "name": "jaunnt",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "_exporter_id": "22371934"
+    },
+    "item": [
+        {
+            "name": "user",
+            "item": [
+                {
+                    "name": "utils",
+                    "item": [
+                        {
+                            "name": "get bookmarks",
+                            "request": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{url}}/users/bookmarks",
+                                    "host": [
+                                        "{{url}}"
+                                    ],
+                                    "path": [
+                                        "users",
+                                        "bookmarks"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "getf following",
+                            "request": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{url}}/users/following",
+                                    "host": [
+                                        "{{url}}"
+                                    ],
+                                    "path": [
+                                        "users",
+                                        "following"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "get followers",
+                            "request": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{url}}/users/followers",
+                                    "host": [
+                                        "{{url}}"
+                                    ],
+                                    "path": [
+                                        "users",
+                                        "followers"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "update following",
+                            "request": {
+                                "method": "PUT",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{url}}/users//follow/{{followUserId}}",
+                                    "host": [
+                                        "{{url}}"
+                                    ],
+                                    "path": [
+                                        "users",
+                                        "",
+                                        "follow",
+                                        "{{followUserId}}"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "update unfollowing",
+                            "request": {
+                                "method": "PUT",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{url}}/users/unfollow/{{unfollowUserId}}",
+                                    "host": [
+                                        "{{url}}"
+                                    ],
+                                    "path": [
+                                        "users",
+                                        "unfollow",
+                                        "{{unfollowUserId}}"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "get user",
+                    "request": {
+                        "auth": {
+                            "type": "noauth"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFbWFpbCI6InN1Z2Fta3ViZXJAZ21haWwuY29tIiwiRnVsbE5hbWUiOiJzdWdhbSIsIlBob25lTnVtYmVyIjoiKzkxODk3MTQ0MjM0MiIsIlVpZCI6IjYzZjg2OTIwMDI2Y2M4MjA2N2I2MDEyOCIsIlByb2ZpbGVQaG90byI6ImhhaGUiLCJVc2VyUm9sZSI6IlVTRVIiLCJleHAiOjE2Nzc0NTQ2MjR9.yLd0bCyR1tah0XY4L5xUDgIqWkJ6vnD_0QQ1_9rjUOQ",
+                                "type": "text",
+                                "disabled": true
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{url}}/users/64046da43494dc7d24909234",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "users",
+                                "64046da43494dc7d24909234"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "get all users",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{url}}/users/all",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "users",
+                                "all"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "update user",
+                    "request": {
+                        "method": "PUT",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "files",
+                                    "type": "file",
+                                    "src": "/C:/Users/SUGAM.KUBER/OneDrive/Desktop/git commits.jpg"
+                                },
+                                {
+                                    "key": "bio",
+                                    "value": "hehehhee",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{url}}/users/641841a96b852a5a7de55752",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "users",
+                                "641841a96b852a5a7de55752"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "delete user (inactive)",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFbWFpbCI6InN1Z2Fta3ViZXJAZ21haWwuY29tIiwiRnVsbE5hbWUiOiJzdWdhbSIsIlBob25lTnVtYmVyIjoiKzkxODk3MTQ0MjM0MiIsIlVpZCI6IjYzZjg2OTIwMDI2Y2M4MjA2N2I2MDEyOCIsIlByb2ZpbGVQaG90byI6ImhhaGUiLCJVc2VyUm9sZSI6IlVTRVIiLCJleHAiOjE2Nzc0NTQ2MjR9.yLd0bCyR1tah0XY4L5xUDgIqWkJ6vnD_0QQ1_9rjUOQ",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}/users",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "users"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "delete user (per)",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{url}}/users/640465f43f2173a2b58ffb6c",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "users",
+                                "640465f43f2173a2b58ffb6c"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "auth",
+            "item": [
+                {
+                    "name": "signup",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"fullName\": \"sugammm\",\r\n    \"email\": \"sugamkuber@gmail.com\",\r\n    \"phoneNumber\": \"+918971442342\",\r\n    \"password\": \"1234Vill\",\r\n    \"confirm\": \"1234Vill\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}/auth/signup",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "signup"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "login",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"phoneNumber\": \"+918971442342\",\r\n    \"password\": \"1234Vill\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}/auth/login",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "login"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "resent otp",
+                    "request": {
+                        "auth": {
+                            "type": "noauth"
+                        },
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n\t\"phoneNumber\": \"+918971442342\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "https://jauunt-backend-production.up.railway.app/auth/resend_otp",
+                            "protocol": "https",
+                            "host": [
+                                "jauunt-backend-production",
+                                "up",
+                                "railway",
+                                "app"
+                            ],
+                            "path": [
+                                "auth",
+                                "resend_otp"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "verify",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MGFlZDJhOTU0YzFkNzY5ZTQ2MTU0OSIsImlhdCI6MTY3ODQzNzY3NCwiZXhwIjoxNjc4NDM4Mjc0fQ.IwmQ6cj6zBXU5kJJHJ2lKTiXl_c1A-emEJHC-PJBaMY",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFbWFpbCI6InF3ZXJ0dEBnbWFpbC5jb20iLCJGdWxsTmFtZSI6InN1Z2FtIiwiUGhvbmVOdW1iZXIiOiIrOTE4OTcxNDQyMzQyIiwiVWlkIjoiNjNmZGY4Njc3MGM2YTA3NzZmZTMxYTYwIiwiUHJvZmlsZVBob3RvIjoiIiwiVXNlclJvbGUiOiJVU0VSIiwiZXhwIjoxNjc3ODE4OTgzfQ.avi2zpmEMM5s3z5k9z4poNQcKW2ohajvJhzC0lEOaKI",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"otpNumber\":\"753424\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}/auth/verify",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "verify"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "forgot pssd req",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFbWFpbCI6Iis5MTg5NzE0NDIzNDIiLCJGdWxsTmFtZSI6InN1Z2FtIiwiUGhvbmVOdW1iZXIiOiIrOTE4OTcxNDQyMzQyIiwiVWlkIjoiNjNmZGY4Njc3MGM2YTA3NzZmZTMxYTYwIiwiVXNlclJvbGUiOiJVU0VSIiwiZXhwIjoxNjc3ODQwMTAzfQ.HlePMoLTq5TVjshhE2l1uHsJuhb8Nfnr2fXCga-5_Vs",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"phoneNumber\":\"+918971442342\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}/auth/forgotpassword",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "forgotpassword"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "frgt reset pssd",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"phoneNumber\":\"+918971442342\",\r\n    \"otp\":\"560227\",\r\n    \"password\":\"123Vill\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}/auth/resetpassword",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "resetpassword"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "reset new pssd",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MGIwMjBiNDc0YjU3OTM3OTY4MDAxYyIsImlhdCI6MTY3ODQ0MzAxOSwiZXhwIjoxNjc4NDQzNjE5fQ.2GBMr6mR0W6tRdAheP0BUZT2itt0StS9iuanAn1Ozms",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"oldPassword\": \"1234Vill\",\r\n    \"newPassword\": \"1234Vill\",\r\n    \"confirm\": \"1234Vill\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}/auth/newpassword",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "newpassword"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "renew token",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{url}}/auth/renewToken/6416fdccf7dc09677ec96b5a",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "renewToken",
+                                "6416fdccf7dc09677ec96b5a"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "exp",
+            "item": [
+                {
+                    "name": "exp utils",
+                    "item": [
+                        {
+                            "name": "Like post",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDQ2ZGE0MzQ5NGRjN2QyNDkwOTIzNCIsImlhdCI6MTY3ODIwNjc5MiwiZXhwIjoxNjc4MjkzMTkyfQ.LpCPBaPZBR9bd0X-_ocliZCeTJdzpwkyvfP1bbx8s1s",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "PUT",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{url}}/exp/like/{{expId}}",
+                                    "host": [
+                                        "{{url}}"
+                                    ],
+                                    "path": [
+                                        "exp",
+                                        "like",
+                                        "{{expId}}"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "create experience posts",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDQ2ZGE0MzQ5NGRjN2QyNDkwOTIzNCIsImlhdCI6MTY3ODIwNjc5MiwiZXhwIjoxNjc4MjkzMTkyfQ.LpCPBaPZBR9bd0X-_ocliZCeTJdzpwkyvfP1bbx8s1s",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "token",
+                                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFbWFpbCI6InF3ZXJ0QGdtYWlsLmNvbSIsIkZ1bGxOYW1lIjoidmlsbGwiLCJQaG9uZU51bWJlciI6Iis5MTg5NzE0NDIzNDEiLCJVaWQiOiI2M2ZhMGYwMjVlNWYzN2NiNjI5MDdmMWMiLCJQcm9maWxlUGhvdG8iOiIiLCJVc2VyUm9sZSI6IlVTRVIiLCJleHAiOjE2Nzc1NjI2MjZ9.1QLWRVGZE_iXZ3hHYO948cIMDZkVbKuxrQLSxxbpl64",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n\t\"placeId\": \"6418369c95fd9db730dbfd04\",\r\n\t\"location\": \"headaw\",\r\n\t\"discription\": \"hoho\",\r\n\t\"travelMode\": \"hhe\",\r\n\t\"category\": [\r\n\t\t\"dwaawd\",\r\n\t\t\"dwawa\"\r\n\t],\r\n\t\"tags\": [\r\n\t\t\"hehe\",\r\n\t\t\"hehee\"\r\n\t],\r\n\t\"groupSize\": 4,\r\n\t\"tripTime\": \"23days\",\r\n\t\"dateOfTrip\": \"32march\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}/exp/create",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "exp",
+                                "create"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get exp",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{url}}/exp/640b56391e5921443408a7e9",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "exp",
+                                "640b56391e5921443408a7e9"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get All exp",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{url}}/exp/all",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "exp",
+                                "all"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get User exp",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}/exp/user/{{userid}}",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "exp",
+                                "user",
+                                "{{userid}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Places Exp",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{url}}/exp/place/6418369c95fd9db730dbfd04",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "exp",
+                                "place",
+                                "6418369c95fd9db730dbfd04"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Experiences Posts",
+                    "request": {
+                        "method": "PUT",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "files",
+                                    "type": "file",
+                                    "src": "/C:/Users/SUGAM.KUBER/OneDrive/Desktop/git commits.jpg"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{url}}/exp/640b56391e5921443408a7e9",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "exp",
+                                "640b56391e5921443408a7e9"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Post",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{url}}/exp/{{expId}}",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "exp",
+                                "{{expId}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "places",
+            "item": [
+                {
+                    "name": "places utils",
+                    "item": [
+                        {
+                            "name": "bookmark place",
+                            "request": {
+                                "method": "PUT",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{url}}/places/bookmark/{{placeId}}",
+                                    "host": [
+                                        "{{url}}"
+                                    ],
+                                    "path": [
+                                        "places",
+                                        "bookmark",
+                                        "{{placeId}}"
+                                    ]
+                                }
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "create places",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"placeName\": \"nandi hills22222\",\r\n    \"placeLocation\": \"near bng\",\r\n    \"description\": \"heheh\",\r\n    \"transportMode\": \"bike\",\r\n    \"tripTime\": \"6hrs\",\r\n    \"bestTime\": \"mrg\",\r\n    \"groupSize\": 7,\r\n    \"category\": [\r\n        \"dwaawd\",\r\n        \"dwawa\"\r\n    ],\r\n    \"tags\": [\r\n        \"dwaawd\",\r\n        \"dwawa\"\r\n    ],\r\n    \"thingsToDo\": [\r\n        {\r\n            \"title\": \"hehe\",\r\n            \"description\": \"hahaha\"\r\n        },\r\n        {\r\n            \"title\": \"ohoh\",\r\n            \"description\": \"hahaha\"\r\n        }\r\n    ],\r\n    \"itenirary\": [\r\n        {\r\n            \"time\": \"hehe\",\r\n            \"title\": \"hahaha\",\r\n            \"subtitle\": \"hoho\",\r\n            \"description\": \"haha\"\r\n        },\r\n        {\r\n            \"time\": \"hehe2\",\r\n            \"title\": \"hahaha\",\r\n            \"subtitle\": \"hoho\",\r\n            \"description\": \"haha\"\r\n        },\r\n        {\r\n            \"time\": \"hehe3\",\r\n            \"title\": \"hahaha\",\r\n            \"subtitle\": \"hoho\",\r\n            \"description\": \"haha\"\r\n        }\r\n    ]\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}/places/create",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "places",
+                                "create"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "get all places",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{url}}/places/all",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "places",
+                                "all"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "get place",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{url}}/places/{{placeId}}",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "places",
+                                "{{placeId}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "delete place",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{url}}/places/{{placeId}}",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "places",
+                                "{{placeId}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": [
+                    {
+                        "key": "token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MTZmZGNjZjdkYzA5Njc3ZWM5NmI1YSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY3OTMwODM5OCwiZXhwIjoxNjc5Mzk0Nzk4fQ.B0P6sG505jEKr32UQ6tL5EHUEQw18wosmtJ1xRdjJeo",
+                        "type": "string"
+                    }
+                ]
+            },
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "type": "text/javascript",
+                        "exec": [
+                            ""
+                        ]
+                    }
+                },
+                {
+                    "listen": "test",
+                    "script": {
+                        "type": "text/javascript",
+                        "exec": [
+                            ""
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "plans",
+            "item": [
+                {
+                    "name": "get user plan",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{url}}/plans/all",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "plans",
+                                "all"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "get plan",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{url}}/plans/{{planId}}",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "plans",
+                                "{{planId}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "create plan",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n\t\"planName\": \"ohhehhe\",\r\n\t\"planDate\": \"12-04-2020\",\r\n\t\"peopleId\": \"\",\r\n\t\"placeId\":\"\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}/plans/create",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "plans",
+                                "create"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "delete plan",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{url}}/plans/{{planId}}",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "plans",
+                                "{{planId}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "update plan",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n\t\"planName\": \"ohhehhe\",\r\n\t\"planDate\": \"12-04-2020\",\r\n\t\"peopleId\": \"\",\r\n\t\"placeId\":\"\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}/plans/{{planId}}",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "plans",
+                                "{{planId}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "string"
+            }
+        ]
+    },
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        }
+    ],
+    "variable": [
+        {
+            "key": "url",
+            "value": "http://localhost:8080",
+            "type": "string"
+        },
+        {
+            "key": "userid",
+            "value": "63f876bac9297e2942e93629",
+            "type": "string"
+        },
+        {
+            "key": "expId",
+            "value": "64077c0d231ffde8eeb3819a",
+            "type": "string"
+        },
+        {
+            "key": "token",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MGI1MTJlMDgxNWIyZWI2MGZmYzBkOCIsImlhdCI6MTY3ODQ2MzQ3MywiZXhwIjoxNjc4NTQ5ODczfQ.Xi88oMZW3jduRg6XJyFX3-vjeB6dmTCIQJTxCExQkw8",
+            "type": "string"
+        },
+        {
+            "key": "placeId",
+            "value": "641700d7455f4d87b8837930",
+            "type": "string"
+        },
+        {
+            "key": "unfollowUserId",
+            "value": "",
+            "type": "string"
+        },
+        {
+            "key": "followUserId",
+            "value": "",
+            "type": "string"
+        }
+    ]
+}
