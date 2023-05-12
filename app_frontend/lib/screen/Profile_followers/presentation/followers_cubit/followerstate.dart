@@ -11,7 +11,7 @@ class FollowerLoading extends FollowerState {}
 
 class FollowerSuccess extends FollowerState {
   final FollowerResponse response;
-  FollowerSuccess(this.response);
+  const FollowerSuccess(this.response);
 }
 
 class FollowerError extends FollowerState {

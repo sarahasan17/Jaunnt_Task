@@ -1,8 +1,6 @@
 import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'dart:convert';
 import 'dart:developer';
 import 'package:app_frontend/constant/networktool.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,8 +13,8 @@ class FollowerRepo {
   final NetworkTool _networkInfo = NetworkInfoImpl();
   Future<Either<Failure, FollowerResponse>> follower() async {
     String token;
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    token = _prefs.getString(TOKEN_KEY) ?? "";
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString(TOKEN_KEY) ?? "";
     String request = "";
 
     if (await _networkInfo.isConnected()) {
