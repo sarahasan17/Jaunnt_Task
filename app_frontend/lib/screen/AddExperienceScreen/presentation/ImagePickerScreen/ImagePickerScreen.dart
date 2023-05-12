@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:convert';
 import 'dart:io';
 import 'package:app_frontend/constant/screen_width.dart';
