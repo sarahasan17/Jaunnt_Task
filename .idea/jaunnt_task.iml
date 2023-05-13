@@ -42,6 +42,9 @@
       <excludeFolder url="file://$MODULE_DIR$/app_frontend/linux/flutter/ephemeral/.plugin_symlinks/shared_preferences_linux/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/app_frontend/linux/flutter/ephemeral/.plugin_symlinks/shared_preferences_linux/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/app_frontend/linux/flutter/ephemeral/.plugin_symlinks/shared_preferences_linux/build" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter/main_app/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter/main_app/build" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter/main_app/.pub" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
