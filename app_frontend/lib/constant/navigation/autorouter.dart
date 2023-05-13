@@ -9,7 +9,7 @@ import 'package:app_frontend/screen/AddExperienceScreen/presentation/AddExperien
 import '../../screen/AddExperienceScreen/presentation/AddExperienceScreen.dart';
 
 class AppRouter extends _iB.RootStackRouter {
-  AppRouter([_iA.GlobalKey<_iA.NavigatorState> navigatorKey])
+  AppRouter([_iA.GlobalKey<_iA.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override

@@ -9,7 +9,7 @@ import '../../../ProfileScreen/presentation/ImagePickerScreen2/filemodel_call.da
 import '../AddExperienceScreen.dart';
 
 class ImagePickerScreen extends StatefulWidget {
-  const ImagePickerScreen({Key key}) : super(key: key);
+  const ImagePickerScreen({Key? key}) : super(key: key);
 
   @override
   State<ImagePickerScreen> createState() => _ImagePickerScreenState();
@@ -24,16 +24,16 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
     tick = List.filled(100, List.filled(10000, false));
   }
 
-  FileModel selectedModel;
-  List<FileModel> files;
+  FileModel? selectedModel;
+  List<FileModel>? files;
   getImagePath() async {
     var imagepath = await StoragePath.imagesPath;
-    var images = jsonDecode(imagepath) as List;
+    var images = jsonDecode(imagepath!) as List;
     files = images.map<FileModel>((e) => FileModel.fromJson(e)).toList();
-    if (files != null && files.isNotEmpty) {
+    if (files != null && files!.isNotEmpty) {
       setState(() {
-        selectedModel = files[0];
-        image = files[0].files[0];
+        selectedModel = files![0];
+        image = files![0].files![0];
         index = 0;
       });
     }
@@ -42,7 +42,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
   int index = 0;
   int count = 0;
   bool multiple = false;
-  String image;
+  String? image;
   List<List<bool>> tick = [[]];
   List<String> multipleimage = [];
   Widget build(BuildContext context) {
@@ -63,15 +63,15 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                     Expanded(
                       flex: 6,
                       child: DropdownButtonHideUnderline(
-                          child: DropdownButton(
+                          child: DropdownButton<dynamic>(
                         value: selectedModel,
                         items: getItems(),
                         onChanged: (d) {
                           setState(() {
-                            selectedModel = d;
-                            image = d.files[0];
-                            for (int i = 0; i < files.length; i++) {
-                              if (selectedModel == files[i]) {
+                            selectedModel = d as FileModel;
+                            image = d?.files![0];
+                            for (int i = 0; i < files!.length; i++) {
+                              if (selectedModel == files?[i]) {
                                 index = i;
                               }
                             }
@@ -115,7 +115,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                   width: s.width,
                   child: image != null
                       ? Image.file(
-                          File(image),
+                          File(image!),
                           fit: BoxFit.cover,
                           height: s.height / 2.3,
                           width: s.width,
@@ -160,7 +160,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
               SizedBox(
                 height: s.height / 150,
               ),
-              selectedModel != null && selectedModel.files.isNotEmpty
+              selectedModel != null && selectedModel!.files!.isNotEmpty
                   ? SizedBox(
                       height: s.height / 2.5,
                       child: GridView.builder(
@@ -170,7 +170,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                                 crossAxisSpacing: 1.5,
                                 mainAxisSpacing: 1.5),
                         itemBuilder: (context, i) {
-                          var file = selectedModel.files[i];
+                          var file = selectedModel?.files![i];
                           return GestureDetector(
                             child: Stack(children: [
                               Positioned(
@@ -179,7 +179,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                                 right: 0,
                                 left: 0,
                                 child: Image.file(
-                                  File(file),
+                                  File(file!),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -208,7 +208,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                                 if (multiple == true) {
                                   tick[index][i] = !tick[index][i];
                                   if (tick[index][i] == true) {
-                                    multipleimage.add(file);
+                                    multipleimage.add(file!);
                                   }
                                   if (tick[index][i] == false) {
                                     multipleimage.remove(file);
@@ -219,7 +219,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                             },
                           );
                         },
-                        itemCount: selectedModel.files.length,
+                        itemCount: selectedModel!.files!.length,
                       ),
                     )
                   : Container()
@@ -231,11 +231,12 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
   }
 
   List<DropdownMenuItem> getItems() {
+    final files = this.files;
     if (files != null) {
       return files
           .map((e) => DropdownMenuItem(
                 value: e,
-                child: Text(e.folder),
+                child: Text(e.folder!),
               ))
           .toList();
     } else {

@@ -1,25 +1,25 @@
 class FollowerResponse {
   String id;
-  List<FollowerResponse2> followers;
-  FollowerResponse({this.id, this.followers});
+  List<Followers> followers;
+  FollowerResponse({required this.id, required this.followers});
   factory FollowerResponse.fromJson(Map<String, dynamic> json) =>
       (FollowerResponse(
         id: json["_id"],
-        followers: List<FollowerResponse2>.from(
+        followers: List<Followers>.from(
             json["followers"].map((x) => FollowerResponse.fromJson(x))),
       ));
 }
 
-class FollowerResponse2 {
+class Followers {
   String fullName;
   String profilePhoto;
   String id;
-  FollowerResponse2({this.fullName, this.profilePhoto, this.id});
-  factory FollowerResponse2.fromJson(Map<String, dynamic> json) =>
-      (FollowerResponse2(
-          fullName: json["fullName"],
-          profilePhoto: json["profilePhoto"],
-          id: json["_id"]));
+  Followers(
+      {required this.fullName, required this.profilePhoto, required this.id});
+  factory Followers.fromJson(Map<String, dynamic> json) => (Followers(
+      fullName: json["fullName"],
+      profilePhoto: json["profilePhoto"],
+      id: json["_id"]));
   Map<String, dynamic> toJson() => {
         "fullName": fullName,
         "profilePhoto": profilePhoto,

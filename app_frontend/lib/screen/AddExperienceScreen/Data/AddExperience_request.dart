@@ -1,23 +1,23 @@
 class AddExperienceRequest {
-  String placeId;
+  String? placeId;
   String location;
   String description;
   String travelMode;
-  List<String> category;
-  List<String> tags;
+  List<String>? category;
+  List<String>? tags;
   int groupSize;
   String tripTime;
   String dateOfTrip;
   AddExperienceRequest(
       {this.placeId,
-      this.location,
-      this.description,
-      this.travelMode,
+      required this.location,
+      required this.description,
+      required this.travelMode,
       this.category,
       this.tags,
-      this.groupSize,
-      this.tripTime,
-      this.dateOfTrip});
+      required this.groupSize,
+      required this.tripTime,
+      required this.dateOfTrip});
   factory AddExperienceRequest.fromJson(Map<String, dynamic> json) =>
       AddExperienceRequest(
           placeId: json["placeId"],

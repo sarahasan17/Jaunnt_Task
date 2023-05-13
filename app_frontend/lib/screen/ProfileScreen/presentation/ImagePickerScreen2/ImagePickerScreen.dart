@@ -9,7 +9,7 @@ import '../../../../constant/hive.dart';
 import '../../../AddExperienceScreen/presentation/ImagePickerScreen/filemodel_call.dart';
 
 class ImagePickerScreen2 extends StatefulWidget {
-  const ImagePickerScreen2({Key key}) : super(key: key);
+  const ImagePickerScreen2({Key? key}) : super(key: key);
 
   @override
   State<ImagePickerScreen2> createState() => _ImagePickerScreen2State();
@@ -23,16 +23,16 @@ class _ImagePickerScreen2State extends State<ImagePickerScreen2> {
     getImagePath();
   }
 
-  FileModel selectedModel;
-  List<FileModel> files;
+  FileModel? selectedModel;
+  List<FileModel>? files;
   getImagePath() async {
     var imagepath = await StoragePath.imagesPath;
-    var images = jsonDecode(imagepath) as List;
+    var images = jsonDecode(imagepath!) as List;
     files = images.map<FileModel>((e) => FileModel.fromJson(e)).toList();
-    if (files != null && files.length > 0) {
+    if (files != null && files!.length > 0) {
       setState(() {
-        selectedModel = files[0];
-        image = files[0].files[0];
+        selectedModel = files![0];
+        image = files![0].files![0];
         index = 0;
       });
     }
@@ -40,7 +40,7 @@ class _ImagePickerScreen2State extends State<ImagePickerScreen2> {
 
   int index = 0;
   int count = 0;
-  String image;
+  String? image;
   Widget build(BuildContext context) {
     ScreenWidth s = ScreenWidth(context);
     ThemeHelper theme = ThemeHelper();
@@ -68,8 +68,8 @@ class _ImagePickerScreen2State extends State<ImagePickerScreen2> {
                           setState(() {
                             selectedModel = d;
                             image = d.files[0];
-                            for (int i = 0; i < files.length; i++) {
-                              if (selectedModel == files[i]) {
+                            for (int i = 0; i < files!.length; i++) {
+                              if (selectedModel == files![i]) {
                                 index = i;
                               }
                             }
@@ -103,7 +103,7 @@ class _ImagePickerScreen2State extends State<ImagePickerScreen2> {
                     width: s.width,
                     child: image != null
                         ? Image.file(
-                            File(image),
+                            File(image!),
                             fit: BoxFit.cover,
                             height: s.height / 2.3,
                             width: s.width,
@@ -114,7 +114,7 @@ class _ImagePickerScreen2State extends State<ImagePickerScreen2> {
                 SizedBox(
                   height: s.height / 150,
                 ),
-                selectedModel != null && selectedModel.files.isNotEmpty
+                selectedModel != null && selectedModel!.files!.isNotEmpty
                     ? SizedBox(
                         height: s.height / 2.5,
                         child: GridView.builder(
@@ -124,7 +124,7 @@ class _ImagePickerScreen2State extends State<ImagePickerScreen2> {
                                   crossAxisSpacing: 1.5,
                                   mainAxisSpacing: 1.5),
                           itemBuilder: (context, i) {
-                            var file = selectedModel.files[i];
+                            var file = selectedModel!.files![i];
                             return GestureDetector(
                               child: Stack(children: [
                                 Positioned(
@@ -145,7 +145,7 @@ class _ImagePickerScreen2State extends State<ImagePickerScreen2> {
                               },
                             );
                           },
-                          itemCount: selectedModel.files.length,
+                          itemCount: selectedModel!.files!.length,
                         ),
                       )
                     : Container()
@@ -158,11 +158,12 @@ class _ImagePickerScreen2State extends State<ImagePickerScreen2> {
   }
 
   List<DropdownMenuItem> getItems() {
+    final files = this.files;
     if (files != null) {
       return files
           .map((e) => DropdownMenuItem(
                 value: e,
-                child: Text(e.folder),
+                child: Text(e.folder!),
               ))
           .toList();
     } else {

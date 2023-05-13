@@ -4,15 +4,15 @@ import '../../../constant/theme/themehelper.dart';
 
 class Planner extends StatefulWidget {
   Planner(
-      {Key key,
-      this.s,
-      this.theme,
-      this.asset,
-      this.question,
-      this.count,
-      this.unit,
-      this.controller,
-      this.globalKey})
+      {Key? key,
+      required this.s,
+      required this.theme,
+      required this.asset,
+      required this.question,
+      required this.count,
+      required this.unit,
+      required this.controller,
+      required this.globalKey})
       : super(key: key);
 
   final ScreenWidth s;

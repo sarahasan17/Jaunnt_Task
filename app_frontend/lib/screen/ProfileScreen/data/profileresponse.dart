@@ -18,24 +18,24 @@ class ProfileResponse {
   String updatedAt;
   int v;
   ProfileResponse(
-      {this.id,
-      this.fullName,
-      this.phoneNumber,
-      this.email,
-      this.userRole,
-      this.isVerified,
-      this.profilePhoto,
-      this.bookMarks,
-      this.createdAt,
-      this.followers,
-      this.followersCount,
-      this.following,
-      this.followingCount,
-      this.isActive,
-      this.posts,
-      this.updatedAt,
-      this.v,
-      this.verifyOtp});
+      {required this.id,
+      required this.fullName,
+      required this.phoneNumber,
+      required this.email,
+      required this.userRole,
+      required this.isVerified,
+      required this.profilePhoto,
+      required this.bookMarks,
+      required this.createdAt,
+      required this.followers,
+      required this.followersCount,
+      required this.following,
+      required this.followingCount,
+      required this.isActive,
+      required this.posts,
+      required this.updatedAt,
+      required this.v,
+      required this.verifyOtp});
   factory ProfileResponse.fromJson(Map<String, dynamic> json) => ProfileResponse(
       id: json["_id"],
       fullName: json["fullName"],
@@ -55,7 +55,8 @@ class ProfileResponse {
       posts: json["posts"],
       updatedAt: json["updatedAt"],
       verifyOtp: json["verifyOtp"],
-      v: json["__v"]);
+      v: json["__v"],
+      bookMarks: ["bookMarks"]);
   Map<String, dynamic> toJson() => {
         "_id": id,
         "fullName": fullName,

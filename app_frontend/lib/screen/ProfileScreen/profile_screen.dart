@@ -13,7 +13,7 @@ import '../../constant/loading_widget.dart';
 import 'EditProfile/Presentation/cubit/EditProfileCubit.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key key}) : super(key: key);
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -29,11 +29,11 @@ class _ProfileScreenState extends State<ProfileScreen>
   TextEditingController edit_name = TextEditingController();
   TextEditingController edit_bio = TextEditingController();
   @override
-  String edit_name1;
-  String edit_bio1;
+  String? edit_name1;
+  String? edit_bio1;
   @override
   int val = 10;
-  String image;
+  String? image;
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -71,11 +71,15 @@ class _ProfileScreenState extends State<ProfileScreen>
                                 ErrorPopup(context, state.msg);
                               }
                               if (state is EditProfileSuccess) {
+                                const SnackBar(
+                                  content: Text('Profile Updated Successfully'),
+                                  backgroundColor: Colors.green,
+                                );
                                 //context.router.popAndPush(const LoginScreen());
                               }
                             }, builder: (context, state) {
                               if (state is EditProfileLoading) {
-                                print('please wait..');
+                                return const LoadingWidget();
                               }
                               return Stack(
                                 children: [
@@ -92,7 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                         const ImagePickerScreen2()));
                                           }
                                         },
-                                        child: Container(
+                                        child: SizedBox(
                                           height: 100,
                                           width: 100,
                                           child: ClipRRect(
@@ -152,29 +156,27 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           ? SizedBox(
                                               height: s.height / 25,
                                               width: s.width / 1.7,
-                                              child: Container(
-                                                child: TextFormField(
-                                                  style: theme.font2,
-                                                  controller: edit_bio,
-                                                  key: _edit_bioFormKey,
-                                                  textAlign: TextAlign.start,
-                                                  cursorColor:
-                                                      theme.buttoncolor,
-                                                  decoration: InputDecoration(
-                                                      contentPadding:
-                                                          const EdgeInsets
-                                                                  .symmetric(
-                                                              horizontal: 0,
-                                                              vertical: 0),
-                                                      hintText: edit_bio1,
-                                                      hintStyle: theme.font2),
-                                                ),
+                                              child: TextFormField(
+                                                style: theme.font2,
+                                                controller: edit_bio,
+                                                key: _edit_bioFormKey,
+                                                textAlign: TextAlign.start,
+                                                cursorColor:
+                                                    theme.buttoncolor,
+                                                decoration: InputDecoration(
+                                                    contentPadding:
+                                                        const EdgeInsets
+                                                                .symmetric(
+                                                            horizontal: 0,
+                                                            vertical: 0),
+                                                    hintText: edit_bio1,
+                                                    hintStyle: theme.font2),
                                               ),
                                             )
                                           : Container(
                                               width: s.width / 1.7,
                                               child: Text(
-                                                edit_bio1,
+                                                edit_bio1!,
                                                 style: theme.font2
                                                     .copyWith(fontSize: 14),
                                               ),
@@ -204,7 +206,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                            const ProfileFollowersScreen()));
+                                                            ProfileFollowersScreen(
+                                                              initialIndex: 0,
+                                                            )));
                                               },
                                               child: Column(
                                                 mainAxisAlignment:
@@ -225,23 +229,34 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                 ],
                                               ),
                                             ),
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  profile.followersCount
-                                                      .toString(),
-                                                  style: theme.font3,
-                                                ),
-                                                SizedBox(
-                                                  height: s.height / 300,
-                                                ),
-                                                Text(
-                                                  'Followers',
-                                                  style: theme.font4,
-                                                )
-                                              ],
+                                            GestureDetector(
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ProfileFollowersScreen(
+                                                              initialIndex: 1,
+                                                            )));
+                                              },
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    profile.followersCount
+                                                        .toString(),
+                                                    style: theme.font3,
+                                                  ),
+                                                  SizedBox(
+                                                    height: s.height / 300,
+                                                  ),
+                                                  Text(
+                                                    'Followers',
+                                                    style: theme.font4,
+                                                  )
+                                                ],
+                                              ),
                                             ),
                                             Column(
                                               mainAxisAlignment:
@@ -273,7 +288,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                               image = mybox.get(4);
                                               BlocProvider.of<EditProfileCubit>(
                                                       context)
-                                                  .editprofile(File(image),
+                                                  .editprofile(File(image!),
                                                       edit_bio.text);
                                             }
                                             edit = !edit;
@@ -363,7 +378,7 @@ class _ProfileScreenState extends State<ProfileScreen>
 }
 
 class TabBars extends StatelessWidget {
-  TabBars({Key key, this.part}) : super(key: key);
+  TabBars({Key? key, required this.part}) : super(key: key);
   String part;
   @override
   Widget build(BuildContext context) {

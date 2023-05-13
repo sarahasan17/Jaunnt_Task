@@ -17,7 +17,7 @@ import 'dart:io';
 import 'cubits/EditExperience/EditExperience_cubit.dart';
 
 class AddExperienceScreen extends StatefulWidget {
-  const AddExperienceScreen({Key key}) : super(key: key);
+  const AddExperienceScreen({Key? key}) : super(key: key);
 
   @override
   State<AddExperienceScreen> createState() => _AddExperienceScreenState();
@@ -60,10 +60,10 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
   }
 
   List<String> multipleimage = [];
-  bool multiple;
-  String searchdata;
+  bool multiple = false;
+  String? searchdata;
   DateTime selectedDate = DateTime.now();
-  String image;
+  String? image;
   datepicker() async {
     showDatePicker(
       context: context,
@@ -84,12 +84,12 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
               ),
             ),
           ),
-          child: child,
+          child: child!,
         );
       },
     ).then((value) {
       setState(() {
-        selectedDate = value;
+        selectedDate = value!;
       });
     });
   }
@@ -190,7 +190,7 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                                                                         .isNotEmpty
                                                                 ? multipleimage[
                                                                     0]
-                                                                : image,
+                                                                : image!,
                                                           ),
                                                           fit: BoxFit.cover,
                                                         ),
@@ -394,15 +394,17 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                                       child: Column(
                                         children: [
                                           Planner(
-                                              controller: hour,
-                                              s: s,
-                                              key: _hourFormKey,
-                                              theme: theme,
-                                              unit: 'hours',
-                                              count: count1,
-                                              question: 'Total trip time?',
-                                              asset:
-                                                  'assets/images/Inner Plugin Iframe.png'),
+                                            controller: hour,
+                                            s: s,
+                                            key: _hourFormKey,
+                                            theme: theme,
+                                            unit: 'hours',
+                                            count: count1,
+                                            question: 'Total trip time?',
+                                            asset:
+                                                'assets/images/Inner Plugin Iframe.png',
+                                            globalKey: _hourFormKey,
+                                          ),
                                           SizedBox(
                                             height: s.height / 40,
                                           ),
@@ -555,7 +557,7 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
 
                                     BlocProvider.of<EditExperienceCubit>(
                                             context)
-                                        .editexp(File(image));
+                                        .editexp(File(image!));
                                     BlocProvider.of<AddExperienceCubit>(context)
                                         .addexp(AddExperienceRequest(
                                             location: place.text,

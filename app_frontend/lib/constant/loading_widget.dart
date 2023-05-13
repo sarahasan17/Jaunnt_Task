@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class LoadingWidget extends StatelessWidget {
   const LoadingWidget({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -16,7 +16,7 @@ class LoadingWidget extends StatelessWidget {
         height: s.sheight(3),
         width: s.swidth(6),
         child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(
+          valueColor: AlwaysStoppedAnimation<Color?>(
               Color.lerp(theme.buttoncolor, theme.followbackgroundcolor, 0.5)),
         ),
       ),

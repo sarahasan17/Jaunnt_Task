@@ -3,9 +3,9 @@ import '../../../constant/theme/themehelper.dart';
 
 class TextFieldWidget extends StatefulWidget {
   TextFieldWidget({
-    Key key,
-    @required this.place,
-    @required this.theme,
+    Key? key,
+    required this.place,
+    required this.theme,
   }) : super(key: key);
   TextEditingController place;
   final ThemeHelper theme;
@@ -52,7 +52,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   }
 
   final layerLink = LayerLink();
-  OverlayEntry entry;
+  OverlayEntry? entry;
   final focusnode = FocusNode();
   void showOverlay() {
     setState(() {
@@ -68,7 +68,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                   showWhenUnlinked: false,
                   link: layerLink,
                   child: buildOverlay())));
-      overlay.insert(entry);
+      overlay.insert(entry!);
     });
   }
 

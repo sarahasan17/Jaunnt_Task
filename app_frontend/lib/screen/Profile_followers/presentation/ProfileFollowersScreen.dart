@@ -9,7 +9,8 @@ import 'followers_cubit/followercubit.dart';
 import 'following_cubit/followingcubit.dart';
 
 class ProfileFollowersScreen extends StatefulWidget {
-  const ProfileFollowersScreen({Key key}) : super(key: key);
+  int initialIndex;
+  ProfileFollowersScreen({Key? key, required this.initialIndex}) : super(key: key);
 
   @override
   State<ProfileFollowersScreen> createState() => _ProfileFollowersScreenState();
@@ -53,23 +54,27 @@ class _ProfileFollowersScreenState extends State<ProfileFollowersScreen>
                     color: theme.backgroundfollowercolor.withOpacity(0.7),
                     borderRadius: BorderRadius.circular(28)),
                 alignment: Alignment.topLeft,
-                child: TabBar(
-                    controller: tabcontroller,
-                    labelColor: theme.white,
-                    unselectedLabelColor: theme.white,
-                    labelPadding:
-                        EdgeInsets.symmetric(horizontal: s.width / 9.5),
-                    unselectedLabelStyle: theme.font2,
-                    labelStyle: theme.font2,
-                    isScrollable: true,
-                    indicator: BoxDecoration(
-                      color: theme.buttoncolor2,
-                      borderRadius: BorderRadius.circular(28),
-                    ),
-                    tabs: const [
-                      Tab(text: "Following"),
-                      Tab(text: "Followers"),
-                    ]),
+                child: DefaultTabController(
+                  initialIndex: widget.initialIndex,
+                  length: 2,
+                  child: TabBar(
+                      controller: tabcontroller,
+                      labelColor: theme.white,
+                      unselectedLabelColor: theme.white,
+                      labelPadding:
+                          EdgeInsets.symmetric(horizontal: s.width / 9.5),
+                      unselectedLabelStyle: theme.font2,
+                      labelStyle: theme.font2,
+                      isScrollable: true,
+                      indicator: BoxDecoration(
+                        color: theme.buttoncolor2,
+                        borderRadius: BorderRadius.circular(28),
+                      ),
+                      tabs: const [
+                        Tab(text: "Following"),
+                        Tab(text: "Followers"),
+                      ]),
+                ),
               ),
               SizedBox(
                 height: s.height / 50,
@@ -270,7 +275,7 @@ class _ProfileFollowersScreenState extends State<ProfileFollowersScreen>
 }
 
 class TabBars extends StatelessWidget {
-  const TabBars({Key key, this.data, this.count}) : super(key: key);
+  const TabBars({Key? key, required this.data, required this.count}) : super(key: key);
 
   final String data;
   final int count;

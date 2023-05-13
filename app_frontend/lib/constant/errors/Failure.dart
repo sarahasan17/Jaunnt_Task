@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Failure {
   final String message;
-  Failure({this.message});
+  Failure({required this.message});
 }
 
 class InternetFailure extends Failure {
@@ -33,7 +33,7 @@ class RequestTimeoutFailure extends Failure {
 }
 
 class UnidentifiedFailure extends Failure {
-  final String errorMessage;
+  final String? errorMessage;
   UnidentifiedFailure({this.errorMessage})
       : super(
             message:
