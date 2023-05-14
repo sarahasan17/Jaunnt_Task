@@ -36,27 +36,26 @@ class ProfileResponse {
       required this.updatedAt,
       required this.v,
       required this.verifyOtp});
-  factory ProfileResponse.fromJson(Map<String, dynamic> json) => ProfileResponse(
-      id: json["_id"],
-      fullName: json["fullName"],
-      phoneNumber: json["phoneNumber"],
-      email: json["email"],
-      userRole: json["userRole"],
-      isVerified: json["isVerified"],
-      profilePhoto: json["profilePhoto"],
-      /**bookMarks: List<String>.from(
-              json["bookMarks"].map((x) => String.fromJson(x))),**/
-      createdAt: json["createdAt"],
-      followers: json["followers"],
-      followersCount: json["followersCount"],
-      following: json["following"],
-      followingCount: json["followingCount"],
-      isActive: json["isActive"],
-      posts: json["posts"],
-      updatedAt: json["updatedAt"],
-      verifyOtp: json["verifyOtp"],
-      v: json["__v"],
-      bookMarks: ["bookMarks"]);
+  factory ProfileResponse.fromJson(Map<String, dynamic> json) =>
+      ProfileResponse(
+          id: json["_id"],
+          fullName: json["fullName"],
+          phoneNumber: json["phoneNumber"],
+          email: json["email"],
+          userRole: json["userRole"],
+          isVerified: json["isVerified"],
+          profilePhoto: json["profilePhoto"],
+          createdAt: json["createdAt"],
+          followers: json["followers"],
+          followersCount: json["followersCount"],
+          following: json["following"],
+          followingCount: json["followingCount"],
+          isActive: json["isActive"],
+          posts: json["posts"],
+          updatedAt: json["updatedAt"],
+          verifyOtp: json["verifyOtp"],
+          v: json["__v"],
+          bookMarks: ["bookMarks"]);
   Map<String, dynamic> toJson() => {
         "_id": id,
         "fullName": fullName,
@@ -65,7 +64,6 @@ class ProfileResponse {
         "userRole": userRole,
         "isVerified": isVerified,
         "profilePhoto": profilePhoto,
-        /**"bookMarks": List<dynamic>.from(bookMarks.map((x) => x.toJson())),**/
         "createdAt": createdAt,
         "followers": followers,
         "followersCount": followersCount,

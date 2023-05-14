@@ -10,6 +10,7 @@ class ThemeHelper {
   Color profilebuttoncolor = const Color(0xFFFF9878);
   Color backgroundfollowercolor = const Color(0xFF6C95A2);
   Color buttoncolor2 = const Color(0xFF366B7E);
+  Color transparentcolor = const Color(0xFF000000);
   final TextStyle font1 = const TextStyle(
       fontFamily: 'Raleway',
       color: Color(0xFF3D405B),
@@ -35,5 +36,16 @@ class ThemeHelper {
       color: Color(0xFF3D405B),
       fontSize: 13,
       fontWeight: FontWeight.w700);
+  final TextStyle font6 = const TextStyle(
+      fontFamily: 'Inter',
+      color: Color(0xFF3D405B),
+      fontSize: 12,
+      fontWeight: FontWeight.w100);
+  final TextStyle font7 = const TextStyle(
+      fontFamily: 'Poppins',
+      color: Color(0xFF00425A),
+      fontSize: 14,
+      fontWeight: FontWeight.w400);
   Color buttoncolor = const Color(0xFF00425A);
+  Color searchcolor = const Color(0xFF00425A);
 }

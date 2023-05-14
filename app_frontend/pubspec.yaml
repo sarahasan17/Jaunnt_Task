@@ -12,7 +12,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  dots_indicator: ^2.1.0
   auto_route: ^3.2.2
   bloc: ^8.0.2
   connectivity: ^3.0.6
@@ -50,6 +50,12 @@ flutter:
     - family: Raleway_main
       fonts:
         - asset: assets/font/Raleway.ttf
+    - family: Inter
+      fonts:
+        - asset: assets/font/Inter-Medium.ttf
+    - family: Poppins
+      fonts:
+        - asset: assets/font/PoppinsRegular.ttf
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
