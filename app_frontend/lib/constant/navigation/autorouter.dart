@@ -5,7 +5,7 @@ import 'package:flutter/material.dart' as _iA;
 import 'package:auto_route/auto_route.dart' as _iB;
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/AddExperienceScreen.dart'
     as _i1;
-import 'package:app_frontend/screen/HomeScreen/presentation/pages/HomeScreen.dart'
+import 'package:app_frontend/screen/Explore/presentation/pages/ExploreScreen.dart'
     as _i4;
 
 class AppRouter extends _iB.RootStackRouter {
@@ -67,7 +67,7 @@ class ProfileScreen extends _iB.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i4.HomeScreen]
+/// [_i4.Explore]
 class HomeScreen extends _iB.PageRouteInfo<void> {
   const HomeScreen() : super(HomeScreen.name, path: '/home');
 

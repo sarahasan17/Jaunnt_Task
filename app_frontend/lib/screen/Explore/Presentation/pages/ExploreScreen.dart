@@ -1,3 +1,4 @@
+import 'package:app_frontend/screen/Explore/Presentation/pages/textfieldwidget.dart';
 import 'package:flutter/material.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import '../../../../constant/screen_width.dart';
@@ -11,12 +12,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  TextEditingController type = TextEditingController();
   List<String> image = [
     "himanshu-choudhary-I0RsGcZIxMU-unsplash 3.png",
     "image 1.png"
   ];
   List<bool> bookmark = List.filled(10000, false);
-
+  RangeValues values1 = const RangeValues(1, 24);
+  RangeValues values2 = const RangeValues(1, 20);
   bool filter = false;
   @override
   int _activepage = 0;
@@ -193,13 +196,114 @@ class _HomeScreenState extends State<HomeScreen> {
                       ? Colors.grey.withOpacity(0.5)
                       : Colors.transparent,
                   child: Container(
+                    padding: const EdgeInsets.all(15.0),
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(25),
                           topRight: Radius.circular(25)),
                       color: Colors.white,
                     ),
-                    height: 400,
+                    height: s.height / 2.5,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(
+                              'Trip Type:',
+                              style: theme.font8,
+                            ),
+                            SizedBox(height: s.height / 100),
+                            TextFieldWidget2(theme: theme, type: type),
+                            SizedBox(height: s.height / 80),
+                            Divider(
+                              color: theme.searchcolor,
+                              thickness: 0.3,
+                            ),
+                            SizedBox(height: s.height / 200),
+                            Text('Trip Time:', style: theme.font8),
+                            SizedBox(height: s.height / 100),
+                            RangeSlider(
+                                values: values1,
+                                min: 1,
+                                max: 24,
+                                divisions: 12,
+                                activeColor: theme.searchcolor,
+                                inactiveColor: theme.selectbackgroundcolor,
+                                labels: RangeLabels(
+                                    values1.start.round().toString(),
+                                    values1.end.round().toString()),
+                                onChanged: (value) {
+                                  setState(() {
+                                    this.values1 = value;
+                                  });
+                                }),
+                            Divider(
+                              color: theme.searchcolor,
+                              thickness: 0.3,
+                            ),
+                            SizedBox(height: s.height / 200),
+                            Text('Distance:', style: theme.font8),
+                            SizedBox(height: s.height / 100),
+                            RangeSlider(
+                                values: values2,
+                                min: 1,
+                                max: 20,
+                                divisions: 10,
+                                activeColor: theme.searchcolor,
+                                inactiveColor: theme.selectbackgroundcolor,
+                                labels: RangeLabels(
+                                    values2.start.round().toString(),
+                                    values2.end.round().toString()),
+                                onChanged: (value) {
+                                  setState(() {
+                                    this.values2 = value;
+                                  });
+                                }),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: () => setState(() {
+                                filter = !filter;
+                              }),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: theme.selectbackgroundcolor,
+                                    borderRadius: BorderRadius.circular(7.0)),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 7, horizontal: 12),
+                                child: Text(
+                                  'Cancel',
+                                  style: theme.font8.copyWith(fontSize: 17),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 15,
+                            ),
+                            GestureDetector(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: theme.searchcolor,
+                                    borderRadius: BorderRadius.circular(6.0)),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 7, horizontal: 14),
+                                child: Text(
+                                  'Apply',
+                                  style: theme.font8.copyWith(
+                                      fontSize: 17,
+                                      color: theme.selectbackgroundcolor),
+                                ),
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 )
               : SizedBox(),
