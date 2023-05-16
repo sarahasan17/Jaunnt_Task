@@ -23,6 +23,61 @@ class _HomeScreenState extends State<HomeScreen> {
   bool filter = false;
   @override
   int _activepage = 0;
+  List<String> text = ['', '', '', '', ''];
+  List<String> text1 = ['trending', 'popular'];
+  static List<String> items = [
+    'Nandi Hills',
+    'Agra Fort',
+    'Ooty',
+    'lucknow',
+    'Wonderla',
+    'Imagicaa'
+  ];
+  List<String> getItems = List.from(items);
+  void searchplace(
+      String query, int trip_time, int distance, List<String> text1) {
+    setState(() {
+      if (query == '') {
+        getItems = List.from(items);
+      } else {
+        if (trip_time >= values1.start.round() &&
+            trip_time <= values1.end.round() &&
+            distance >= values2.start.round() &&
+            distance <= values2.end.round()) {
+          print(values1.start.round());
+          print(values1.end.round());
+          int a = text1.length;
+          int c = text.length;
+          for (int i = 0; i < text.length; i++) {
+            if (text[i] == '') {
+              c = c - 1;
+            }
+          }
+          int b = 0;
+          for (int i = 0; i < a; i++) {
+            for (int j = 0; j < c; j++) {
+              if (text1[i] == text[j]) {
+                b = b + 1;
+              }
+            }
+          }
+          if (b == c) {
+            getItems = items
+                .where((element) =>
+                    element.toLowerCase().contains(query.toLowerCase()))
+                .toList();
+          } else {
+            getItems = [];
+          }
+        } else {
+          getItems = [];
+        }
+      }
+    });
+  }
+
+  int distance = 9;
+  int trip = 8;
   final GlobalKey<FormFieldState> _searchkey = GlobalKey<FormFieldState>();
   TextEditingController search = TextEditingController();
   @override
@@ -48,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color:
                     filter ? Colors.grey.withOpacity(0.5) : Colors.transparent,
                 child: ListView.builder(
-                    itemCount: 7,
+                    itemCount: getItems.length,
                     scrollDirection: Axis.vertical,
                     itemBuilder: (BuildContext context, int index) {
                       int i = index;
@@ -123,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       .spaceBetween,
                                               children: [
                                                 Text(
-                                                  'Nandi Hills',
+                                                  getItems[i],
                                                   style: theme.font3.copyWith(
                                                       color: Colors.white,
                                                       fontSize: 18),
@@ -152,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                '9 hours trip time',
+                                                '${trip} hours trip time',
                                                 style: theme.font6.copyWith(
                                                     color: Colors.white),
                                               ),
@@ -162,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     color: Colors.white),
                                               ),
                                               Text(
-                                                '40 km from you',
+                                                '${distance} km from you',
                                                 style: theme.font6.copyWith(
                                                     color: Colors.white),
                                               ),
@@ -172,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     color: Colors.white),
                                               ),
                                               Text(
-                                                'Popular, Trending',
+                                                '${text1[0]}, ${text1[1]}',
                                                 style: theme.font6.copyWith(
                                                     color: Colors.white),
                                               ),
@@ -215,7 +270,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: theme.font8,
                             ),
                             SizedBox(height: s.height / 100),
-                            TextFieldWidget2(theme: theme, type: type),
+                            TextFieldWidget2(text: text, theme: theme),
                             SizedBox(height: s.height / 80),
                             Divider(
                               color: theme.searchcolor,
@@ -269,6 +324,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             GestureDetector(
                               onTap: () => setState(() {
                                 filter = !filter;
+                                search.text = '';
+                                getItems = List.from(items);
                               }),
                               child: Container(
                                 decoration: BoxDecoration(
@@ -286,6 +343,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               width: 15,
                             ),
                             GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  filter = !filter;
+                                  searchplace(
+                                      search.text, trip, distance, text1);
+                                });
+                              },
                               child: Container(
                                 decoration: BoxDecoration(
                                     color: theme.searchcolor,
@@ -345,7 +409,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 hintText: "Where do you want to go",
                                 hintStyle: theme.font7),
                             onChanged: (value) {
-                              setState(() {});
+                              setState(() {
+                                searchplace(value, trip, distance, text1);
+                              });
                             },
                             /*validator: (text) {
                             if (text == null || text.isEmpty) {

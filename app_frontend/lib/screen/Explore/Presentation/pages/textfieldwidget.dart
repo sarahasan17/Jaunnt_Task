@@ -8,11 +8,11 @@ import '../../../../constant/theme/themehelper.dart';
 class TextFieldWidget2 extends StatefulWidget {
   TextFieldWidget2({
     Key? key,
-    required this.type,
+    required this.text,
     required this.theme,
   }) : super(key: key);
-  TextEditingController type;
   final ThemeHelper theme;
+  List<String> text;
 
   @override
   State<TextFieldWidget2> createState() => _TextFieldWidget2State();
@@ -37,8 +37,8 @@ class _TextFieldWidget2State extends State<TextFieldWidget2> {
   @override
   static List<String> items = [
     'Trek',
-    'Item2',
-    'Item3',
+    'trending',
+    'popular',
     'Item4',
     'Item5',
     'Item6',
@@ -48,15 +48,19 @@ class _TextFieldWidget2State extends State<TextFieldWidget2> {
   List<String> getItems = List.from(items);
   void searchBook(String query) {
     setState(() {
-      getItems = items
-          .where(
-              (element) => element.toLowerCase().contains(query.toLowerCase()))
-          .toList();
+      if (query != '') {
+        getItems = items
+            .where((element) =>
+                element.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      } else {
+        getItems = items;
+      }
     });
   }
 
+  TextEditingController type = TextEditingController();
   bool willcheck = false;
-  List<String> text = ['', '', '', '', ''];
   int count1 = 0;
   final layerLink = LayerLink();
   OverlayEntry? entry;
@@ -89,62 +93,53 @@ class _TextFieldWidget2State extends State<TextFieldWidget2> {
     ScreenWidth s = ScreenWidth(context);
     return Material(
       child: Container(
-        height: 200,
-        width: s.width / 1.25,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5.0),
-          color: ThemeHelper().white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 3,
-              blurRadius: 3,
-              offset: const Offset(0, 0), // changes position of shadow
-            ),
-          ],
-        ),
-        child: getItems.isNotEmpty
-            ? ListView.builder(
-                padding: const EdgeInsets.only(top: 5.0),
-                itemCount: getItems.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    padding:
-                        const EdgeInsets.only(top: 5, bottom: 10, left: 10),
-                    child: GestureDetector(
-                      onTap: () {
-                        for (int i = 0; i < count1; i++) {
-                          if (getItems[index] == text[i]) {
-                            willcheck = true;
-                          }
-                        }
-                        if (willcheck == false) {
-                          text[count1] = getItems[index];
-                          setState(() {
-                            count1 = count1 + 1;
-                          });
-                        } else {
-                          print('match found');
-                        }
-                        willcheck = false;
-                        //hideOverlay();
-                        //focusnode.unfocus();
-                      },
-                      child: Text(
-                        getItems[index],
-                        style: ThemeHelper().font2,
-                      ),
-                    ),
-                  );
-                })
-            : Container(
-                padding: const EdgeInsets.only(top: 5, bottom: 10, left: 10),
-                child: Text(
-                  'Add Trip type \'${widget.type.text}\'',
-                  style: ThemeHelper().font8,
-                ),
+          height: 200,
+          width: s.width / 1.25,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5.0),
+            color: ThemeHelper().white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.2),
+                spreadRadius: 3,
+                blurRadius: 3,
+                offset: const Offset(0, 0), // changes position of shadow
               ),
-      ),
+            ],
+          ),
+          child: ListView.builder(
+              padding: const EdgeInsets.only(top: 5.0),
+              itemCount: getItems.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  padding: const EdgeInsets.only(top: 5, bottom: 10, left: 10),
+                  child: GestureDetector(
+                    onTap: () {
+                      for (int i = 0; i < count1; i++) {
+                        if (getItems[index] == widget.text[i]) {
+                          willcheck = true;
+                        }
+                      }
+                      if (willcheck == false) {
+                        widget.text[count1] = getItems[index];
+                        setState(() {
+                          count1 = count1 + 1;
+                          type.text = '';
+                        });
+                      } else {
+                        print('match found');
+                      }
+                      willcheck = false;
+                      //hideOverlay();
+                      //focusnode.unfocus();
+                    },
+                    child: Text(
+                      getItems[index],
+                      style: ThemeHelper().font2,
+                    ),
+                  ),
+                );
+              })),
     );
   }
 
@@ -177,7 +172,7 @@ class _TextFieldWidget2State extends State<TextFieldWidget2> {
                             itemCount: count1,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (BuildContext context, int index) {
-                              if (text.length > index) {
+                              if (widget.text.length > index) {
                                 return Container(
                                     margin: const EdgeInsets.all(4),
                                     padding: const EdgeInsets.symmetric(
@@ -191,7 +186,7 @@ class _TextFieldWidget2State extends State<TextFieldWidget2> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          text[index],
+                                          widget.text[index],
                                           style: theme.font8
                                               .copyWith(fontSize: 12),
                                         ),
@@ -205,9 +200,10 @@ class _TextFieldWidget2State extends State<TextFieldWidget2> {
                                                 for (int i = index;
                                                     i < count1;
                                                     i++) {
-                                                  text[i] = text[i + 1];
+                                                  widget.text[i] =
+                                                      widget.text[i + 1];
                                                 }
-                                                text[count1] = '';
+                                                widget.text[count1] = '';
                                               });
                                             },
                                             child: CircleAvatar(
@@ -239,7 +235,7 @@ class _TextFieldWidget2State extends State<TextFieldWidget2> {
                             focusNode: focusnode,
                             textAlign: TextAlign.start,
                             cursorColor: widget.theme.borderColor,
-                            controller: widget.type,
+                            controller: type,
                             decoration: const InputDecoration(
                               border: InputBorder.none,
                             ),
