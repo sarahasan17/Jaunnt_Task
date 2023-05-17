@@ -14,8 +14,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController type = TextEditingController();
   List<String> image = [
-    "himanshu-choudhary-I0RsGcZIxMU-unsplash 3.png",
-    "image 1.png"
+    "image_1.png",
+    "review3.png",
+    "VIT Vellore.png",
+    "mountain2.png"
   ];
   List<bool> bookmark = List.filled(10000, false);
   RangeValues values1 = const RangeValues(1, 24);
@@ -33,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
     'Wonderla',
     'Imagicaa'
   ];
+  List<int> index1 = List.filled(10, 0);
   List<String> getItems = List.from(items);
   void searchplace(
       String query, int trip_time, int distance, List<String> text1) {
@@ -76,6 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  final PageController _controller = PageController();
   int distance = 9;
   int trip = 8;
   final GlobalKey<FormFieldState> _searchkey = GlobalKey<FormFieldState>();
@@ -99,7 +103,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   : const ColorFilter.mode(
                       Colors.transparent, BlendMode.srcATop),
               child: Container(
-                height: 500,
                 color:
                     filter ? Colors.grey.withOpacity(0.5) : Colors.transparent,
                 child: ListView.builder(
@@ -109,30 +112,41 @@ class _HomeScreenState extends State<HomeScreen> {
                       int i = index;
                       return Container(
                         margin: const EdgeInsets.all(10.0),
-                        height: 220,
-                        width: double.maxFinite / 1.3,
+                        height: 217,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25.0),
+                          borderRadius: BorderRadius.circular(20.0),
                         ),
-                        child: PageView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: image.length,
-                            onPageChanged: (int page) {
-                              setState(() {
-                                _activepage = page;
-                              });
-                            },
-                            itemBuilder: (_, index) {
-                              return Container(
+                        child: Stack(
+                          children: [
+                            Positioned.fill(
+                              child: PageView.builder(
+                                  controller: _controller,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: image.length,
+                                  onPageChanged: (int page) {
+                                    setState(() {
+                                      _activepage = page;
+                                    });
+                                  },
+                                  itemBuilder: (_, index) {
+                                    index1[i] = index;
+                                    return ClipRRect(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      child: Image.asset(
+                                        "assets/images/${image[index]}",
+                                        fit: BoxFit.cover,
+                                      ),
+                                    );
+                                  }),
+                            ),
+                            Positioned(
+                              top: 0,
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              child: Container(
                                 padding: const EdgeInsets.only(
-                                    top: 5, left: 5, right: 5),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25.0),
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                        "assets/images/${image[index]}"),
-                                    fit: BoxFit.cover,
-                                  ),
+                                  top: 10,
                                 ),
                                 child: Column(
                                   mainAxisAlignment:
@@ -144,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       children: [
                                         DotsIndicator(
                                           dotsCount: image.length,
-                                          position: index.toDouble(),
+                                          position: index1[index].toDouble(),
                                           decorator: DotsDecorator(
                                             activeSize: const Size(15, 7),
                                             activeShape: RoundedRectangleBorder(
@@ -238,8 +252,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     )
                                   ],
                                 ),
-                              );
-                            }),
+                              ),
+                            ),
+                          ],
+                        ),
                       );
                     }),
               ),
@@ -262,61 +278,62 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text(
-                              'Trip Type:',
-                              style: theme.font8,
-                            ),
-                            SizedBox(height: s.height / 100),
-                            TextFieldWidget2(text: text, theme: theme),
-                            SizedBox(height: s.height / 80),
-                            Divider(
-                              color: theme.searchcolor,
-                              thickness: 0.3,
-                            ),
-                            SizedBox(height: s.height / 200),
-                            Text('Trip Time:', style: theme.font8),
-                            SizedBox(height: s.height / 100),
-                            RangeSlider(
-                                values: values1,
-                                min: 1,
-                                max: 24,
-                                divisions: 12,
-                                activeColor: theme.searchcolor,
-                                inactiveColor: theme.selectbackgroundcolor,
-                                labels: RangeLabels(
-                                    values1.start.round().toString(),
-                                    values1.end.round().toString()),
-                                onChanged: (value) {
-                                  setState(() {
-                                    this.values1 = value;
-                                  });
-                                }),
-                            Divider(
-                              color: theme.searchcolor,
-                              thickness: 0.3,
-                            ),
-                            SizedBox(height: s.height / 200),
-                            Text('Distance:', style: theme.font8),
-                            SizedBox(height: s.height / 100),
-                            RangeSlider(
-                                values: values2,
-                                min: 1,
-                                max: 20,
-                                divisions: 10,
-                                activeColor: theme.searchcolor,
-                                inactiveColor: theme.selectbackgroundcolor,
-                                labels: RangeLabels(
-                                    values2.start.round().toString(),
-                                    values2.end.round().toString()),
-                                onChanged: (value) {
-                                  setState(() {
-                                    this.values2 = value;
-                                  });
-                                }),
-                          ],
+                        Flexible(
+                          child: ListView(
+                            children: [
+                              Text(
+                                'Trip Type:',
+                                style: theme.font8,
+                              ),
+                              SizedBox(height: s.height / 100),
+                              TextFieldWidget2(text: text, theme: theme),
+                              SizedBox(height: s.height / 80),
+                              Divider(
+                                color: theme.searchcolor,
+                                thickness: 0.3,
+                              ),
+                              SizedBox(height: s.height / 200),
+                              Text('Trip Time:', style: theme.font8),
+                              SizedBox(height: s.height / 100),
+                              RangeSlider(
+                                  values: values1,
+                                  min: 1,
+                                  max: 24,
+                                  divisions: 12,
+                                  activeColor: theme.searchcolor,
+                                  inactiveColor: theme.selectbackgroundcolor,
+                                  labels: RangeLabels(
+                                      values1.start.round().toString(),
+                                      values1.end.round().toString()),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      values1 = value;
+                                    });
+                                  }),
+                              Divider(
+                                color: theme.searchcolor,
+                                thickness: 0.3,
+                              ),
+                              SizedBox(height: s.height / 200),
+                              Text('Distance:', style: theme.font8),
+                              SizedBox(height: s.height / 100),
+                              RangeSlider(
+                                  values: values2,
+                                  min: 1,
+                                  max: 20,
+                                  divisions: 10,
+                                  activeColor: theme.searchcolor,
+                                  inactiveColor: theme.selectbackgroundcolor,
+                                  labels: RangeLabels(
+                                      values2.start.round().toString(),
+                                      values2.end.round().toString()),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      values2 = value;
+                                    });
+                                  }),
+                            ],
+                          ),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -370,7 +387,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 )
-              : SizedBox(),
+              : const SizedBox(),
           Container(
             color: theme.backgroundColor,
             padding: const EdgeInsets.only(right: 10),

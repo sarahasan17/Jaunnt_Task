@@ -152,7 +152,7 @@ class _TextFieldWidget2State extends State<TextFieldWidget2> {
         link: layerLink,
         child: Container(
             padding: const EdgeInsets.all(0),
-            height: s.height / 25,
+            height: 34,
             width: double.maxFinite,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
@@ -258,12 +258,13 @@ class _TextFieldWidget2State extends State<TextFieldWidget2> {
                         });
                       },
                       child: Container(
-                          alignment: Alignment.topCenter,
-                          child: Icon(
-                            Icons.arrow_drop_down_rounded,
-                            color: theme.searchcolor,
-                            size: 40,
-                          )))
+                          child: Center(
+                        child: Icon(
+                          Icons.arrow_drop_down_rounded,
+                          color: theme.searchcolor,
+                          size: 40,
+                        ),
+                      )))
                 ])));
   }
 }
