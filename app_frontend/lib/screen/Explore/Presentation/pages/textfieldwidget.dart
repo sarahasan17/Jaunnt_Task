@@ -6,14 +6,15 @@ import 'package:flutter/rendering.dart';
 import '../../../../constant/theme/themehelper.dart';
 
 class TextFieldWidget2 extends StatefulWidget {
-  TextFieldWidget2({
-    Key? key,
-    required this.text,
-    required this.theme,
-  }) : super(key: key);
+  TextFieldWidget2(
+      {Key? key,
+      required this.text,
+      required this.theme,
+      required this.count_trip})
+      : super(key: key);
   final ThemeHelper theme;
   List<String> text;
-
+  int count_trip;
   @override
   State<TextFieldWidget2> createState() => _TextFieldWidget2State();
 }
@@ -125,6 +126,10 @@ class _TextFieldWidget2State extends State<TextFieldWidget2> {
                         setState(() {
                           count1 = count1 + 1;
                           type.text = '';
+                          setState(() {
+                            widget.count_trip = 1;
+                          });
+                          print(widget.count_trip);
                         });
                       } else {
                         print('match found');
@@ -205,6 +210,14 @@ class _TextFieldWidget2State extends State<TextFieldWidget2> {
                                                 }
                                                 widget.text[count1] = '';
                                               });
+                                              setState(() {
+                                                if (count1 == 0) {
+                                                  widget.count_trip = 0;
+                                                } else {
+                                                  widget.count_trip = 1;
+                                                }
+                                                print(widget.count_trip);
+                                              });
                                             },
                                             child: CircleAvatar(
                                               backgroundColor:
@@ -222,25 +235,6 @@ class _TextFieldWidget2State extends State<TextFieldWidget2> {
                                 return const SizedBox();
                               }
                             }),
-                        Container(
-                          padding: const EdgeInsets.all(4),
-                          width: s.width / 1.5,
-                          child: TextFormField(
-                            onChanged: (value) {
-                              hideOverlay();
-                              showOverlay();
-                              searchBook(value);
-                            },
-                            style: ThemeHelper().font2,
-                            focusNode: focusnode,
-                            textAlign: TextAlign.start,
-                            cursorColor: widget.theme.borderColor,
-                            controller: type,
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ),
@@ -257,14 +251,13 @@ class _TextFieldWidget2State extends State<TextFieldWidget2> {
                           }
                         });
                       },
-                      child: Container(
-                          child: Center(
+                      child: Center(
                         child: Icon(
                           Icons.arrow_drop_down_rounded,
                           color: theme.searchcolor,
                           size: 40,
                         ),
-                      )))
+                      ))
                 ])));
   }
 }

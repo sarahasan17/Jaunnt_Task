@@ -54,4 +54,5 @@ class ThemeHelper {
   Color buttoncolor = const Color(0xFF00425A);
   Color selectbackgroundcolor = const Color(0xFFD8E9EB);
   Color searchcolor = const Color(0xFF00425A);
+  Color filtercountcolor = const Color(0xFFF8A435);
 }

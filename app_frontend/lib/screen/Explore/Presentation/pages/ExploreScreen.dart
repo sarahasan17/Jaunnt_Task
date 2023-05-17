@@ -35,50 +35,52 @@ class _HomeScreenState extends State<HomeScreen> {
     'Wonderla',
     'Imagicaa'
   ];
+
   List<int> index1 = List.filled(10, 0);
   List<String> getItems = List.from(items);
   void searchplace(
       String query, int trip_time, int distance, List<String> text1) {
     setState(() {
-      if (query == '') {
-        getItems = List.from(items);
-      } else {
-        if (trip_time >= values1.start.round() &&
-            trip_time <= values1.end.round() &&
-            distance >= values2.start.round() &&
-            distance <= values2.end.round()) {
-          print(values1.start.round());
-          print(values1.end.round());
-          int a = text1.length;
-          int c = text.length;
-          for (int i = 0; i < text.length; i++) {
-            if (text[i] == '') {
-              c = c - 1;
+      if (trip_time >= values1.start.round() &&
+          trip_time <= values1.end.round() &&
+          distance >= values2.start.round() &&
+          distance <= values2.end.round()) {
+        print(values1.start.round());
+        print(values1.end.round());
+        int a = text1.length;
+        int c = text.length;
+        for (int i = 0; i < text.length; i++) {
+          if (text[i] == '') {
+            c = c - 1;
+          }
+        }
+        int b = 0;
+        for (int i = 0; i < a; i++) {
+          for (int j = 0; j < c; j++) {
+            if (text1[i] == text[j]) {
+              b = b + 1;
             }
           }
-          int b = 0;
-          for (int i = 0; i < a; i++) {
-            for (int j = 0; j < c; j++) {
-              if (text1[i] == text[j]) {
-                b = b + 1;
-              }
-            }
-          }
-          if (b == c) {
-            getItems = items
-                .where((element) =>
-                    element.toLowerCase().contains(query.toLowerCase()))
-                .toList();
-          } else {
-            getItems = [];
-          }
+        }
+        if (b == c) {
+          getItems = items
+              .where((element) =>
+                  element.toLowerCase().contains(query.toLowerCase()))
+              .toList();
         } else {
           getItems = [];
         }
+      } else {
+        getItems = [];
       }
     });
   }
 
+  bool trip_time = false;
+  bool trip_dist = false;
+  int count_trip = 0;
+  int count_filters = 0;
+  @override
   final PageController _controller = PageController();
   int distance = 9;
   int trip = 8;
@@ -231,7 +233,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     color: Colors.white),
                                               ),
                                               Text(
-                                                '${distance} km from you',
+                                                '$distance km from you',
                                                 style: theme.font6.copyWith(
                                                     color: Colors.white),
                                               ),
@@ -274,7 +276,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           topRight: Radius.circular(25)),
                       color: Colors.white,
                     ),
-                    height: s.height / 2.5,
+                    height: s.height / 2.6,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -286,7 +288,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 style: theme.font8,
                               ),
                               SizedBox(height: s.height / 100),
-                              TextFieldWidget2(text: text, theme: theme),
+                              TextFieldWidget2(
+                                text: text,
+                                theme: theme,
+                                count_trip: count_trip,
+                              ),
                               SizedBox(height: s.height / 80),
                               Divider(
                                 color: theme.searchcolor,
@@ -308,6 +314,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onChanged: (value) {
                                     setState(() {
                                       values1 = value;
+                                      trip_time = true;
                                     });
                                   }),
                               Divider(
@@ -330,6 +337,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onChanged: (value) {
                                     setState(() {
                                       values2 = value;
+                                      trip_dist = true;
                                     });
                                   }),
                             ],
@@ -340,7 +348,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             GestureDetector(
                               onTap: () => setState(() {
-                                filter = !filter;
+                                trip_dist = false;
+                                trip_time = false;
+                                count_trip = 0;
+                                count_filters = 0;
+                                filter = false;
                                 search.text = '';
                                 getItems = List.from(items);
                               }),
@@ -351,7 +363,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 7, horizontal: 12),
                                 child: Text(
-                                  'Cancel',
+                                  'Reset Changes',
                                   style: theme.font8.copyWith(fontSize: 17),
                                 ),
                               ),
@@ -362,9 +374,40 @@ class _HomeScreenState extends State<HomeScreen> {
                             GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  filter = !filter;
+                                  filter = false;
                                   searchplace(
                                       search.text, trip, distance, text1);
+                                  int i;
+                                  for (i = 0; i < text.length; i++) {
+                                    if (text[i] == '') {
+                                      break;
+                                    }
+                                  }
+                                  if (i > 0) {
+                                    count_trip = 1;
+                                  } else {
+                                    count_trip = 0;
+                                  }
+                                  if (trip_time == true &&
+                                      trip_dist == true &&
+                                      count_trip == 1) {
+                                    count_filters = 3;
+                                  } else if (trip_time == true &&
+                                          trip_dist == true ||
+                                      trip_dist == true && count_trip == 1 ||
+                                      trip_time == true && count_trip == 1) {
+                                    count_filters = 2;
+                                  } else if (trip_time == true ||
+                                      trip_dist == true ||
+                                      count_trip == 1) {
+                                    count_filters = 1;
+                                  } else {
+                                    count_filters = 0;
+                                  }
+                                  values1 = const RangeValues(1, 24);
+                                  values2 = const RangeValues(1, 20);
+
+                                  print(count_trip);
                                 });
                               },
                               child: Container(
@@ -395,6 +438,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Row(
               children: [
                 Expanded(
+                  flex: 10,
                   child: Container(
                     margin: const EdgeInsets.all(12.0),
                     padding: const EdgeInsets.symmetric(
@@ -427,6 +471,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 hintStyle: theme.font7),
                             onChanged: (value) {
                               setState(() {
+                                //filter = false;
                                 searchplace(value, trip, distance, text1);
                               });
                             },
@@ -443,16 +488,53 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      filter = !filter;
-                    });
-                  },
-                  child: Icon(
-                    Icons.filter_alt_sharp,
-                    color: theme.searchcolor,
-                    size: 30,
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        filter = !filter;
+                        FocusScope.of(context).unfocus();
+                        print(search.text);
+                        //FocusManager.instance.primaryFocus?.unfocus();
+                      });
+                    },
+                    child: count_filters > 0
+                        ? Stack(
+                            children: [
+                              Positioned(
+                                top: 0,
+                                bottom: 0,
+                                left: 0,
+                                right: 5,
+                                child: Icon(
+                                  Icons.filter_alt_sharp,
+                                  color: theme.searchcolor,
+                                  size: 30,
+                                ),
+                              ),
+                              Positioned(
+                                  top: 10,
+                                  right: 0,
+                                  child: CircleAvatar(
+                                    backgroundColor: theme.filtercountcolor,
+                                    radius: 12,
+                                    child: Center(
+                                      child: Text(
+                                        count_filters.toString(),
+                                        style: const TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                    ),
+                                  ))
+                            ],
+                          )
+                        : Icon(
+                            Icons.filter_alt_sharp,
+                            color: theme.searchcolor,
+                            size: 30,
+                          ),
                   ),
                 )
               ],
