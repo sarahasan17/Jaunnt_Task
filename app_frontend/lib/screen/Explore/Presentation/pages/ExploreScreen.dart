@@ -4,6 +4,18 @@ import 'package:dots_indicator/dots_indicator.dart';
 import '../../../../constant/screen_width.dart';
 import '../../../../constant/theme/themehelper.dart';
 
+class Object {
+  String value;
+  int distance;
+  int triptime;
+  List<String> text;
+  Object(
+      {required this.value,
+      required this.distance,
+      required this.triptime,
+      required this.text});
+}
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -38,42 +50,57 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<int> index1 = List.filled(10, 0);
   List<String> getItems = List.from(items);
-  void searchplace(
+
+  bool? searchplacemain(
       String query, int trip_time, int distance, List<String> text1) {
-    setState(() {
+    if (query == '') {
+      return true;
+    } else {
       if (trip_time >= values1.start.round() &&
           trip_time <= values1.end.round() &&
           distance >= values2.start.round() &&
           distance <= values2.end.round()) {
-        print(values1.start.round());
-        print(values1.end.round());
-        int a = text1.length;
         int c = text.length;
         for (int i = 0; i < text.length; i++) {
           if (text[i] == '') {
             c = c - 1;
           }
         }
-        int b = 0;
-        for (int i = 0; i < a; i++) {
-          for (int j = 0; j < c; j++) {
-            if (text1[i] == text[j]) {
-              b = b + 1;
+        if (c == 0) {
+          if (query == '') {
+            return true;
+          } else {
+            if (query.contains(search.text)) {
+              return true;
+            } else {
+              return false;
+            }
+          }
+        } else {
+          int b = 0;
+          for (int i = 0; i < text1.length; i++) {
+            for (int j = 0; j < text.length; j++) {
+              if (text[j] == text1[i]) {
+                b = b + 1;
+              }
+            }
+          }
+          if (b == c) {
+            if (query == '') {
+              return true;
+            } else {
+              if (query.toLowerCase().contains(search.text.toLowerCase())) {
+                return true;
+              } else {
+                return false;
+              }
             }
           }
         }
-        if (b == c) {
-          getItems = items
-              .where((element) =>
-                  element.toLowerCase().contains(query.toLowerCase()))
-              .toList();
-        } else {
-          getItems = [];
-        }
       } else {
-        getItems = [];
+        return false;
       }
-    });
+    }
   }
 
   bool trip_time = false;
@@ -90,6 +117,80 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     ThemeHelper theme = ThemeHelper();
     ScreenWidth s = ScreenWidth(context);
+    List<Object> item1 = [
+      Object(value: 'Nandi Hills', distance: 8, triptime: 9, text: text1),
+      Object(value: 'Ooty', distance: 10, triptime: 15, text: text1)
+    ];
+    List<Object> getItem1 = List.from(item1);
+    void searchlist(Object query) {
+      int b = 0;
+      int c = text.length;
+      for (int i = 0; i < text.length; i++) {
+        if (text[i] == '') {
+          c = c - 1;
+        }
+      }
+      for (int i = 0; i < text.length; i++) {
+        for (int j = 0; j < query.text.length; j++) {
+          if (text[i] == query.text[j]) {
+            b = b + 1;
+          }
+        }
+      }
+      if (b == c) {
+        getItem1 = item1
+            .where((element) =>
+                element.value
+                    .toLowerCase()
+                    .contains(query.value.toLowerCase()) &&
+                query.triptime >= values1.start.round().toDouble() &&
+                query.triptime <= values1.end.round().toDouble() &&
+                query.distance >= values2.start.round().toDouble() &&
+                query.distance <= values2.end.round().toDouble())
+            .toList();
+      } else {
+        getItem1 = [];
+      }
+    }
+
+    void searchplace(
+        String query, int trip_time, int distance, List<String> text1) {
+      setState(() {
+        if (trip_time >= values1.start.round() &&
+            trip_time <= values1.end.round() &&
+            distance >= values2.start.round() &&
+            distance <= values2.end.round()) {
+          print(values1.start.round());
+          print(values1.end.round());
+          int a = text1.length;
+          int c = text.length;
+          for (int i = 0; i < text.length; i++) {
+            if (text[i] == '') {
+              c = c - 1;
+            }
+          }
+          int b = 0;
+          for (int i = 0; i < a; i++) {
+            for (int j = 0; j < c; j++) {
+              if (text1[i] == text[j]) {
+                b = b + 1;
+              }
+            }
+          }
+          if (b == c) {
+            getItems = items
+                .where((element) =>
+                    element.toLowerCase().contains(query.toLowerCase()))
+                .toList();
+          } else {
+            getItems = [];
+          }
+        } else {
+          getItems = [];
+        }
+      });
+    }
+
     return Scaffold(
       backgroundColor: theme.backgroundColor,
       body: SafeArea(
@@ -108,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color:
                     filter ? Colors.grey.withOpacity(0.5) : Colors.transparent,
                 child: ListView.builder(
-                    itemCount: getItems.length,
+                    itemCount: getItem1.length,
                     scrollDirection: Axis.vertical,
                     itemBuilder: (BuildContext context, int index) {
                       int i = index;
@@ -194,7 +295,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       .spaceBetween,
                                               children: [
                                                 Text(
-                                                  getItems[i],
+                                                  getItem1[i].value,
                                                   style: theme.font3.copyWith(
                                                       color: Colors.white,
                                                       fontSize: 18),
@@ -204,7 +305,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       setState(() {
                                                         bookmark[i] =
                                                             !bookmark[i];
-                                                        print(bookmark);
                                                       });
                                                     },
                                                     child: Icon(
@@ -223,7 +323,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                '${trip} hours trip time',
+                                                '${getItem1[index].triptime} hours trip time',
                                                 style: theme.font6.copyWith(
                                                     color: Colors.white),
                                               ),
@@ -233,7 +333,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     color: Colors.white),
                                               ),
                                               Text(
-                                                '$distance km from you',
+                                                '${getItem1[index].distance} km from you',
                                                 style: theme.font6.copyWith(
                                                     color: Colors.white),
                                               ),
@@ -243,7 +343,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     color: Colors.white),
                                               ),
                                               Text(
-                                                '${text1[0]}, ${text1[1]}',
+                                                '${text1[0]}, ${text1[0]}',
                                                 style: theme.font6.copyWith(
                                                     color: Colors.white),
                                               ),
@@ -355,6 +455,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 filter = false;
                                 search.text = '';
                                 getItems = List.from(items);
+                                values1 = const RangeValues(1, 24);
+                                values2 = const RangeValues(1, 20);
                               }),
                               child: Container(
                                 decoration: BoxDecoration(
@@ -404,9 +506,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   } else {
                                     count_filters = 0;
                                   }
-                                  values1 = const RangeValues(1, 24);
-                                  values2 = const RangeValues(1, 20);
-
                                   print(count_trip);
                                 });
                               },
@@ -472,7 +571,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             onChanged: (value) {
                               setState(() {
                                 //filter = false;
-                                searchplace(value, trip, distance, text1);
+                                //searchplace(value, trip, distance, text1);
                               });
                             },
                             /*validator: (text) {
