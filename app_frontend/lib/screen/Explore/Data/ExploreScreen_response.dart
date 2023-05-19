@@ -5,7 +5,9 @@ class ExploreResponse {
       ExploreResponse(
           response: List<ExploreResponse2>.from(
               json[""].map((x) => ExploreResponse.fromJson(x))));
-  Map<String, dynamic> toJson() => {"":List<dynamic>.from(response.map((x) => x.toJson())),};
+  Map<String, dynamic> toJson() => {
+        "": List<dynamic>.from(response.map((x) => x.toJson())),
+      };
 }
 
 class ExploreResponse2 {
@@ -14,14 +16,14 @@ class ExploreResponse2 {
   String placeLocation;
   String description;
   String transportMode;
-  String tripTime;
+  int tripTime;
   String bestTime;
   String groupSize;
   String coverPhoto;
   String images;
   List<String> category;
   List<String> tags;
-  String distance;
+  int distance;
   int length;
   List<ThingsToDo> thingsToDo;
   List<Itenirary> itenirary;
