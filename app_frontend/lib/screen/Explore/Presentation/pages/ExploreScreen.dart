@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app_frontend/screen/Explore/Data/ExploreScreen_response.dart';
 import 'package:app_frontend/screen/Explore/Presentation/pages/textfieldwidget.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +11,7 @@ import '../../../../constant/screen_width.dart';
 import '../../../../constant/theme/themehelper.dart';
 import '../cubit/ExploreScreen_cubit.dart';
 
-class Object {
+/**class Object {
   String value;
   int distance;
   int triptime;
@@ -19,7 +21,7 @@ class Object {
       required this.distance,
       required this.triptime,
       required this.text});
-}
+}**/
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -230,7 +232,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: PageView.builder(
                                           controller: _controller,
                                           scrollDirection: Axis.horizontal,
-                                          itemCount: image.length,
+                                          itemCount: getItem1[i].images.length,
                                           onPageChanged: (int page) {
                                             setState(() {
                                               _activepage = page;
@@ -239,13 +241,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                           itemBuilder: (_, index) {
                                             index1[i] = index;
                                             return ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(20.0),
-                                              child: Image.asset(
-                                                "assets/images/${image[index]}",
-                                                fit: BoxFit.cover,
-                                              ),
-                                            );
+                                                borderRadius:
+                                                    BorderRadius.circular(20.0),
+                                                child: Image.file(File(
+                                                    getItem1[i]
+                                                        .images[index])));
                                           }),
                                     ),
                                     Positioned(

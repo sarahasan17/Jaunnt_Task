@@ -69,7 +69,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                         onChanged: (d) {
                           setState(() {
                             selectedModel = d as FileModel;
-                            image = d?.files![0];
+                            image = d.files![0];
                             for (int i = 0; i < files!.length; i++) {
                               if (selectedModel == files?[i]) {
                                 index = i;

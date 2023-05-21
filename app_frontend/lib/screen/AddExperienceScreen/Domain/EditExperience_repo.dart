@@ -3,8 +3,6 @@ import 'dart:io';
 import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:path/path.dart';
-import 'package:async/async.dart';
 import '../../../constant/errors/Failure.dart';
 import '../../../constant/network_info.dart';
 import 'package:http/http.dart' as http;
