@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../components/common/image_carousel.dart';
-import '../components/place_detailed/experience_tab.dart';
-import '../components/place_detailed/itinerary_tab.dart';
-import '../components/place_detailed/overview_tab.dart';
-import '../components/place_detailed/tab_button.dart';
-import '../config/colors.dart';
+import '../../components/common/image_carousel.dart';
+import '../../components/place_detailed/experience_tab.dart';
+import '../../components/place_detailed/itinerary_tab.dart';
+import '../../components/place_detailed/overview_tab.dart';
+import '../../components/place_detailed/tab_button.dart';
+import '../../config/colors.dart';
 
 const List<String> dummyImages = [
   "https://i7m8n5e3.stackpathcdn.com/images/ott/movies/366/360/79366-backdrop-1680879935093-1.jpeg?country=in",
@@ -100,38 +100,40 @@ class _PlaceDetailedState extends State<PlaceDetailed> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: Container(
-        color: primaryColor,
-        child: Column(
-          children: <Widget>[
-            const ImageCarousel(
-              images: dummyImages,
-              bottomInfoWidget: SizedBox.shrink(),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: _getTabHeaders(),
+        child: Container(
+          child: Column(
+            //shrinkWrap: true,
+            children: [
+              const ImageCarousel(
+                images: dummyImages,
+                bottomInfoWidget: SizedBox.shrink(),
               ),
-            ),
-            Expanded(
-              child: PageView.builder(
-                controller: _controller,
-                onPageChanged: (int newPage) {
-                  setState(() {
-                    _activePage = newPage;
-                  });
-                },
-                itemCount: _numTabs,
-                itemBuilder: (BuildContext context, int index) {
-                  return _tabs[index % _numTabs];
-                },
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: _getTabHeaders(),
+                ),
               ),
-            ),
-          ],
+              Expanded(
+                child: PageView.builder(
+                  controller: _controller,
+                  onPageChanged: (int newPage) {
+                    setState(() {
+                      _activePage = newPage;
+                    });
+                  },
+                  itemCount: _numTabs,
+                  itemBuilder: (BuildContext context, int index) {
+                    return _tabs[index % _numTabs];
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
-      )),
+      ),
     );
   }
 }

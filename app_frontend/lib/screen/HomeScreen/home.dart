@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../components/home/experience_card.dart';
-import '../components/home/place_card.dart';
+import '../../components/home/experience_card.dart';
+import '../../components/home/place_card.dart';
 
 const double bodyPadding = 10;
 

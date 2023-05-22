@@ -7,6 +7,9 @@ import 'package:app_frontend/screen/AddExperienceScreen/presentation/AddExperien
     as _i1;
 import 'package:app_frontend/screen/Explore/presentation/pages/ExploreScreen.dart'
     as _i4;
+import 'package:app_frontend/screen/HomeScreen/home.dart' as _i5;
+import 'package:app_frontend/screen/Place_DetailedScreen/place_detailed.dart'
+    as _i6;
 
 class AppRouter extends _iB.RootStackRouter {
   AppRouter([_iA.GlobalKey<_iA.NavigatorState>? navigatorKey])
@@ -26,9 +29,17 @@ class AppRouter extends _iB.RootStackRouter {
       return _iB.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i3.ProfileScreen());
     },
-    HomeScreen.name: (routeData) {
+    ExploreScreen.name: (routeData) {
       return _iB.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i4.HomeScreen());
+    },
+    Home.name: (routeData) {
+      return _iB.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i5.Home());
+    },
+    PlaceDetailed.name: (routeData) {
+      return _iB.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i6.PlaceDetailed());
     },
   };
   @override
@@ -37,7 +48,9 @@ class AppRouter extends _iB.RootStackRouter {
         _iB.RouteConfig(AddExperienceScreen.name, path: '/addexp'),
         _iB.RouteConfig(ImagePickerScreen.name, path: '/img'),
         _iB.RouteConfig(ProfileScreen.name, path: '/profile'),
-        _iB.RouteConfig(HomeScreen.name, path: '/home'),
+        _iB.RouteConfig(ExploreScreen.name, path: '/explore'),
+        _iB.RouteConfig(Home.name, path: '/home'),
+        _iB.RouteConfig(PlaceDetailed.name, path: '/place_detailed'),
       ];
 }
 
@@ -68,8 +81,24 @@ class ProfileScreen extends _iB.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.Explore]
-class HomeScreen extends _iB.PageRouteInfo<void> {
-  const HomeScreen() : super(HomeScreen.name, path: '/home');
+class ExploreScreen extends _iB.PageRouteInfo<void> {
+  const ExploreScreen() : super(ExploreScreen.name, path: '/explore');
+
+  static const String name = 'explore';
+}
+
+/// generated route for
+/// [_i5.Home]
+class Home extends _iB.PageRouteInfo<void> {
+  const Home() : super(Home.name, path: '/home');
+
+  static const String name = 'home';
+}
+
+/// generated route for
+/// [_i6.PlaceDetailed]
+class PlaceDetailed extends _iB.PageRouteInfo<void> {
+  const PlaceDetailed() : super(PlaceDetailed.name, path: '/place_detailed');
 
   static const String name = 'home';
 }

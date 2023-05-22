@@ -1,3 +1,6 @@
+import 'package:app_frontend/constant/screen_width.dart';
+import 'package:app_frontend/constant/theme/themehelper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../config/colors.dart';
 import '../common/basic_elevated_card.dart';
@@ -11,135 +14,318 @@ class OverviewTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      children: <Widget>[
-        BasicElevatedCard(
-            margin: const EdgeInsets.symmetric(vertical: 8),
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    placeName,
-                    style: TextStyle(
-                        color: textColorPrimaryDark,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w400),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    description,
-                    style: TextStyle(
-                        color: textColorBlack,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w300),
+    ThemeHelper theme = ThemeHelper();
+    ScreenWidth s = ScreenWidth(context);
+    return Container(
+      child: ListView(
+        shrinkWrap: true,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        children: <Widget>[
+          Container(
+              padding: const EdgeInsets.all(10.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12.0),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 3,
+                    blurRadius: 3,
+                    offset: const Offset(0, 0), // changes position of shadow
                   ),
                 ],
               ),
-            )),
-        BasicElevatedCard(
-            margin: const EdgeInsets.symmetric(vertical: 8),
-            child: Container(
-              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    placeName,
-                    style: TextStyle(
-                        color: textColorPrimaryDark,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w400),
+                children: [
+                  Text('Nandi Hills',
+                      style: theme.font8
+                          .copyWith(fontSize: 24, fontWeight: FontWeight.bold)),
+                  const SizedBox(
+                    height: 5,
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    description,
-                    style: TextStyle(
-                        color: textColorBlack,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w300),
+                  Container(
+                    child: Text(
+                      'Nandi Hills is a scenic hill station located in the state of Karnataka, India. It is situated at an altitude of 1,478 meters above sea level and is a popular tourist destination for both locals and visitors from around the world.',
+                      style: theme.font7.copyWith(fontSize: 14),
+                    ),
+                  )
+                ],
+              )),
+          SizedBox(height: s.height / 70),
+          Container(
+              padding: const EdgeInsets.all(17.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12.0),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 3,
+                    blurRadius: 3,
+                    offset: const Offset(0, 0), // changes position of shadow
                   ),
                 ],
               ),
-            )),
-        BasicElevatedCard(
-            margin: const EdgeInsets.symmetric(vertical: 8),
-            child: Container(
-              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    placeName,
-                    style: TextStyle(
-                        color: textColorPrimaryDark,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w400),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    description,
-                    style: TextStyle(
-                        color: textColorBlack,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w300),
-                  ),
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Image.asset(
+                                'assets/images/pic-1.png',
+                                width: s.width / 12,
+                              ),
+                              SizedBox(width: s.width / 50),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Distance',
+                                      style: theme.font8.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13)),
+                                  SizedBox(
+                                    height: s.height / 300,
+                                  ),
+                                  Text('40km from you',
+                                      style: theme.font8.copyWith(fontSize: 13))
+                                ],
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: s.height / 60,
+                          ),
+                          Row(
+                            children: [
+                              Image.asset(
+                                'assets/images/img.png',
+                                width: s.width / 12,
+                              ),
+                              SizedBox(width: s.width / 50),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Mode of Transport',
+                                      style: theme.font8.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13)),
+                                  SizedBox(
+                                    height: s.height / 300,
+                                  ),
+                                  Text('4 wheelers',
+                                      style: theme.font8.copyWith(fontSize: 13))
+                                ],
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: s.height / 60,
+                          ),
+                          Row(
+                            children: [
+                              Image.asset(
+                                'assets/images/pic-4.png',
+                                width: s.width / 12,
+                              ),
+                              SizedBox(width: s.width / 50),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Visitors Rating',
+                                      style: theme.font8.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13)),
+                                  SizedBox(
+                                    height: s.height / 300,
+                                  ),
+                                  Text('4.5',
+                                      style: theme.font8.copyWith(fontSize: 13))
+                                ],
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Image.asset(
+                                'assets/images/Inner Plugin Iframe.png',
+                                width: s.width / 12,
+                              ),
+                              SizedBox(width: s.width / 50),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Trip Time',
+                                      style: theme.font8.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13)),
+                                  SizedBox(
+                                    height: s.height / 300,
+                                  ),
+                                  Text('5 hours',
+                                      style: theme.font8.copyWith(fontSize: 13))
+                                ],
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: s.height / 60,
+                          ),
+                          Row(
+                            children: [
+                              Image.asset('assets/images/pic-3.png'),
+                              SizedBox(width: s.width / 50),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Tags',
+                                      style: theme.font8.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13)),
+                                  SizedBox(
+                                    height: s.height / 300,
+                                  ),
+                                  Text('Popular, Trending',
+                                      style: theme.font8.copyWith(fontSize: 13))
+                                ],
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: s.height / 60,
+                          ),
+                          Row(
+                            children: [
+                              Image.asset('assets/images/pic-5.png'),
+                              SizedBox(width: s.width / 50),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Best time to visit',
+                                      style: theme.font8.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13)),
+                                  SizedBox(
+                                    height: s.height / 300,
+                                  ),
+                                  Text('Sept. to March',
+                                      style: theme.font8.copyWith(fontSize: 13))
+                                ],
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
                 ],
-              ),
-            )),
-        BasicElevatedCard(
-            margin: const EdgeInsets.symmetric(vertical: 8),
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    placeName,
-                    style: TextStyle(
-                        color: textColorPrimaryDark,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w400),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    description,
-                    style: TextStyle(
-                        color: textColorBlack,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w300),
-                  ),
-                ],
-              ),
-            )),
-        BasicElevatedCard(
-            margin: const EdgeInsets.symmetric(vertical: 8),
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    placeName,
-                    style: TextStyle(
-                        color: textColorPrimaryDark,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w400),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    description,
-                    style: TextStyle(
-                        color: textColorBlack,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w300),
-                  ),
-                ],
-              ),
-            )),
-      ],
+              )),
+          SizedBox(height: s.height / 70),
+          Container(
+            padding: const EdgeInsets.all(17.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12.0),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.2),
+                  spreadRadius: 3,
+                  blurRadius: 3,
+                  offset: const Offset(0, 0), // changes position of shadow
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Key things to do',
+                    style: theme.font8
+                        .copyWith(fontSize: 24, fontWeight: FontWeight.bold)),
+                SizedBox(
+                  height: s.height / 100,
+                ),
+                ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: 5,
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        height: s.height / 20,
+                        child: Stack(
+                          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Positioned(
+                                top: 0,
+                                left: 2,
+                                child: SizedBox(
+                                  width: 8,
+                                  height: s.height / 20,
+                                  child: Center(
+                                    child: Container(
+                                      color: theme.selectbackgroundcolor,
+                                    ),
+                                  ),
+                                )),
+                            Positioned(
+                              top: 5,
+                              left: 2,
+                              child: Container(
+                                height: 3.5,
+                                width: 3.5,
+                                margin: const EdgeInsets.all(2.0),
+                                decoration:
+                                    BoxDecoration(color: theme.searchcolor),
+                              ),
+                            ),
+                            Positioned(
+                                top: 5,
+                                left: s.width / 17,
+                                child: SizedBox(
+                                  width: s.width / 1.2,
+                                  child: RichText(
+                                    textScaleFactor: 1.1,
+                                    text: TextSpan(
+                                      text: ' Trekking: ',
+                                      style: theme.font8.copyWith(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold),
+                                      children: [
+                                        TextSpan(
+                                            text:
+                                                ' Explore Skandagiri, Brahmagiri, Chennarayana Durga. ',
+                                            style: theme.font8.copyWith(
+                                              fontSize: 14,
+                                            )),
+                                      ],
+                                    ),
+                                  ),
+                                ))
+                          ],
+                        ),
+                      );
+                    })
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
+/** Text(
+    'Trekking: Explore Skandagiri, Brahmagiri, Chennarayana Durga.',
+    style: theme.font8.copyWith(fontSize: 13),
+    ),**/

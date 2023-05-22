@@ -51,6 +51,7 @@ class ThemeHelper {
       color: Color(0xFF00425A),
       fontSize: 14,
       fontWeight: FontWeight.w600);
+  Color thingscolor = const Color(0xFFD8E9EB);
   Color buttoncolor = const Color(0xFF00425A);
   Color selectbackgroundcolor = const Color(0xFFD8E9EB);
   Color searchcolor = const Color(0xFF00425A);
