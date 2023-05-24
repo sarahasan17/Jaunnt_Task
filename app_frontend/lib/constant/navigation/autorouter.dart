@@ -5,11 +5,11 @@ import 'package:flutter/material.dart' as _iA;
 import 'package:auto_route/auto_route.dart' as _iB;
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/AddExperienceScreen.dart'
     as _i1;
-import 'package:app_frontend/screen/Explore/presentation/pages/ExploreScreen.dart'
-    as _i4;
 import 'package:app_frontend/screen/HomeScreen/home.dart' as _i5;
 import 'package:app_frontend/screen/Place_DetailedScreen/place_detailed.dart'
     as _i6;
+
+import '../../screen/Explore/Presentation/pages/ExploreScreen.dart' as _i4;
 
 class AppRouter extends _iB.RootStackRouter {
   AppRouter([_iA.GlobalKey<_iA.NavigatorState>? navigatorKey])
@@ -31,7 +31,7 @@ class AppRouter extends _iB.RootStackRouter {
     },
     ExploreScreen.name: (routeData) {
       return _iB.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i4.HomeScreen());
+          routeData: routeData, child: const _i4.ExploreScreen());
     },
     Home.name: (routeData) {
       return _iB.MaterialPageX<dynamic>(
@@ -50,7 +50,7 @@ class AppRouter extends _iB.RootStackRouter {
         _iB.RouteConfig(ProfileScreen.name, path: '/profile'),
         _iB.RouteConfig(ExploreScreen.name, path: '/explore'),
         _iB.RouteConfig(Home.name, path: '/home'),
-        _iB.RouteConfig(PlaceDetailed.name, path: '/place_detailed'),
+        _iB.RouteConfig(PlaceDetailed.name, path: '/place'),
       ];
 }
 
@@ -80,7 +80,7 @@ class ProfileScreen extends _iB.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i4.Explore]
+/// [_i4.ExploreScreen]
 class ExploreScreen extends _iB.PageRouteInfo<void> {
   const ExploreScreen() : super(ExploreScreen.name, path: '/explore');
 
@@ -100,5 +100,5 @@ class Home extends _iB.PageRouteInfo<void> {
 class PlaceDetailed extends _iB.PageRouteInfo<void> {
   const PlaceDetailed() : super(PlaceDetailed.name, path: '/place_detailed');
 
-  static const String name = 'home';
+  static const String name = 'place';
 }

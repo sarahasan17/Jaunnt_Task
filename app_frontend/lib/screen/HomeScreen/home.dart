@@ -1,3 +1,6 @@
+import 'package:app_frontend/constant/screen_width.dart';
+import 'package:app_frontend/constant/theme/themehelper.dart';
+import 'package:app_frontend/screen/HomeScreen/filter_overlay.dart';
 import 'package:flutter/material.dart';
 import '../../components/home/experience_card.dart';
 import '../../components/home/place_card.dart';
@@ -32,50 +35,147 @@ class Home extends StatefulWidget {
 // TODO: Profile pic flow
 class _HomeState extends State<Home> {
   @override
+  bool filter = false;
+  bool notification = false;
+  bool trip = false;
+  bool experience = false;
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
+    ThemeHelper theme = ThemeHelper();
+    ScreenWidth s = ScreenWidth(context);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Jaunnt"),
-        centerTitle: true,
-      ),
       body: SafeArea(
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.all(bodyPadding),
-            child: ListView.builder(
-              itemBuilder: (BuildContext context, int index) {
-                if (index % 4 == 0) {
-                  return const ExperienceCard(
-                    images: dummyImages,
-                    profileName: dummyUserProfileName,
-                    description: dummyDescription,
-                    placeName: dummyPlace,
-                  );
-                }
-                if (index % 4 == 1) {
-                  return const PlaceCard(
-                    images: dummyImages,
-                    placeName: dummyPlace,
-                    description: dummyPlaceDescription,
-                    tags: dummyPlaceTags,
-                  );
-                }
-                if (index % 4 == 2) {
-                  return const ExperienceCard(
-                    images: dummyImages,
-                    profileName: dummyUserProfileName,
-                    description: "",
-                    placeName: dummyPlace,
-                  );
-                }
-                return const PlaceCard(
-                  images: dummyImages,
-                  placeName: dummyPlace,
-                  description: dummyPlaceDescription,
-                  tags: dummyPlaceTags,
-                );
-              },
-              itemCount: 10,
+            padding: EdgeInsets.all(15.0),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: s.height / 100,
+                ),
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Image.asset('assets/images/home_icon1.png'),
+                      SizedBox(
+                        width: s.width / 50,
+                      ),
+                      Row(
+                        children: [
+                          Image.asset('assets/images/logo.png'),
+                          Text('Jaunnt',
+                              style: theme.font8.copyWith(fontSize: 24))
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          FilterOverlay(
+                            experience: experience,
+                            trip: trip,
+                            filter: filter,
+                            notification: notification,
+                          ),
+                          Column(
+                            children: [
+                              GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      notification = !notification;
+                                    });
+                                  },
+                                  child: Image.asset(
+                                      'assets/images/home_icon3.png')),
+                              notification == true
+                                  ? SizedBox(
+                                      height: s.height / 200,
+                                    )
+                                  : const SizedBox(),
+                              notification == true
+                                  ? SizedBox(
+                                      height: 2.5,
+                                      width: s.width / 15,
+                                      child: Center(
+                                        child: Container(
+                                          color: theme.searchcolor,
+                                        ),
+                                      ),
+                                    )
+                                  : const SizedBox()
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: s.height / 50,
+                ),
+                notification == true
+                    ? Container(
+                        height: s.height / 5,
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(10),
+                          bottomLeft: Radius.circular(10),
+                        )),
+                        child: Column(
+                          children: [],
+                        ),
+                      )
+                    : const SizedBox(),
+                Flexible(
+                  child: ColorFiltered(
+                    colorFilter: notification
+                        ? ColorFilter.mode(
+                            Colors.grey.withOpacity(0.5), BlendMode.srcATop)
+                        : const ColorFilter.mode(
+                            Colors.transparent, BlendMode.srcATop),
+                    child: Container(
+                      child: ListView.builder(
+                        itemBuilder: (BuildContext context, int index) {
+                          if (index % 4 == 0) {
+                            return const ExperienceCard(
+                              images: dummyImages,
+                              profileName: dummyUserProfileName,
+                              description: dummyDescription,
+                              placeName: dummyPlace,
+                            );
+                          }
+                          if (index % 4 == 1) {
+                            return const PlaceCard(
+                              images: dummyImages,
+                              placeName: dummyPlace,
+                              description: dummyPlaceDescription,
+                              tags: dummyPlaceTags,
+                            );
+                          }
+                          if (index % 4 == 2) {
+                            return const ExperienceCard(
+                              images: dummyImages,
+                              profileName: dummyUserProfileName,
+                              description: "",
+                              placeName: dummyPlace,
+                            );
+                          }
+                          return const PlaceCard(
+                            images: dummyImages,
+                            placeName: dummyPlace,
+                            description: dummyPlaceDescription,
+                            tags: dummyPlaceTags,
+                          );
+                        },
+                        itemCount: 10,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

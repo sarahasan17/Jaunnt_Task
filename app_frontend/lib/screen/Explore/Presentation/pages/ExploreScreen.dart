@@ -23,14 +23,14 @@ import '../cubit/ExploreScreen_cubit.dart';
       required this.text});
 }**/
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class ExploreScreen extends StatefulWidget {
+  const ExploreScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<ExploreScreen> createState() => _ExploreScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _ExploreScreenState extends State<ExploreScreen> {
   TextEditingController type = TextEditingController();
   List<String> image = [
     "image_1.png",
@@ -686,7 +686,7 @@ class _HomeScreenState extends State<HomeScreen> {
               )),
             );
           }
-          return SizedBox();
+          return const SizedBox();
         }));
   }
 }
