@@ -10,6 +10,8 @@ import 'package:app_frontend/screen/Place_DetailedScreen/place_detailed.dart'
     as _i6;
 
 import '../../screen/Explore/Presentation/pages/ExploreScreen.dart' as _i4;
+import 'package:app_frontend/screen/ExperienceScreen/presentation/presentation.dart'
+    as _i7;
 
 class AppRouter extends _iB.RootStackRouter {
   AppRouter([_iA.GlobalKey<_iA.NavigatorState>? navigatorKey])
@@ -41,6 +43,10 @@ class AppRouter extends _iB.RootStackRouter {
       return _iB.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i6.PlaceDetailed());
     },
+    ExperienceScreen.name: (routeData) {
+      return _iB.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i7.ExperienceScreen());
+    },
   };
   @override
   // TODO: implement routes
@@ -51,6 +57,7 @@ class AppRouter extends _iB.RootStackRouter {
         _iB.RouteConfig(ExploreScreen.name, path: '/explore'),
         _iB.RouteConfig(Home.name, path: '/home'),
         _iB.RouteConfig(PlaceDetailed.name, path: '/place'),
+        _iB.RouteConfig(ExperienceScreen.name, path: '/experience'),
       ];
 }
 
@@ -101,4 +108,12 @@ class PlaceDetailed extends _iB.PageRouteInfo<void> {
   const PlaceDetailed() : super(PlaceDetailed.name, path: '/place_detailed');
 
   static const String name = 'place';
+}
+
+/// generated route for
+/// [_i7.ExperienceScreen]
+class ExperienceScreen extends _iB.PageRouteInfo<void> {
+  const ExperienceScreen() : super(ExperienceScreen.name, path: '/experience');
+
+  static const String name = 'experience';
 }
