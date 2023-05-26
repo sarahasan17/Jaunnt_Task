@@ -1,9 +1,11 @@
+import 'package:app_frontend/constant/navigation/autorouter.dart';
 import 'package:app_frontend/constant/screen_width.dart';
 import 'package:app_frontend/constant/theme/themehelper.dart';
 import 'package:app_frontend/screen/HomeScreen/filter_overlay.dart';
 import 'package:flutter/material.dart';
 import '../../components/home/experience_card.dart';
 import '../../components/home/place_card.dart';
+import 'package:auto_route/auto_route.dart';
 
 const double bodyPadding = 10;
 
@@ -189,19 +191,27 @@ class _HomeState extends State<Home> {
                     child: ListView.builder(
                       itemBuilder: (BuildContext context, int index) {
                         if (index % 4 == 0) {
-                          return const ExperienceCard(
-                            images: dummyImages,
-                            profileName: dummyUserProfileName,
-                            description: dummyDescription,
-                            placeName: dummyPlace,
+                          return GestureDetector(
+                            onTap: () =>
+                                context.router.push(const ExperienceScreen()),
+                            child: const ExperienceCard(
+                              images: dummyImages,
+                              profileName: dummyUserProfileName,
+                              description: dummyDescription,
+                              placeName: dummyPlace,
+                            ),
                           );
                         }
                         if (index % 4 == 1) {
-                          return const PlaceCard(
-                            images: dummyImages,
-                            placeName: dummyPlace,
-                            description: dummyPlaceDescription,
-                            tags: dummyPlaceTags,
+                          return GestureDetector(
+                            onTap: () =>
+                                context.router.push(const PlaceDetailed()),
+                            child: const PlaceCard(
+                              images: dummyImages,
+                              placeName: dummyPlace,
+                              description: dummyPlaceDescription,
+                              tags: dummyPlaceTags,
+                            ),
                           );
                         }
                         if (index % 4 == 2) {
