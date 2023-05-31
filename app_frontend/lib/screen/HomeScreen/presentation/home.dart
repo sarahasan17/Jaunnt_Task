@@ -53,6 +53,7 @@ class _HomeState extends State<Home> {
     _refreshController.refreshCompleted();
   }
 
+  @override
   Widget build(BuildContext context) {
     ThemeHelper theme = ThemeHelper();
     ScreenWidth s = ScreenWidth(context);
@@ -62,9 +63,9 @@ class _HomeState extends State<Home> {
         enablePullDown: true,
         header: CustomHeader(
           builder: (BuildContext context, _) {
-            return const Center(
+            return Center(
               child: CircularProgressIndicator(
-                color: Color(0xFF37AABC),
+                color: theme.searchcolor,
                 strokeWidth: 3,
               ),
             );

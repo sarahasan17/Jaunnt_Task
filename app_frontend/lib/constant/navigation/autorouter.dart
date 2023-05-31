@@ -10,7 +10,7 @@ import 'package:app_frontend/screen/Place_DetailedScreen/place_detailed.dart'
     as _i6;
 
 import '../../screen/Explore/Presentation/pages/ExploreScreen.dart' as _i4;
-import 'package:app_frontend/screen/ExperienceScreen/presentation/presentation.dart'
+import 'package:app_frontend/screen/ExperienceScreen/presentation/ExperienceScreen.dart'
     as _i7;
 
 class AppRouter extends _iB.RootStackRouter {

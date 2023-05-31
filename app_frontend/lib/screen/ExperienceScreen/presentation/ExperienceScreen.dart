@@ -11,8 +11,6 @@ import '../../../components/place_detailed/experience_tab.dart';
 import '../../../components/place_detailed/itinerary_tab.dart';
 import '../../../components/place_detailed/overview_tab.dart';
 import '../../../components/place_detailed/tab_button.dart';
-import '../../HomeScreen/presentation/home.dart';
-import '../../Place_DetailedScreen/place_detailed.dart';
 
 const List<String> dummyImages = [
   "https://i7m8n5e3.stackpathcdn.com/images/ott/movies/366/360/79366-backdrop-1680879935093-1.jpeg?country=in",
@@ -67,7 +65,25 @@ const List<ItineraryItem> dummyItinerary = [
 ];
 
 class ExperienceScreen extends StatefulWidget {
-  const ExperienceScreen({Key? key}) : super(key: key);
+  String place_name;
+  String trip_time;
+  String distance;
+  String image;
+  String description;
+  String id_name;
+  String travel_mode;
+  String dateOfTrip;
+  ExperienceScreen(
+      {Key? key,
+      required this.distance,
+      required this.description,
+      required this.image,
+      required this.trip_time,
+      required this.place_name,
+      required this.id_name,
+      required this.travel_mode,
+      required this.dateOfTrip})
+      : super(key: key);
 
   @override
   State<ExperienceScreen> createState() => _ExperienceScreenState();
