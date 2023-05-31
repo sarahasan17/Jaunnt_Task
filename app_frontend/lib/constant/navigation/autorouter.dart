@@ -5,7 +5,7 @@ import 'package:flutter/material.dart' as _iA;
 import 'package:auto_route/auto_route.dart' as _iB;
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/AddExperienceScreen.dart'
     as _i1;
-import 'package:app_frontend/screen/HomeScreen/home.dart' as _i5;
+import 'package:app_frontend/screen/HomeScreen/presentation/home.dart' as _i5;
 import 'package:app_frontend/screen/Place_DetailedScreen/place_detailed.dart'
     as _i6;
 

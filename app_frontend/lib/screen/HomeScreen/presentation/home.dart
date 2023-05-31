@@ -1,14 +1,14 @@
 import 'package:app_frontend/constant/navigation/autorouter.dart';
 import 'package:app_frontend/constant/screen_width.dart';
 import 'package:app_frontend/constant/theme/themehelper.dart';
-import 'package:app_frontend/screen/HomeScreen/filter_overlay.dart';
+import 'package:app_frontend/screen/HomeScreen/presentation/filter_overlay.dart';
 import 'package:flutter/material.dart';
-import '../../components/home/experience_card.dart';
-import '../../components/home/place_card.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import '../../../components/home/experience_card.dart';
+import '../../../components/home/place_card.dart';
 import 'package:auto_route/auto_route.dart';
 
 const double bodyPadding = 10;
-
 const List<String> dummyImages = [
   "https://i7m8n5e3.stackpathcdn.com/images/ott/movies/213/360/50213-backdrop-1651222749937-2.jpeg?country=in",
   "https://i7m8n5e3.stackpathcdn.com/images/ott/movies/366/360/79366-backdrop-1680879935093-1.jpeg?country=in",
@@ -41,16 +41,37 @@ class _HomeState extends State<Home> {
   bool notification = false;
   bool trip = false;
   bool experience = false;
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
+  }
+
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+  void _onRefresh() async {
+    _refreshController.refreshCompleted();
   }
 
   Widget build(BuildContext context) {
     ThemeHelper theme = ThemeHelper();
     ScreenWidth s = ScreenWidth(context);
     return Scaffold(
-      body: SafeArea(
+        body: SafeArea(
+      child: SmartRefresher(
+        enablePullDown: true,
+        header: CustomHeader(
+          builder: (BuildContext context, _) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: Color(0xFF37AABC),
+                strokeWidth: 3,
+              ),
+            );
+          },
+        ),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
         child: Center(
           child: Column(
             children: [
@@ -58,7 +79,7 @@ class _HomeState extends State<Home> {
                 height: s.height / 100,
               ),
               Container(
-                padding: EdgeInsets.all(12.0),
+                padding: const EdgeInsets.all(12.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -238,6 +259,6 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
-    );
+    ));
   }
 }

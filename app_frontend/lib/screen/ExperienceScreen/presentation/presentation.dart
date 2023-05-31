@@ -11,7 +11,7 @@ import '../../../components/place_detailed/experience_tab.dart';
 import '../../../components/place_detailed/itinerary_tab.dart';
 import '../../../components/place_detailed/overview_tab.dart';
 import '../../../components/place_detailed/tab_button.dart';
-import '../../HomeScreen/home.dart';
+import '../../HomeScreen/presentation/home.dart';
 import '../../Place_DetailedScreen/place_detailed.dart';
 
 const List<String> dummyImages = [
