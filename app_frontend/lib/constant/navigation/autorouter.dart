@@ -6,7 +6,7 @@ import 'package:auto_route/auto_route.dart' as _iB;
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/AddExperienceScreen.dart'
     as _i1;
 import 'package:app_frontend/screen/HomeScreen/presentation/home.dart' as _i5;
-import 'package:app_frontend/screen/Place_DetailedScreen/place_detailed.dart'
+import 'package:app_frontend/screen/Place_DetailedScreen/presentation/place_detailed.dart'
     as _i6;
 
 import '../../screen/Explore/Presentation/pages/ExploreScreen.dart' as _i4;
@@ -43,10 +43,10 @@ class AppRouter extends _iB.RootStackRouter {
       return _iB.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i6.PlaceDetailed());
     },
-    ExperienceScreen.name: (routeData) {
+    /**ExperienceScreen.name: (routeData) {
       return _iB.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i7.ExperienceScreen());
-    },
+          routeData: routeData, child: _i7.ExperienceScreen());
+    },**/
   };
   @override
   // TODO: implement routes

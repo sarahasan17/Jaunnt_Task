@@ -65,25 +65,8 @@ const List<ItineraryItem> dummyItinerary = [
 ];
 
 class ExperienceScreen extends StatefulWidget {
-  String place_name;
-  String trip_time;
-  String distance;
-  String image;
-  String description;
-  String id_name;
-  String travel_mode;
-  String dateOfTrip;
-  ExperienceScreen(
-      {Key? key,
-      required this.distance,
-      required this.description,
-      required this.image,
-      required this.trip_time,
-      required this.place_name,
-      required this.id_name,
-      required this.travel_mode,
-      required this.dateOfTrip})
-      : super(key: key);
+  String id;
+  ExperienceScreen({Key? key, required this.id}) : super(key: key);
 
   @override
   State<ExperienceScreen> createState() => _ExperienceScreenState();
