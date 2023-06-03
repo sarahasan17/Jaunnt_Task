@@ -1,6 +1,7 @@
 import 'package:app_frontend/constant/screen_width.dart';
 import 'package:app_frontend/screen/AddExperienceScreen/Data/AddExperience_request.dart';
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/cubits/AddExperience_Cubit.dart';
+import 'package:app_frontend/screen/AddExperienceScreen/presentation/dropdownbutton.dart';
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/planner.dart';
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/textfieldwidget.dart';
 import 'package:auto_route/auto_route.dart';
@@ -13,7 +14,6 @@ import '../../../constant/loading_widget.dart';
 import '../../../constant/navigation/autorouter.dart';
 import '../../../constant/theme/themehelper.dart';
 import 'dart:io';
-
 import 'cubits/EditExperience/EditExperience_cubit.dart';
 
 class AddExperienceScreen extends StatefulWidget {
@@ -25,6 +25,7 @@ class AddExperienceScreen extends StatefulWidget {
 
 class _AddExperienceScreenState extends State<AddExperienceScreen> {
   final GlobalKey<FormFieldState> _hourFormKey = GlobalKey<FormFieldState>();
+  final GlobalKey<FormFieldState> _placeFormKey = GlobalKey<FormFieldState>();
   final GlobalKey<FormFieldState> _membersFormKey = GlobalKey<FormFieldState>();
   final GlobalKey<FormFieldState> _budgetFormKey = GlobalKey<FormFieldState>();
   final GlobalKey<FormFieldState> _sharexperienceFormKey =
@@ -432,7 +433,7 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                                               asset:
                                                   'assets/images/circle-coin-vertical.png'),
                                           SizedBox(
-                                            height: s.height / 60,
+                                            height: s.height / 37,
                                           ),
                                           Row(
                                             children: [
@@ -517,18 +518,29 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                                                   ),
                                                   dropdownStyleData:
                                                       DropdownStyleData(
-                                                          maxHeight:
-                                                              s.height / 5,
-                                                          width: s.width / 3.7,
-                                                          padding: null,
-                                                          decoration: BoxDecoration(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5),
-                                                              color:
-                                                                  theme.white),
-                                                          scrollbarTheme:
+                                                    maxHeight: s.height / 5,
+                                                    width: s.width / 3.7,
+                                                    scrollbarTheme:
+                                                        ScrollbarThemeData(
+                                                      mainAxisMargin: 0,
+                                                      crossAxisMargin: 0,
+                                                      radius:
+                                                          const Radius.circular(
+                                                              40),
+                                                      thickness:
+                                                          MaterialStateProperty
+                                                              .all<double>(6),
+                                                      thumbVisibility:
+                                                          MaterialStateProperty
+                                                              .all<bool>(true),
+                                                    ),
+                                                    padding: null,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5),
+                                                        color: theme.white),
+                                                    /**scrollbarTheme:
                                                               ScrollbarThemeData(
                                                             radius: const Radius
                                                                 .circular(5),
@@ -538,7 +550,8 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                                                             thumbVisibility:
                                                                 MaterialStateProperty
                                                                     .all(true),
-                                                          )),
+                                                          )**/
+                                                  ),
                                                 ),
                                               ),
                                             ],
@@ -553,7 +566,7 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                                 ),
                                 TextButton(
                                   onPressed: () {
-                                    context.router.push(const ProfileScreen());
+                                    context.router.push(const BottomNavbar());
 
                                     BlocProvider.of<EditExperienceCubit>(
                                             context)

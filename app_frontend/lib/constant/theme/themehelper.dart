@@ -51,6 +51,7 @@ class ThemeHelper {
       color: Color(0xFF00425A),
       fontSize: 14,
       fontWeight: FontWeight.w600);
+  Color sidenavcolor1 = Color(0xFF272727);
   final TextStyle font9 = const TextStyle(
       fontFamily: 'Raleway', color: Color(0xFFB4B9C1), fontSize: 12);
   Color thingscolor = const Color(0xFFD8E9EB);

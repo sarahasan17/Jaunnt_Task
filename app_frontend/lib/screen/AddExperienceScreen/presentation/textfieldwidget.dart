@@ -77,6 +77,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
     entry = null;
   }
 
+  final GlobalKey<FormFieldState> _placeFormKey = GlobalKey<FormFieldState>();
   int count = 0;
   StatefulWidget buildOverlay() => Material(
         child: Container(
@@ -136,6 +137,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         },
         style: ThemeHelper().font2,
         focusNode: focusnode,
+        key: _placeFormKey,
         textAlign: TextAlign.start,
         cursorColor: widget.theme.borderColor,
         controller: widget.place,

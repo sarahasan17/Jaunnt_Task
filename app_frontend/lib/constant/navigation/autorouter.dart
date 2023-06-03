@@ -8,10 +8,11 @@ import 'package:app_frontend/screen/AddExperienceScreen/presentation/AddExperien
 import 'package:app_frontend/screen/HomeScreen/presentation/home.dart' as _i5;
 import 'package:app_frontend/screen/Place_DetailedScreen/presentation/place_detailed.dart'
     as _i6;
-
 import '../../screen/Explore/Presentation/pages/ExploreScreen.dart' as _i4;
 import 'package:app_frontend/screen/ExperienceScreen/presentation/ExperienceScreen.dart'
     as _i7;
+import 'package:app_frontend/screen/Bottomnavbarscreen/bottomnavbar.dart'
+    as _i8;
 
 class AppRouter extends _iB.RootStackRouter {
   AppRouter([_iA.GlobalKey<_iA.NavigatorState>? navigatorKey])
@@ -23,41 +24,26 @@ class AppRouter extends _iB.RootStackRouter {
       return _iB.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i1.AddExperienceScreen());
     },
-    ImagePickerScreen.name: (routeData) {
-      return _iB.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i2.ImagePickerScreen());
-    },
-    ProfileScreen.name: (routeData) {
-      return _iB.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i3.ProfileScreen());
-    },
-    ExploreScreen.name: (routeData) {
-      return _iB.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i4.ExploreScreen());
-    },
-    Home.name: (routeData) {
-      return _iB.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i5.Home());
-    },
     PlaceDetailed.name: (routeData) {
       return _iB.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i6.PlaceDetailed());
     },
-    /**ExperienceScreen.name: (routeData) {
+    BottomNavbar.name: (routeData) {
+      return _iB.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i8.BottomNavbar());
+    },
+    ExperienceScreen.name: (routeData) {
       return _iB.MaterialPageX<dynamic>(
           routeData: routeData, child: _i7.ExperienceScreen());
-    },**/
+    },
   };
   @override
   // TODO: implement routes
   List<_iB.RouteConfig> get routes => [
         _iB.RouteConfig(AddExperienceScreen.name, path: '/addexp'),
-        _iB.RouteConfig(ImagePickerScreen.name, path: '/img'),
-        _iB.RouteConfig(ProfileScreen.name, path: '/profile'),
-        _iB.RouteConfig(ExploreScreen.name, path: '/explore'),
-        _iB.RouteConfig(Home.name, path: '/home'),
         _iB.RouteConfig(PlaceDetailed.name, path: '/place'),
         _iB.RouteConfig(ExperienceScreen.name, path: '/experience'),
+        _iB.RouteConfig(BottomNavbar.name, path: '/BottomNavbar'),
       ];
 }
 
@@ -68,38 +54,6 @@ class AddExperienceScreen extends _iB.PageRouteInfo<void> {
       : super(AddExperienceScreen.name, path: '/addexp');
 
   static const String name = 'addexp';
-}
-
-/// generated route for
-/// [_i2.ImagePickerScreen]
-class ImagePickerScreen extends _iB.PageRouteInfo<void> {
-  const ImagePickerScreen() : super(ImagePickerScreen.name, path: '/img');
-
-  static const String name = 'img';
-}
-
-/// generated route for
-/// [_i3.ProfileScreen]
-class ProfileScreen extends _iB.PageRouteInfo<void> {
-  const ProfileScreen() : super(ProfileScreen.name, path: '/profile');
-
-  static const String name = 'profile';
-}
-
-/// generated route for
-/// [_i4.ExploreScreen]
-class ExploreScreen extends _iB.PageRouteInfo<void> {
-  const ExploreScreen() : super(ExploreScreen.name, path: '/explore');
-
-  static const String name = 'explore';
-}
-
-/// generated route for
-/// [_i5.Home]
-class Home extends _iB.PageRouteInfo<void> {
-  const Home() : super(Home.name, path: '/home');
-
-  static const String name = 'home';
 }
 
 /// generated route for
@@ -116,4 +70,12 @@ class ExperienceScreen extends _iB.PageRouteInfo<void> {
   const ExperienceScreen() : super(ExperienceScreen.name, path: '/experience');
 
   static const String name = 'experience';
+}
+
+/// generated route for
+/// [_i8.BottomNavbar()]
+class BottomNavbar extends _iB.PageRouteInfo<void> {
+  const BottomNavbar() : super(BottomNavbar.name, path: '/BottomNavbar');
+
+  static const String name = 'BottomNavbar';
 }

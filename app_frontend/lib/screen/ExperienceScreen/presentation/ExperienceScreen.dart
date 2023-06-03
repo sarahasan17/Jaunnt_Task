@@ -1,11 +1,9 @@
 import 'dart:io';
-
 import 'package:app_frontend/constant/screen_width.dart';
 import 'package:app_frontend/constant/theme/themehelper.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../../components/common/image_carousel.dart';
 import '../../../components/place_detailed/experience_tab.dart';
 import '../../../components/place_detailed/itinerary_tab.dart';
@@ -65,8 +63,8 @@ const List<ItineraryItem> dummyItinerary = [
 ];
 
 class ExperienceScreen extends StatefulWidget {
-  String id;
-  ExperienceScreen({Key? key, required this.id}) : super(key: key);
+  //String? id;
+  ExperienceScreen({Key? key}) : super(key: key);
 
   @override
   State<ExperienceScreen> createState() => _ExperienceScreenState();
@@ -75,6 +73,7 @@ class ExperienceScreen extends StatefulWidget {
 class _ExperienceScreenState extends State<ExperienceScreen> {
   bool bookmark = false;
   final PageController _controller = PageController(initialPage: 0);
+  final PageController _controller2 = PageController(initialPage: 0);
   final int _numTabs = 3;
   int _activepage = 0;
   final List<String> _tabHeaders = ["Overview", "Itinerary", "Experiences"];
@@ -91,6 +90,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
   ];
   int _activePage = 0;
   int index1 = 0;
+  int index2 = 0;
   List<Widget> _getTabHeaders() {
     List<Widget> headers = [];
 
@@ -397,11 +397,13 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                                 },
                                 itemBuilder: (_, index) {
                                   index1 = index;
-                                  return ClipRRect(
-                                      borderRadius: BorderRadius.circular(15.0),
+                                  return Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15.0)),
                                       child: Image.asset(
                                           'assets/images/${image[index]}',
-                                          fit: BoxFit.cover)
+                                          fit: BoxFit.fill)
                                       /**Image.file(File(
                                           'assets/images/${image[index]}'))**/
                                       );
@@ -527,7 +529,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                           '  More places like this  ',
                           style: theme.font8,
                         ),
-                        Expanded(
+                        const Expanded(
                             child: Divider(
                           thickness: 1.5,
                         )),
@@ -541,9 +543,13 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                       ),
                       child: Stack(
                         children: [
-                          Positioned.fill(
+                          Positioned(
+                            top: 0,
+                            bottom: 0,
+                            right: 0,
+                            left: 0,
                             child: PageView.builder(
-                                controller: _controller,
+                                controller: _controller2,
                                 scrollDirection: Axis.horizontal,
                                 itemCount: image.length,
                                 onPageChanged: (int page) {
@@ -552,7 +558,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                                   });
                                 },
                                 itemBuilder: (_, index) {
-                                  index1 = index;
+                                  index2 = index;
                                   return ClipRRect(
                                       borderRadius: BorderRadius.circular(15.0),
                                       child: Image.asset(
@@ -581,7 +587,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                                     children: [
                                       DotsIndicator(
                                         dotsCount: image.length,
-                                        position: index1.toDouble(),
+                                        position: index2.toDouble(),
                                         decorator: DotsDecorator(
                                           activeSize: const Size(15, 7),
                                           activeShape: RoundedRectangleBorder(
