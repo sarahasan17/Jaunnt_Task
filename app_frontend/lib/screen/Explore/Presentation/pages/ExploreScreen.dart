@@ -9,6 +9,7 @@ import '../../../../constant/errors/error_popup.dart';
 import '../../../../constant/loading_widget.dart';
 import '../../../../constant/screen_width.dart';
 import '../../../../constant/theme/themehelper.dart';
+import '../../BOOKMARK/presentation/cubit/bookmark_cubit.dart';
 import '../cubit/ExploreScreen_cubit.dart';
 
 /**class Object {
@@ -318,24 +319,65 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                                                       .white,
                                                                   fontSize: 18),
                                                         ),
-                                                        GestureDetector(
-                                                            onTap: () {
-                                                              setState(() {
-                                                                bookmark[i] =
-                                                                    !bookmark[
-                                                                        i];
-                                                              });
-                                                            },
-                                                            child: Icon(
-                                                              bookmark[i] ==
-                                                                      false
-                                                                  ? Icons
-                                                                      .bookmark_border
-                                                                  : Icons
-                                                                      .bookmark,
-                                                              color:
-                                                                  Colors.white,
-                                                            ))
+                                                        BlocProvider(
+                                                            create: (context) =>
+                                                                BookmarkCubit(),
+                                                            child: BlocConsumer<
+                                                                    BookmarkCubit,
+                                                                    BookmarkState>(
+                                                                listener:
+                                                                    (context,
+                                                                        state) {
+                                                              if (state
+                                                                  is BookmarkError) {
+                                                                ErrorPopup(
+                                                                    context,
+                                                                    state.msg);
+                                                              }
+                                                            }, builder:
+                                                                    (context,
+                                                                        state) {
+                                                              if (state
+                                                                  is BookmarkLoading) {
+                                                                return const LoadingWidget();
+                                                              } else if (state
+                                                                  is BookmarkSuccess) {
+                                                                const SnackBar(
+                                                                  content: Text(
+                                                                      'Bookmark added'),
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .green,
+                                                                );
+                                                              }
+                                                              return GestureDetector(
+                                                                  onTap: () {
+                                                                    setState(
+                                                                        () {
+                                                                      bookmark[
+                                                                              i] =
+                                                                          !bookmark[
+                                                                              i];
+                                                                      if (bookmark[
+                                                                              i] ==
+                                                                          true) {
+                                                                        context
+                                                                            .read<BookmarkCubit>()
+                                                                            .bookmark();
+                                                                      }
+                                                                    });
+                                                                  },
+                                                                  child: Icon(
+                                                                    bookmark[i] ==
+                                                                            false
+                                                                        ? Icons
+                                                                            .bookmark_border
+                                                                        : Icons
+                                                                            .bookmark,
+                                                                    color: Colors
+                                                                        .white,
+                                                                  ));
+                                                            }))
                                                       ],
                                                     ),
                                                   ),

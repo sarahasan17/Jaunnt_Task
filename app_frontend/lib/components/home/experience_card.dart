@@ -6,7 +6,12 @@ import '../common/image_carousel.dart';
 const double avatarRadius = 20;
 
 class ExperienceCard extends StatelessWidget {
-  const ExperienceCard({super.key, required this.images, required this.profileName, required this.placeName, required this.description});
+  const ExperienceCard(
+      {super.key,
+      required this.images,
+      required this.profileName,
+      required this.placeName,
+      required this.description});
 
   final List<String> images;
   final String profileName;
@@ -37,19 +42,28 @@ class ExperienceCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                      constraints: const BoxConstraints(minHeight: 2 * avatarRadius),
+                      constraints:
+                          const BoxConstraints(minHeight: 2 * avatarRadius),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
                             profileName,
-                            style: TextStyle(color: textColorWhite, fontSize: 18, fontWeight: FontWeight.w400, overflow: TextOverflow.ellipsis),
+                            style: TextStyle(
+                                color: textColorWhite,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                                overflow: TextOverflow.ellipsis),
                             maxLines: 1,
                           ),
                           Text(
                             placeName,
-                            style: TextStyle(color: textColorWhite, fontSize: 14, fontWeight: FontWeight.w400, overflow: TextOverflow.ellipsis),
+                            style: TextStyle(
+                                color: textColorWhite,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                overflow: TextOverflow.ellipsis),
                             maxLines: 1,
                           ),
                         ],
@@ -58,15 +72,21 @@ class ExperienceCard extends StatelessWidget {
                   ),
                 ],
               ),
-              (description == "") ? const SizedBox.shrink() : Container(
-                padding: const EdgeInsets.fromLTRB(12, 6, 0, 0),
-                child: Text(
-                  description,
-                  style: TextStyle(color: textColorWhite, fontSize: 12, fontWeight: FontWeight.w300, overflow: TextOverflow.ellipsis),
-                  textAlign: TextAlign.start,
-                  maxLines: 2,
-                ),
-              ),
+              (description == "")
+                  ? const SizedBox.shrink()
+                  : Container(
+                      padding: const EdgeInsets.fromLTRB(12, 6, 0, 0),
+                      child: Text(
+                        description,
+                        style: TextStyle(
+                            color: textColorWhite,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w300,
+                            overflow: TextOverflow.ellipsis),
+                        textAlign: TextAlign.start,
+                        maxLines: 2,
+                      ),
+                    ),
             ],
           ),
         );

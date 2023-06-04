@@ -1,5 +1,6 @@
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/cubits/AddExperience_Cubit.dart';
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/cubits/EditExperience/EditExperience_cubit.dart';
+import 'package:app_frontend/screen/Explore/BOOKMARK/presentation/cubit/bookmark_Cubit.dart';
 import 'package:app_frontend/screen/ProfileScreen/EditProfile/Presentation/cubit/EditProfileCubit.dart';
 import 'package:app_frontend/screen/ProfileScreen/presentation/Profilecubit/ProfileCubit.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => EditExperienceCubit(),
+        ),
+        BlocProvider(
+          create: (context) => BookmarkCubit(),
         ),
       ],
       child: MaterialApp.router(

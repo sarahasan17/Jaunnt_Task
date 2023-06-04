@@ -1,7 +1,6 @@
 import 'package:app_frontend/constant/screen_width.dart';
 import 'package:app_frontend/screen/AddExperienceScreen/Data/AddExperience_request.dart';
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/cubits/AddExperience_Cubit.dart';
-import 'package:app_frontend/screen/AddExperienceScreen/presentation/dropdownbutton.dart';
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/planner.dart';
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/textfieldwidget.dart';
 import 'package:auto_route/auto_route.dart';
@@ -451,6 +450,21 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                                               ),
                                               DropdownButtonHideUnderline(
                                                 child: DropdownButton2(
+                                                  menuItemStyleData:
+                                                      const MenuItemStyleData(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  left: 7),
+                                                          customHeights: [
+                                                        28,
+                                                        28,
+                                                        28,
+                                                        28,
+                                                        28,
+                                                        28,
+                                                        28,
+                                                        28
+                                                      ]),
                                                   isExpanded: true,
                                                   hint: Row(
                                                     children: [
@@ -518,7 +532,10 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                                                   ),
                                                   dropdownStyleData:
                                                       DropdownStyleData(
-                                                    maxHeight: s.height / 5,
+                                                    elevation: 8,
+                                                    padding: null,
+                                                    scrollPadding: null,
+                                                    maxHeight: s.height / 5.3,
                                                     width: s.width / 3.7,
                                                     scrollbarTheme:
                                                         ScrollbarThemeData(
@@ -534,7 +551,6 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                                                           MaterialStateProperty
                                                               .all<bool>(true),
                                                     ),
-                                                    padding: null,
                                                     decoration: BoxDecoration(
                                                         borderRadius:
                                                             BorderRadius

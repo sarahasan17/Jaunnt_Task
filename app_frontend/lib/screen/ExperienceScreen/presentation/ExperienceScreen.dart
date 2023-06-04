@@ -386,28 +386,31 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                       child: Stack(
                         children: [
                           Positioned.fill(
-                            child: PageView.builder(
-                                controller: _controller,
-                                scrollDirection: Axis.horizontal,
-                                itemCount: image.length,
-                                onPageChanged: (int page) {
-                                  setState(() {
-                                    _activepage = page;
-                                  });
-                                },
-                                itemBuilder: (_, index) {
-                                  index1 = index;
-                                  return Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15.0)),
-                                      child: Image.asset(
-                                          'assets/images/${image[index]}',
-                                          fit: BoxFit.fill)
-                                      /**Image.file(File(
-                                          'assets/images/${image[index]}'))**/
-                                      );
-                                }),
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15.0),
+                                child: PageView.builder(
+                                    controller: _controller,
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: image.length,
+                                    onPageChanged: (int page) {
+                                      setState(() {
+                                        _activepage = page;
+                                      });
+                                    },
+                                    itemBuilder: (_, index) {
+                                      index1 = index;
+                                      return Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(0.0),
+                                              color: Colors.black),
+                                          child: Image.asset(
+                                              'assets/images/${image[index]}',
+                                              fit: BoxFit.cover)
+                                          /**Image.file(File(
+                                            'assets/images/${image[index]}'))**/
+                                          );
+                                    })),
                           ),
                           Positioned(
                             top: 0,
@@ -544,31 +547,33 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                       child: Stack(
                         children: [
                           Positioned(
-                            top: 0,
-                            bottom: 0,
-                            right: 0,
-                            left: 0,
-                            child: PageView.builder(
-                                controller: _controller2,
-                                scrollDirection: Axis.horizontal,
-                                itemCount: image.length,
-                                onPageChanged: (int page) {
-                                  setState(() {
-                                    _activepage = page;
-                                  });
-                                },
-                                itemBuilder: (_, index) {
-                                  index2 = index;
-                                  return ClipRRect(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      child: Image.asset(
-                                          'assets/images/${image[index]}',
-                                          fit: BoxFit.cover)
+                              top: 0,
+                              bottom: 0,
+                              right: 0,
+                              left: 0,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15.0),
+                                child: PageView.builder(
+                                    controller: _controller2,
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: image.length,
+                                    onPageChanged: (int page) {
+                                      setState(() {
+                                        _activepage = page;
+                                      });
+                                    },
+                                    itemBuilder: (_, index) {
+                                      index2 = index;
+                                      return ('assets/images/${image[index]}' !=
+                                              null)
+                                          ? Image.asset(
+                                              'assets/images/${image[index]}',
+                                              fit: BoxFit.cover)
+                                          : const SizedBox();
                                       /**Image.file(File(
                                         'assets/images/${image[index]}'))**/
-                                      );
-                                }),
-                          ),
+                                    }),
+                              )),
                           Positioned(
                             top: 0,
                             bottom: 0,
