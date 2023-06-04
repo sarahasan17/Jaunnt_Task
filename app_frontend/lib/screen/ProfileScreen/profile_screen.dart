@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:app_frontend/constant/screen_width.dart';
 import 'package:app_frontend/constant/theme/themehelper.dart';
+import 'package:app_frontend/screen/ProfileScreen/bookmarkedexperience/presentation/bookmarkedexperience_cubit.dart';
 import 'package:app_frontend/screen/ProfileScreen/presentation/ImagePickerScreen2/ImagePickerScreen.dart';
 import 'package:app_frontend/screen/ProfileScreen/presentation/Profilecubit/ProfileCubit.dart';
 import 'package:app_frontend/screen/Profile_followers/presentation/ProfileFollowersScreen.dart';
@@ -361,7 +362,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                               controller: tabcontroller,
                               children: [
                                 TabBars(part: 'experience'),
-                                TabBars(part: 'saved places'),
+                                TabBars2(part: 'saved places'),
                               ],
                             ),
                           )
@@ -466,6 +467,131 @@ class TabBars extends StatelessWidget {
                               image: const DecorationImage(
                                   image:
                                       AssetImage("assets/images/profile.png"),
+                                  fit: BoxFit.cover)),
+                          margin: const EdgeInsets.all(7),
+                          width: s.width / 2.3,
+                          height: s.height / 6.5,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 3, horizontal: 8),
+                                width: s.width / 2.3,
+                                height: s.height / 35,
+                                decoration: BoxDecoration(
+                                    color: theme.buttoncolor.withOpacity(0.5),
+                                    borderRadius: const BorderRadius.only(
+                                        bottomLeft: Radius.circular(15.0),
+                                        bottomRight: Radius.circular(15.0))),
+                                child: Text(
+                                  'Chunchi Falls',
+                                  style: theme.font2.copyWith(
+                                      color: theme.white, fontSize: 12),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                });
+          } else {
+            return const SizedBox();
+          }
+        }));
+  }
+}
+class TabBars2 extends StatelessWidget {
+  TabBars2({Key? key, required this.part}) : super(key: key);
+  String part;
+  @override
+  Widget build(BuildContext context) {
+    ThemeHelper theme = ThemeHelper();
+    ScreenWidth s = ScreenWidth(context);
+    return BlocProvider(
+        create: (context) => BookmarkedExperienceCubit(),
+        child: BlocConsumer<BookmarkedExperienceCubit, BookmarkedExperienceState>(
+            listener: (context, state) {
+              if (state is BookmarkedExperienceError) {
+                ErrorPopup(context, state.message);
+              }
+            }, builder: (context, state) {
+          if (state is BookmarkedExperienceLoading) {
+            return const LoadingWidget();
+          } else if (state is BookmarkedExperienceSuccess) {
+            var BookmarkedExperienceUser = state.response;
+            return ListView.builder(
+                itemCount: 5,
+                scrollDirection: Axis.vertical,
+                itemBuilder: (BuildContext context, int index) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.4),
+                                  spreadRadius: 3,
+                                  blurRadius: 3,
+                                  offset: const Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ],
+                              borderRadius: BorderRadius.circular(20.0),
+                              color: theme.white,
+                              image: const DecorationImage(
+                                  image:
+                                  AssetImage("assets/images/profile.png"),
+                                  fit: BoxFit.cover)),
+                          margin: const EdgeInsets.all(7),
+                          width: s.width / 2.28,
+                          height: s.height / 6.5,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 3, horizontal: 8),
+                                width: s.width / 2.2,
+                                height: s.height / 35,
+                                decoration: BoxDecoration(
+                                    color: theme.buttoncolor.withOpacity(0.5),
+                                    borderRadius: const BorderRadius.only(
+                                        bottomLeft: Radius.circular(15.0),
+                                        bottomRight: Radius.circular(15.0))),
+                                child: Text(
+                                  'Chunchi Falls',
+                                  style: theme.font2.copyWith(
+                                      color: theme.white, fontSize: 12),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.4),
+                                  spreadRadius: 3,
+                                  blurRadius: 3,
+                                  offset: const Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ],
+                              borderRadius: BorderRadius.circular(20.0),
+                              color: theme.white,
+                              image: const DecorationImage(
+                                  image:
+                                  AssetImage("assets/images/profile.png"),
                                   fit: BoxFit.cover)),
                           margin: const EdgeInsets.all(7),
                           width: s.width / 2.3,

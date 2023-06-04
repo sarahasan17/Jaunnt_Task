@@ -1,3 +1,6 @@
+
+
+
 import 'dart:developer';
 import 'dart:io';
 
@@ -8,12 +11,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../constant/errors/Failure.dart';
 import '../../../../constant/network_info.dart';
 import '../../../../constant/sharedpref_keys.dart';
+import '../data/bookmarkedexperience_response.dart';
 
-class BookmarkRepo {
+class BookmarkedExperienceRepo {
   final Dio _dio = Dio();
   final NetworkInfoImpl _networkInfo = NetworkInfoImpl();
 
-  Future<Either<Failure, String>> bookmark() async {
+  Future<Either<Failure, BookmarkedExperienceResponse>> BookmarkedExperience() async {
     String token;
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     token = _prefs.getString(TOKEN_KEY) ?? "";
@@ -21,7 +25,7 @@ class BookmarkRepo {
 
     if (await _networkInfo.isConnected()) {
       try {
-        final Response response = await _dio.put(url,
+        final Response response = await _dio.get(url,
             options: Options(
               headers: {
                 HttpHeaders.authorizationHeader: "Bearer $token",
@@ -31,7 +35,8 @@ class BookmarkRepo {
         var body = response.data as Map<String, dynamic>;
         switch (response.statusCode) {
           case 200:
-            return Right(body as String);
+          //return Right(HomeResponse.fromJson(body));
+
           default:
             return Left(UnidentifiedFailure());
         }

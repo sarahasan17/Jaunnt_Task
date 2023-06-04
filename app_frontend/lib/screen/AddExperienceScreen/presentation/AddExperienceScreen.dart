@@ -24,7 +24,6 @@ class AddExperienceScreen extends StatefulWidget {
 
 class _AddExperienceScreenState extends State<AddExperienceScreen> {
   final GlobalKey<FormFieldState> _hourFormKey = GlobalKey<FormFieldState>();
-  final GlobalKey<FormFieldState> _placeFormKey = GlobalKey<FormFieldState>();
   final GlobalKey<FormFieldState> _membersFormKey = GlobalKey<FormFieldState>();
   final GlobalKey<FormFieldState> _budgetFormKey = GlobalKey<FormFieldState>();
   final GlobalKey<FormFieldState> _sharexperienceFormKey =
@@ -347,6 +346,7 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                                             margin: const EdgeInsets.symmetric(
                                                 vertical: 5),
                                             child: TextFormField(
+                                              key: _sharexperienceFormKey,
                                               minLines: 5,
                                               maxLines: 10,
                                               style: theme.font2,

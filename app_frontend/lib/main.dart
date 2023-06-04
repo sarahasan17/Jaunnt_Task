@@ -1,7 +1,9 @@
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/cubits/AddExperience_Cubit.dart';
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/cubits/EditExperience/EditExperience_cubit.dart';
-import 'package:app_frontend/screen/Explore/BOOKMARK/presentation/cubit/bookmark_Cubit.dart';
+import 'package:app_frontend/screen/Explore/BOOKMARK/presentation/cubit/bookmark_cubit.dart';
 import 'package:app_frontend/screen/ProfileScreen/EditProfile/Presentation/cubit/EditProfileCubit.dart';
+import 'package:app_frontend/screen/ProfileScreen/bookmarkedexperience/presentation/bookmarkedexperience_cubit.dart';
+import 'package:app_frontend/screen/ProfileScreen/experiencebyuser/presentation/experiencebyuser_cubit.dart';
 import 'package:app_frontend/screen/ProfileScreen/presentation/Profilecubit/ProfileCubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,6 +43,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => BookmarkCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ExperienceByUserCubit(),
+        ),
+        BlocProvider(
+          create: (context) => BookmarkedExperienceCubit(),
         ),
       ],
       child: MaterialApp.router(

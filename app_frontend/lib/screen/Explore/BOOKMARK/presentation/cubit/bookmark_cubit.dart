@@ -4,11 +4,11 @@ part 'bookmark_state.dart';
 
 class BookmarkCubit extends Cubit<BookmarkState> {
   BookmarkCubit() : super(BookmarkInitial());
-  final BookmarkRepo _addexpRepo = BookmarkRepo();
+  final BookmarkRepo _BookmarkRepo = BookmarkRepo();
   void bookmark() async {
     emit(BookmarkLoading());
-    var res = await _addexpRepo.bookmark();
-    res.fold((l) => emit(BookmarkError(l.message)),
-            (r) => emit(BookmarkSuccess()));
+    var res = await _BookmarkRepo.bookmark();
+    res.fold(
+        (l) => emit(BookmarkError(l.message)), (r) => emit(BookmarkSuccess()));
   }
 }

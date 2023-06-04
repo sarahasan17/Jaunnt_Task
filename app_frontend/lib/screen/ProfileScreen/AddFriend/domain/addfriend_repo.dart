@@ -1,37 +1,31 @@
+import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../constant/errors/Failure.dart';
 import '../../../../constant/network_info.dart';
-import '../../../../constant/sharedpref_keys.dart';
 
-class BookmarkRepo {
+class AddFriendRepo {
   final Dio _dio = Dio();
   final NetworkInfoImpl _networkInfo = NetworkInfoImpl();
-
-  Future<Either<Failure, String>> bookmark() async {
-    String token;
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    token = _prefs.getString(TOKEN_KEY) ?? "";
+  Future<Either<Failure, Map<String, dynamic>>> addfriend(String id) async {
     String url = "";
 
     if (await _networkInfo.isConnected()) {
       try {
-        final Response response = await _dio.put(url,
-            options: Options(
-              headers: {
-                HttpHeaders.authorizationHeader: "Bearer $token",
-              },
-            ));
+        final Response response = await _dio.post(
+          url,
+          data: jsonEncode({"friendId": id}),
+        );
 
         var body = response.data as Map<String, dynamic>;
         switch (response.statusCode) {
           case 200:
-            return Right(body as String);
+            return Right(body);
+          case 404:
+            return Left(UserNotFound());
           default:
             return Left(UnidentifiedFailure());
         }
