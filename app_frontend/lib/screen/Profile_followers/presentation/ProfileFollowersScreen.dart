@@ -1,16 +1,21 @@
 import 'dart:io';
+import 'dart:js_interop';
 import 'package:app_frontend/constant/screen_width.dart';
 import 'package:app_frontend/constant/theme/themehelper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../constant/errors/error_popup.dart';
 import '../../../constant/loading_widget.dart';
+import '../../ProfileScreen/AddFriend/presentation/addfriend_cubit.dart';
+import '../../ProfileScreen/isFriend/cubit/isfriend_cubit.dart';
+import '../../ProfileScreen/unfriend/presentation/unfriend_cubit.dart';
 import 'followers_cubit/followercubit.dart';
 import 'following_cubit/followingcubit.dart';
 
 class ProfileFollowersScreen extends StatefulWidget {
   int initialIndex;
-  ProfileFollowersScreen({Key? key, required this.initialIndex}) : super(key: key);
+  ProfileFollowersScreen({Key? key, required this.initialIndex})
+      : super(key: key);
 
   @override
   State<ProfileFollowersScreen> createState() => _ProfileFollowersScreenState();
@@ -24,7 +29,7 @@ class _ProfileFollowersScreenState extends State<ProfileFollowersScreen>
     ThemeHelper theme = ThemeHelper();
     ScreenWidth s = ScreenWidth(context);
     return BlocProvider(
-      create: (context) => FollowerCubit(),
+      create: (context) => FollowingCubit(),
       child: Scaffold(
           body: SafeArea(
         child: Container(
@@ -72,7 +77,7 @@ class _ProfileFollowersScreenState extends State<ProfileFollowersScreen>
                       ),
                       tabs: const [
                         Tab(text: "Following"),
-                        Tab(text: "Followers"),
+                        // Tab(text: "Followers"),
                       ]),
                 ),
               ),
@@ -84,7 +89,7 @@ class _ProfileFollowersScreenState extends State<ProfileFollowersScreen>
                 child: TabBarView(
                   controller: tabcontroller,
                   children: [
-                    BlocConsumer<FollowerCubit, FollowerState>(
+                    /**BlocConsumer<FollowerCubit, FollowerState>(
                         listener: (context, state) {
                       if (state is FollowerError) {
                         ErrorPopup(context, state.msg);
@@ -171,7 +176,7 @@ class _ProfileFollowersScreenState extends State<ProfileFollowersScreen>
                       } else {
                         return const SizedBox();
                       }
-                    }),
+                    }),**/
                     BlocConsumer<FollowingCubit, FollowingState>(
                         listener: (context, state) {
                       if (state is FollowingError) {
@@ -212,28 +217,126 @@ class _ProfileFollowersScreenState extends State<ProfileFollowersScreen>
                                             const SizedBox(),
                                             const SizedBox(),
                                             const SizedBox(),
-                                            Container(
-                                              padding:
-                                                  const EdgeInsets.all(10.0),
-                                              decoration: BoxDecoration(
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.grey
-                                                          .withOpacity(0.4),
-                                                      spreadRadius: 1,
-                                                      blurRadius: 1,
-                                                      offset: const Offset(0,
-                                                          1), // changes position of shadow
+                                            BlocConsumer<AddFriendCubit,
+                                                    AddFriendState>(
+                                                listener: (context, state) {
+                                              if (state is AddFriendSuccess) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  const SnackBar(
+                                                    content: Text(
+                                                        'Friend added successfully'),
+                                                    backgroundColor:
+                                                        Colors.green,
+                                                  ),
+                                                );
+                                              }
+                                              if (state is AddFriendError) {
+                                                ErrorPopup(
+                                                    context, state.message);
+                                              }
+                                            }, builder: (context, state) {
+                                              if (state is AddFriendLoading) {
+                                                return const LoadingWidget();
+                                              }
+                                              return BlocConsumer<UnFriendCubit,
+                                                      UnFriendState>(
+                                                  listener: (context, state) {
+                                                if (state is UnFriendSuccess) {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    const SnackBar(
+                                                      content: Text(
+                                                          'Friend removed successfully'),
+                                                      backgroundColor:
+                                                          Colors.green,
                                                     ),
-                                                  ],
-                                                  color: theme
-                                                      .followbackgroundcolor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                              child: Text('Unfollow',
-                                                  style: theme.font5),
-                                            )
+                                                  );
+                                                }
+                                                if (state is UnFriendError) {
+                                                  ErrorPopup(
+                                                      context, state.message);
+                                                }
+                                              }, builder: (context, state) {
+                                                if (state is UnFriendLoading) {
+                                                  return const LoadingWidget();
+                                                }
+                                                return BlocConsumer<
+                                                        IsFriendCubit,
+                                                        IsFriendState>(
+                                                    listener: (context, state) {
+                                                  if (state
+                                                      is IsFriendSuccess) {}
+                                                  if (state is IsFriendError) {
+                                                    ErrorPopup(
+                                                        context, state.message);
+                                                  }
+                                                }, builder: (context, state) {
+                                                  if (state
+                                                      is IsFriendLoading) {
+                                                    return const LoadingWidget();
+                                                  } else if (state
+                                                      is IsFriendSuccess) {
+                                                    bool isfriend = state
+                                                        .isDefinedAndNotNull;
+                                                    return GestureDetector(
+                                                      onTap: () {
+                                                        if (isfriend == true) {
+                                                          if (isfriend ==
+                                                              false) {
+                                                            context
+                                                                .read<
+                                                                    AddFriendCubit>()
+                                                                .addfriend(
+                                                                    following
+                                                                        .id);
+                                                          } else {
+                                                            context
+                                                                .read<
+                                                                    UnFriendCubit>()
+                                                                .unfriend(
+                                                                    following
+                                                                        .id);
+                                                          }
+                                                        }
+                                                      },
+                                                      child: Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(10.0),
+                                                        decoration: BoxDecoration(
+                                                            boxShadow: [
+                                                              BoxShadow(
+                                                                color: Colors
+                                                                    .grey
+                                                                    .withOpacity(
+                                                                        0.4),
+                                                                spreadRadius: 1,
+                                                                blurRadius: 1,
+                                                                offset: const Offset(
+                                                                    0,
+                                                                    1), // changes position of shadow
+                                                              ),
+                                                            ],
+                                                            color: theme
+                                                                .followbackgroundcolor,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10)),
+                                                        child: Text(
+                                                            isfriend
+                                                                ? 'Unfriend'
+                                                                : 'Add friend',
+                                                            style: theme.font5),
+                                                      ),
+                                                    );
+                                                  } else {
+                                                    return const SizedBox();
+                                                  }
+                                                });
+                                              });
+                                            }),
                                           ],
                                         ),
                                       ));
@@ -275,7 +378,8 @@ class _ProfileFollowersScreenState extends State<ProfileFollowersScreen>
 }
 
 class TabBars extends StatelessWidget {
-  const TabBars({Key? key, required this.data, required this.count}) : super(key: key);
+  const TabBars({Key? key, required this.data, required this.count})
+      : super(key: key);
 
   final String data;
   final int count;

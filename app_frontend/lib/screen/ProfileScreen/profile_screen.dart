@@ -1,9 +1,11 @@
 import 'dart:io';
+import 'dart:js_interop';
 import 'package:app_frontend/constant/screen_width.dart';
 import 'package:app_frontend/constant/theme/themehelper.dart';
 import 'package:app_frontend/screen/ProfileScreen/bookmarkedexperience/presentation/bookmarkedexperience_cubit.dart';
 import 'package:app_frontend/screen/ProfileScreen/presentation/ImagePickerScreen2/ImagePickerScreen.dart';
 import 'package:app_frontend/screen/ProfileScreen/presentation/Profilecubit/ProfileCubit.dart';
+import 'package:app_frontend/screen/ProfileScreen/unfriend/presentation/unfriend_cubit.dart';
 import 'package:app_frontend/screen/Profile_followers/presentation/ProfileFollowersScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +13,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../constant/errors/error_popup.dart';
 import '../../constant/hive.dart';
 import '../../constant/loading_widget.dart';
+import 'AddFriend/presentation/addfriend_cubit.dart';
 import 'EditProfile/Presentation/cubit/EditProfileCubit.dart';
 import 'experiencebyuser/presentation/experiencebyuser_cubit.dart';
+import 'isFriend/cubit/isfriend_cubit.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -41,6 +45,8 @@ class _ProfileScreenState extends State<ProfileScreen>
     super.initState();
   }
 
+  bool user = false;
+  bool friend = false;
   Widget build(BuildContext context) {
     TabController tabcontroller = TabController(length: 2, vsync: this);
     ThemeHelper theme = ThemeHelper();
@@ -58,6 +64,7 @@ class _ProfileScreenState extends State<ProfileScreen>
               return const LoadingWidget();
             } else if (state is ProfileSuccess) {
               var profile = state.response;
+              user = ProfileCubit().isLoggedinUserProfile(profile.id);
               return Scaffold(
                 body: SafeArea(
                   child: Container(
@@ -278,53 +285,175 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         ),
                                       )),
                                   Positioned(
-                                      bottom: s.height / 50,
-                                      left: s.width / 50,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            if (edit == true) {
-                                              edit_bio1 = edit_bio.text;
-                                              edit_name1 = edit_name.text;
-                                              image = mybox.get(4);
-                                              BlocProvider.of<EditProfileCubit>(
-                                                      context)
-                                                  .editprofile(File(image!),
-                                                      edit_bio.text);
-                                            }
-                                            edit = !edit;
-                                          });
-                                        },
-                                        child: Container(
-                                          padding: const EdgeInsets.all(10.0),
-                                          decoration: BoxDecoration(
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.grey
-                                                      .withOpacity(0.4),
-                                                  spreadRadius: 1,
-                                                  blurRadius: 1,
-                                                  offset: const Offset(0,
-                                                      1), // changes position of shadow
+                                    bottom: s.height / 50,
+                                    left: s.width / 50,
+                                    child: user == true
+                                        ? GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                if (edit == true) {
+                                                  edit_bio1 = edit_bio.text;
+                                                  edit_name1 = edit_name.text;
+                                                  image = mybox.get(4);
+                                                  BlocProvider.of<
+                                                              EditProfileCubit>(
+                                                          context)
+                                                      .editprofile(File(image!),
+                                                          edit_bio.text);
+                                                }
+                                                edit = !edit;
+                                              });
+                                            },
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey
+                                                          .withOpacity(0.4),
+                                                      spreadRadius: 1,
+                                                      blurRadius: 1,
+                                                      offset: const Offset(0,
+                                                          1), // changes position of shadow
+                                                    ),
+                                                  ],
+                                                  color: edit == true
+                                                      ? theme.savechangescolor
+                                                      : theme
+                                                          .profilebuttoncolor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              child: Text(
+                                                edit == true
+                                                    ? "Save changes"
+                                                    : 'Edit Profile',
+                                                style: theme.font2,
+                                              ),
+                                            ),
+                                          )
+                                        : BlocConsumer<AddFriendCubit,
+                                                AddFriendState>(
+                                            listener: (context, state) {
+                                            if (state is AddFriendSuccess) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                  content: Text(
+                                                      'Friend added successfully'),
+                                                  backgroundColor: Colors.green,
                                                 ),
-                                              ],
-                                              color: edit == true
-                                                  ? theme.savechangescolor
-                                                  : theme.profilebuttoncolor,
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          child: Text(
-                                            edit == true
-                                                ? "Save changes"
-                                                : 'Edit Profile',
-                                            style: theme.font2,
-                                          ),
-                                        ),
-                                      )),
+                                              );
+                                            }
+                                            if (state is AddFriendError) {
+                                              ErrorPopup(
+                                                  context, state.message);
+                                            }
+                                          }, builder: (context, state) {
+                                            if (state is AddFriendLoading) {
+                                              return const LoadingWidget();
+                                            }
+                                            return BlocConsumer<UnFriendCubit,
+                                                    UnFriendState>(
+                                                listener: (context, state) {
+                                              if (state is UnFriendSuccess) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  const SnackBar(
+                                                    content: Text(
+                                                        'Friend removed successfully'),
+                                                    backgroundColor:
+                                                        Colors.green,
+                                                  ),
+                                                );
+                                              }
+                                              if (state is UnFriendError) {
+                                                ErrorPopup(
+                                                    context, state.message);
+                                              }
+                                            }, builder: (context, state) {
+                                              if (state is UnFriendLoading) {
+                                                return const LoadingWidget();
+                                              }
+                                              return BlocConsumer<IsFriendCubit,
+                                                      IsFriendState>(
+                                                  listener: (context, state) {
+                                                if (state is IsFriendSuccess) {}
+                                                if (state is IsFriendError) {
+                                                  ErrorPopup(
+                                                      context, state.message);
+                                                }
+                                              }, builder: (context, state) {
+                                                if (state is IsFriendLoading) {
+                                                  return const LoadingWidget();
+                                                } else if (state
+                                                    is IsFriendSuccess) {
+                                                  bool isfriend =
+                                                      state.isDefinedAndNotNull;
+                                                  return GestureDetector(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        if (isfriend == false) {
+                                                          context
+                                                              .read<
+                                                                  AddFriendCubit>()
+                                                              .addfriend(
+                                                                  profile.id);
+                                                        }
+                                                        else{
+                                                          context
+                                                              .read<
+                                                              UnFriendCubit>()
+                                                              .unfriend(
+                                                              profile.id);
+                                                        }
+                                                      });
+                                                    },
+                                                    child: Container(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              10.0),
+                                                      decoration: BoxDecoration(
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                              color: Colors.grey
+                                                                  .withOpacity(
+                                                                      0.4),
+                                                              spreadRadius: 1,
+                                                              blurRadius: 1,
+                                                              offset: const Offset(
+                                                                  0,
+                                                                  1), // changes position of shadow
+                                                            ),
+                                                          ],
+                                                          color: friend == true
+                                                              ? theme
+                                                                  .followbackgroundcolor
+                                                              : Colors.grey,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      10)),
+                                                      child: Text(
+                                                        isfriend == true
+                                                            ? "Add Friend"
+                                                            : "Remove friends",
+                                                        style: theme.font2,
+                                                      ),
+                                                    ),
+                                                  );
+                                                } else {
+                                                  return const SizedBox();
+                                                }
+                                              });
+                                            });
+                                          }),
+                                  ),
                                   Positioned(
                                       top: s.height / 40,
                                       left: s.width / 5,
-                                      child: edit == true
+                                      child: edit == true && user == true
                                           ? const Icon(
                                               CupertinoIcons.pencil,
                                               size: 30,
@@ -503,6 +632,7 @@ class TabBars extends StatelessWidget {
         }));
   }
 }
+
 class TabBars2 extends StatelessWidget {
   TabBars2({Key? key, required this.part}) : super(key: key);
   String part;
@@ -512,12 +642,13 @@ class TabBars2 extends StatelessWidget {
     ScreenWidth s = ScreenWidth(context);
     return BlocProvider(
         create: (context) => BookmarkedExperienceCubit(),
-        child: BlocConsumer<BookmarkedExperienceCubit, BookmarkedExperienceState>(
-            listener: (context, state) {
-              if (state is BookmarkedExperienceError) {
-                ErrorPopup(context, state.message);
-              }
-            }, builder: (context, state) {
+        child:
+            BlocConsumer<BookmarkedExperienceCubit, BookmarkedExperienceState>(
+                listener: (context, state) {
+          if (state is BookmarkedExperienceError) {
+            ErrorPopup(context, state.message);
+          }
+        }, builder: (context, state) {
           if (state is BookmarkedExperienceLoading) {
             return const LoadingWidget();
           } else if (state is BookmarkedExperienceSuccess) {
@@ -546,7 +677,7 @@ class TabBars2 extends StatelessWidget {
                               color: theme.white,
                               image: const DecorationImage(
                                   image:
-                                  AssetImage("assets/images/profile.png"),
+                                      AssetImage("assets/images/profile.png"),
                                   fit: BoxFit.cover)),
                           margin: const EdgeInsets.all(7),
                           width: s.width / 2.28,
@@ -591,7 +722,7 @@ class TabBars2 extends StatelessWidget {
                               color: theme.white,
                               image: const DecorationImage(
                                   image:
-                                  AssetImage("assets/images/profile.png"),
+                                      AssetImage("assets/images/profile.png"),
                                   fit: BoxFit.cover)),
                           margin: const EdgeInsets.all(7),
                           width: s.width / 2.3,
