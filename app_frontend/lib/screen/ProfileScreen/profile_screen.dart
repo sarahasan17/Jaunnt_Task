@@ -11,6 +11,7 @@ import '../../constant/errors/error_popup.dart';
 import '../../constant/hive.dart';
 import '../../constant/loading_widget.dart';
 import 'EditProfile/Presentation/cubit/EditProfileCubit.dart';
+import 'experiencebyuser/presentation/experiencebyuser_cubit.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -161,8 +162,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                 controller: edit_bio,
                                                 key: _edit_bioFormKey,
                                                 textAlign: TextAlign.start,
-                                                cursorColor:
-                                                    theme.buttoncolor,
+                                                cursorColor: theme.buttoncolor,
                                                 decoration: InputDecoration(
                                                     contentPadding:
                                                         const EdgeInsets
@@ -384,103 +384,121 @@ class TabBars extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeHelper theme = ThemeHelper();
     ScreenWidth s = ScreenWidth(context);
-    return ListView.builder(
-        itemCount: 5,
-        scrollDirection: Axis.vertical,
-        itemBuilder: (BuildContext context, int index) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.4),
-                          spreadRadius: 3,
-                          blurRadius: 3,
-                          offset:
-                              const Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(20.0),
-                      color: theme.white,
-                      image: const DecorationImage(
-                          image: AssetImage("assets/images/profile.png"),
-                          fit: BoxFit.cover)),
-                  margin: const EdgeInsets.all(7),
-                  width: s.width / 2.28,
-                  height: s.height / 6.5,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
+    return BlocProvider(
+        create: (context) => ExperienceByUserCubit(),
+        child: BlocConsumer<ExperienceByUserCubit, ExperienceByUserState>(
+            listener: (context, state) {
+          if (state is ExperienceByUserError) {
+            ErrorPopup(context, state.message);
+          }
+        }, builder: (context, state) {
+          if (state is ExperienceByUserLoading) {
+            return const LoadingWidget();
+          } else if (state is ExperienceByUserSuccess) {
+            var ExperienceByUser = state.response;
+            return ListView.builder(
+                itemCount: 5,
+                scrollDirection: Axis.vertical,
+                itemBuilder: (BuildContext context, int index) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 3, horizontal: 8),
-                        width: s.width / 2.2,
-                        height: s.height / 35,
-                        decoration: BoxDecoration(
-                            color: theme.buttoncolor.withOpacity(0.5),
-                            borderRadius: const BorderRadius.only(
-                                bottomLeft: Radius.circular(15.0),
-                                bottomRight: Radius.circular(15.0))),
-                        child: Text(
-                          'Chunchi Falls',
-                          style: theme.font2
-                              .copyWith(color: theme.white, fontSize: 12),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.4),
+                                  spreadRadius: 3,
+                                  blurRadius: 3,
+                                  offset: const Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ],
+                              borderRadius: BorderRadius.circular(20.0),
+                              color: theme.white,
+                              image: const DecorationImage(
+                                  image:
+                                      AssetImage("assets/images/profile.png"),
+                                  fit: BoxFit.cover)),
+                          margin: const EdgeInsets.all(7),
+                          width: s.width / 2.28,
+                          height: s.height / 6.5,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 3, horizontal: 8),
+                                width: s.width / 2.2,
+                                height: s.height / 35,
+                                decoration: BoxDecoration(
+                                    color: theme.buttoncolor.withOpacity(0.5),
+                                    borderRadius: const BorderRadius.only(
+                                        bottomLeft: Radius.circular(15.0),
+                                        bottomRight: Radius.circular(15.0))),
+                                child: Text(
+                                  'Chunchi Falls',
+                                  style: theme.font2.copyWith(
+                                      color: theme.white, fontSize: 12),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.4),
+                                  spreadRadius: 3,
+                                  blurRadius: 3,
+                                  offset: const Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ],
+                              borderRadius: BorderRadius.circular(20.0),
+                              color: theme.white,
+                              image: const DecorationImage(
+                                  image:
+                                      AssetImage("assets/images/profile.png"),
+                                  fit: BoxFit.cover)),
+                          margin: const EdgeInsets.all(7),
+                          width: s.width / 2.3,
+                          height: s.height / 6.5,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 3, horizontal: 8),
+                                width: s.width / 2.3,
+                                height: s.height / 35,
+                                decoration: BoxDecoration(
+                                    color: theme.buttoncolor.withOpacity(0.5),
+                                    borderRadius: const BorderRadius.only(
+                                        bottomLeft: Radius.circular(15.0),
+                                        bottomRight: Radius.circular(15.0))),
+                                child: Text(
+                                  'Chunchi Falls',
+                                  style: theme.font2.copyWith(
+                                      color: theme.white, fontSize: 12),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.4),
-                          spreadRadius: 3,
-                          blurRadius: 3,
-                          offset:
-                              const Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(20.0),
-                      color: theme.white,
-                      image: const DecorationImage(
-                          image: AssetImage("assets/images/profile.png"),
-                          fit: BoxFit.cover)),
-                  margin: const EdgeInsets.all(7),
-                  width: s.width / 2.3,
-                  height: s.height / 6.5,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 3, horizontal: 8),
-                        width: s.width / 2.3,
-                        height: s.height / 35,
-                        decoration: BoxDecoration(
-                            color: theme.buttoncolor.withOpacity(0.5),
-                            borderRadius: const BorderRadius.only(
-                                bottomLeft: Radius.circular(15.0),
-                                bottomRight: Radius.circular(15.0))),
-                        child: Text(
-                          'Chunchi Falls',
-                          style: theme.font2
-                              .copyWith(color: theme.white, fontSize: 12),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          );
-        });
+                  );
+                });
+          } else {
+            return const SizedBox();
+          }
+        }));
   }
 }
