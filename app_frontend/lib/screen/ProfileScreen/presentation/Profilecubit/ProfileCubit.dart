@@ -19,4 +19,12 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(ProfileSuccess(r));
     });
   }
+
+  bool isLoggedinUserProfile(String id) {
+    if (USER_ID_KEY == id) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
