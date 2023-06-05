@@ -7,10 +7,18 @@ import 'package:dio/dio.dart';
 import '../../../../constant/errors/Failure.dart';
 import '../../../../constant/network_info.dart';
 
+class IsFriendResponse {
+  bool result;
+  IsFriendResponse({required this.result});
+  factory IsFriendResponse.fromJson(Map<String, dynamic> json) =>
+      IsFriendResponse(result: json["result"]);
+  Map<String, dynamic> toJson() => {"result": result};
+}
+
 class IsFriendRepo {
   final Dio _dio = Dio();
   final NetworkInfoImpl _networkInfo = NetworkInfoImpl();
-  Future<Either<Failure, bool>> isfriend(String id) async {
+  Future<Either<Failure, IsFriendResponse>> isfriend(String id) async {
     String url = "";
 
     if (await _networkInfo.isConnected()) {
@@ -20,10 +28,10 @@ class IsFriendRepo {
           data: jsonEncode({"friendId": id}),
         );
 
-        var body = response.data as bool;
+        var body = response.data;
         switch (response.statusCode) {
           case 200:
-            return Right(body as bool);
+            return Right(body);
           case 404:
             return Left(UserNotFound());
           default:

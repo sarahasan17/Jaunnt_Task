@@ -277,7 +277,7 @@ class _ProfileFollowersScreenState extends State<ProfileFollowersScreen>
                                                   } else if (state
                                                       is IsFriendSuccess) {
                                                     bool isfriend =
-                                                        state.response;
+                                                        state.response.result;
                                                     return GestureDetector(
                                                       onTap: () {
                                                         if (isfriend == true) {

@@ -7,7 +7,7 @@ class IsFriendInitial extends IsFriendState {}
 class IsFriendLoading extends IsFriendState {}
 
 class IsFriendSuccess extends IsFriendState {
-  bool response;
+  IsFriendResponse response;
   IsFriendSuccess(this.response);
 }
 

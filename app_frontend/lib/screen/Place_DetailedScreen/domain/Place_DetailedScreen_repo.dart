@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../constant/errors/Failure.dart';
 import '../../../constant/network_info.dart';
 import '../../../constant/sharedpref_keys.dart';
+import '../../../url_contants.dart';
 import '../data/Place_Detailedscreen_response.dart';
 
 class Place_DetailedScreenRepo {
@@ -16,7 +17,7 @@ class Place_DetailedScreenRepo {
     String token;
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     token = _prefs.getString(TOKEN_KEY) ?? "";
-    String url = "";
+    String url = getplace + "6438083e57420d8c86804f1f";
 
     if (await _networkInfo.isConnected()) {
       try {

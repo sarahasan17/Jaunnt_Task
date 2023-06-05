@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:app_frontend/url_contants.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,15 +15,16 @@ class ExperienceOfPlaceRepo {
   Future<Either<Failure, ExperienceOfPlaceResponse>> follower() async {
     String token;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString(TOKEN_KEY) ?? "";
-    String request = "";
+    token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NTlmNGFhMWUyODhkMzc3NTkwYzY0NyIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY4NTk2MzIyNSwiZXhwIjoxNjg2NTY4MDI1fQ.T1JT0yIQIebSGgWrQPuvd5HHX8LVxnkoXlTHObFQsK0";
+    String request = exp_of_place + "6438083e57420d8c86804f1f";
 
     if (await _networkInfo.isConnected()) {
       try {
         final Response response = await _dio.get(request,
             options: Options(
               headers: {
-                HttpHeaders.authorizationHeader: "Bearer $token",
+                HttpHeaders.authorizationHeader: "Bearer ",
               },
             ));
         var body = response.data as Map<String, dynamic>;

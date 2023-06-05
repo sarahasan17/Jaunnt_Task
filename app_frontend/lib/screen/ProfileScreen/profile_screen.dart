@@ -390,7 +390,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                 } else if (state
                                                     is IsFriendSuccess) {
                                                   bool isfriend =
-                                                      state.response;
+                                                      state.response.result;
                                                   return GestureDetector(
                                                     onTap: () {
                                                       setState(() {
