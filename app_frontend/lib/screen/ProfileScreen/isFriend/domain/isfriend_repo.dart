@@ -20,7 +20,7 @@ class IsFriendRepo {
           data: jsonEncode({"friendId": id}),
         );
 
-        var body = response.data as Map<String, dynamic>;
+        var body = response.data as bool;
         switch (response.statusCode) {
           case 200:
             return Right(body as bool);

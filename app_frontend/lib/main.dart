@@ -1,10 +1,13 @@
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/cubits/AddExperience_Cubit.dart';
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/cubits/EditExperience/EditExperience_cubit.dart';
 import 'package:app_frontend/screen/Explore/BOOKMARK/presentation/cubit/bookmark_cubit.dart';
+import 'package:app_frontend/screen/ProfileScreen/AddFriend/presentation/addfriend_cubit.dart';
 import 'package:app_frontend/screen/ProfileScreen/EditProfile/Presentation/cubit/EditProfileCubit.dart';
 import 'package:app_frontend/screen/ProfileScreen/bookmarkedexperience/presentation/bookmarkedexperience_cubit.dart';
 import 'package:app_frontend/screen/ProfileScreen/experiencebyuser/presentation/experiencebyuser_cubit.dart';
+import 'package:app_frontend/screen/ProfileScreen/isFriend/cubit/isfriend_cubit.dart';
 import 'package:app_frontend/screen/ProfileScreen/presentation/Profilecubit/ProfileCubit.dart';
+import 'package:app_frontend/screen/ProfileScreen/unfriend/presentation/unfriend_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -50,6 +53,19 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => BookmarkedExperienceCubit(),
         ),
+        BlocProvider(
+          create: (context) => BookmarkedExperienceCubit(),
+        ),
+        BlocProvider(
+          create: (context) => AddFriendCubit(),
+        ),
+        BlocProvider(
+          create: (context) => UnFriendCubit(),
+        ),
+        BlocProvider(
+          create: (context) => IsFriendCubit(),
+        ),
+
       ],
       child: MaterialApp.router(
         theme: ThemeData(scaffoldBackgroundColor: theme.backgroundColor),

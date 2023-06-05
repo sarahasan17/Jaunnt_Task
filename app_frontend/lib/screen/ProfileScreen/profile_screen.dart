@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:js_interop';
 import 'package:app_frontend/constant/screen_width.dart';
 import 'package:app_frontend/constant/theme/themehelper.dart';
 import 'package:app_frontend/screen/ProfileScreen/bookmarkedexperience/presentation/bookmarkedexperience_cubit.dart';
@@ -47,6 +46,7 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   bool user = false;
   bool friend = false;
+  @override
   Widget build(BuildContext context) {
     TabController tabcontroller = TabController(length: 2, vsync: this);
     ThemeHelper theme = ThemeHelper();
@@ -390,7 +390,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                 } else if (state
                                                     is IsFriendSuccess) {
                                                   bool isfriend =
-                                                      state.isDefinedAndNotNull;
+                                                      state.response;
                                                   return GestureDetector(
                                                     onTap: () {
                                                       setState(() {
@@ -400,13 +400,12 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                                   AddFriendCubit>()
                                                               .addfriend(
                                                                   profile.id);
-                                                        }
-                                                        else{
+                                                        } else {
                                                           context
                                                               .read<
-                                                              UnFriendCubit>()
+                                                                  UnFriendCubit>()
                                                               .unfriend(
-                                                              profile.id);
+                                                                  profile.id);
                                                         }
                                                       });
                                                     },

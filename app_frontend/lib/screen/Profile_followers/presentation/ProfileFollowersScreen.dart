@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:js_interop';
 import 'package:app_frontend/constant/screen_width.dart';
 import 'package:app_frontend/constant/theme/themehelper.dart';
 import 'package:flutter/material.dart';
@@ -277,8 +276,8 @@ class _ProfileFollowersScreenState extends State<ProfileFollowersScreen>
                                                     return const LoadingWidget();
                                                   } else if (state
                                                       is IsFriendSuccess) {
-                                                    bool isfriend = state
-                                                        .isDefinedAndNotNull;
+                                                    bool isfriend =
+                                                        state.response;
                                                     return GestureDetector(
                                                       onTap: () {
                                                         if (isfriend == true) {

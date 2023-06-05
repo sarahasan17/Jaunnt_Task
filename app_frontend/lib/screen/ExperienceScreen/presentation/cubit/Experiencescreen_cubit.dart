@@ -5,8 +5,8 @@ import '../../data/experiencescreen_response.dart';
 import '../../domain/ExperienceScreen_repo.dart';
 part 'Experiencescreen_state.dart';
 
-class HomeCubit extends Cubit<ExperienceState> {
-  HomeCubit() : super(ExperienceInitial());
+class ExperienceCubit extends Cubit<ExperienceState> {
+  ExperienceCubit() : super(ExperienceInitial());
   final ExperienceScreenRepo _experienceScreenRepo = ExperienceScreenRepo();
   void getProfile() async {
     emit(ExperienceLoading());

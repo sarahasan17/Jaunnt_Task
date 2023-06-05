@@ -9,8 +9,7 @@ class IsFriendCubit extends Cubit<IsFriendState> {
     emit(IsFriendLoading());
 
     var res = await _IsFriendRepo.isfriend(id);
-    res.fold((l) => emit(IsFriendError(l.message)), (r) async {
-      emit(IsFriendSuccess());
-    });
+    res.fold(
+        (l) => emit(IsFriendError(l.message)), (r) => emit(IsFriendSuccess(r)));
   }
 }
