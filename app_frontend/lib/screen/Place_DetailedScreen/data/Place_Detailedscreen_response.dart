@@ -8,7 +8,7 @@ class Place_DetailedResponse {
   String bestTime;
   String groupSize;
   String coverPhoto;
-  String images;
+  List<String> images;
   List<String> category;
   List<String> tags;
   int distance;

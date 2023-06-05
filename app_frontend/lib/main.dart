@@ -1,6 +1,8 @@
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/cubits/AddExperience_Cubit.dart';
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/cubits/EditExperience/EditExperience_cubit.dart';
 import 'package:app_frontend/screen/Explore/BOOKMARK/presentation/cubit/bookmark_cubit.dart';
+import 'package:app_frontend/screen/Place_DetailedScreen/ExperienceOfPlace/presentation/experienceofplace_cubit.dart';
+import 'package:app_frontend/screen/Place_DetailedScreen/presentation/cubit/place_detailedScreen_cubit.dart';
 import 'package:app_frontend/screen/ProfileScreen/AddFriend/presentation/addfriend_cubit.dart';
 import 'package:app_frontend/screen/ProfileScreen/EditProfile/Presentation/cubit/EditProfileCubit.dart';
 import 'package:app_frontend/screen/ProfileScreen/bookmarkedexperience/presentation/bookmarkedexperience_cubit.dart';
@@ -54,9 +56,6 @@ class MyApp extends StatelessWidget {
           create: (context) => BookmarkedExperienceCubit(),
         ),
         BlocProvider(
-          create: (context) => BookmarkedExperienceCubit(),
-        ),
-        BlocProvider(
           create: (context) => AddFriendCubit(),
         ),
         BlocProvider(
@@ -65,7 +64,12 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => IsFriendCubit(),
         ),
-
+        BlocProvider(
+          create: (context) => Place_DetailedCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ExperienceOfPlaceCubit(),
+        ),
       ],
       child: MaterialApp.router(
         theme: ThemeData(scaffoldBackgroundColor: theme.backgroundColor),

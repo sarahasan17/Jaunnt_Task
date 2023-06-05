@@ -23,48 +23,6 @@ const List<String> dummyImages = [
 const String dummyPlace = "Kabini backwaters";
 const String dummyDescription =
     "One of the best places to visit in the morning. Bahut acha place bhai. Esa kabhi nahi dekha jeevan mein... now bloody dummy text gchv nvhfcvvjfhfchg gcghfxhvhgcxtdx b";
-const List<ItineraryItem> dummyItinerary = [
-  ItineraryItem(
-      time: "04.00 am",
-      name: "Depart from Bengaluru",
-      description:
-          "Nandi Hills is around 60 km away from Bangalore and takes approximately 1.5-2 hours to reach"),
-  ItineraryItem(time: "05.30 am", name: "Sunrise at Nandi Hills"),
-  ItineraryItem(
-      time: "07.00 am",
-      name: "Exploring in and around",
-      description: "There is temple and small parks on top of Nandi hills"),
-  ItineraryItem(
-      time: "04.00 am",
-      name: "Depart from Bengaluru",
-      description:
-          "Nandi Hills is around 60 km away from Bangalore and takes approximately 1.5-2 hours to reach"),
-  ItineraryItem(time: "05.30 am", name: "Sunrise at Nandi Hills"),
-  ItineraryItem(
-      time: "07.00 am",
-      name: "Exploring in and around",
-      description: "There is temple and small parks on top of Nandi hills"),
-  ItineraryItem(
-      time: "04.00 am",
-      name: "Depart from Bengaluru",
-      description:
-          "Nandi Hills is around 60 km away from Bangalore and takes approximately 1.5-2 hours to reach"),
-  ItineraryItem(time: "05.30 am", name: "Sunrise at Nandi Hills"),
-  ItineraryItem(
-      time: "07.00 am",
-      name: "Exploring in and around",
-      description: "There is temple and small parks on top of Nandi hills"),
-  ItineraryItem(
-      time: "04.00 am",
-      name: "Depart from Bengaluru",
-      description:
-          "Nandi Hills is around 60 km away from Bangalore and takes approximately 1.5-2 hours to reach"),
-  ItineraryItem(time: "05.30 am", name: "Sunrise at Nandi Hills"),
-  ItineraryItem(
-      time: "07.00 am",
-      name: "Exploring in and around",
-      description: "There is temple and small parks on top of Nandi hills"),
-];
 
 class ExperienceScreen extends StatefulWidget {
   //String? id;
@@ -81,11 +39,6 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
   final int _numTabs = 3;
   int _activepage = 0;
   final List<String> _tabHeaders = ["Overview", "Itinerary", "Experiences"];
-  final List<Widget> _tabs = [
-    const OverviewTab(placeName: dummyPlace, description: dummyDescription),
-    const ItineraryTab(items: dummyItinerary),
-    const ExperienceTab(placeName: dummyPlace, description: dummyDescription),
-  ];
   List<String> image = [
     "image_1.png",
     "review3.png",

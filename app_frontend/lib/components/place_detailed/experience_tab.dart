@@ -1,23 +1,22 @@
+import 'package:app_frontend/screen/Place_DetailedScreen/ExperienceOfPlace/data/experienceofplace_response.dart';
+import 'package:app_frontend/screen/Place_DetailedScreen/data/Place_Detailedscreen_response.dart';
 import 'package:flutter/material.dart';
 import '../../config/colors.dart';
 import '../common/basic_elevated_card.dart';
 
 class ExperienceTab extends StatelessWidget {
-  const ExperienceTab(
-      {super.key, required this.placeName, required this.description});
-
-  final String placeName;
-  final String description;
+  ExperienceTab({super.key, required this.place});
+  ExperienceOfPlaceResponse place;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: 5,
+        itemCount: place.experienceOfPlaceResponse.length,
         scrollDirection: Axis.vertical,
         itemBuilder: (BuildContext context, int index) {
           return Container(
-            padding: EdgeInsets.only(left: 17, right: 17, bottom: 5),
+            padding: const EdgeInsets.only(left: 17, right: 17, bottom: 5),
             child: BasicElevatedCard(
                 margin: const EdgeInsets.symmetric(vertical: 8),
                 child: Container(
@@ -26,7 +25,7 @@ class ExperienceTab extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        placeName,
+                        place.experienceOfPlaceResponse[index].postedBy,
                         style: TextStyle(
                             color: textColorPrimaryDark,
                             fontSize: 24,
@@ -34,7 +33,7 @@ class ExperienceTab extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        description,
+                        place.experienceOfPlaceResponse[index].discription,
                         style: TextStyle(
                             color: textColorBlack,
                             fontSize: 14,

@@ -1,17 +1,14 @@
 import 'package:app_frontend/constant/screen_width.dart';
 import 'package:app_frontend/constant/theme/themehelper.dart';
+import 'package:app_frontend/screen/Place_DetailedScreen/data/Place_Detailedscreen_response.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../config/colors.dart';
 import '../common/basic_elevated_card.dart';
 
 class OverviewTab extends StatelessWidget {
-  const OverviewTab(
-      {super.key, required this.placeName, required this.description});
-
-  final String placeName;
-  final String description;
-
+  OverviewTab({super.key, required this.place});
+  Place_DetailedResponse place;
   @override
   Widget build(BuildContext context) {
     ThemeHelper theme = ThemeHelper();
@@ -38,7 +35,7 @@ class OverviewTab extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Nandi Hills',
+                  Text(place.placeName,
                       style: theme.font8
                           .copyWith(fontSize: 24, fontWeight: FontWeight.bold)),
                   const SizedBox(
@@ -46,7 +43,7 @@ class OverviewTab extends StatelessWidget {
                   ),
                   Container(
                     child: Text(
-                      'Nandi Hills is a scenic hill station located in the state of Karnataka, India. It is situated at an altitude of 1,478 meters above sea level and is a popular tourist destination for both locals and visitors from around the world.',
+                      place.description,
                       style: theme.font7.copyWith(fontSize: 14),
                     ),
                   )
@@ -94,7 +91,7 @@ class OverviewTab extends StatelessWidget {
                                   SizedBox(
                                     height: s.height / 300,
                                   ),
-                                  Text('40km from you',
+                                  Text(place.distance.toString(),
                                       style: theme.font8.copyWith(fontSize: 13))
                                 ],
                               )
@@ -120,7 +117,7 @@ class OverviewTab extends StatelessWidget {
                                   SizedBox(
                                     height: s.height / 300,
                                   ),
-                                  Text('4 wheelers',
+                                  Text(place.transportMode,
                                       style: theme.font8.copyWith(fontSize: 13))
                                 ],
                               )
@@ -146,7 +143,7 @@ class OverviewTab extends StatelessWidget {
                                   SizedBox(
                                     height: s.height / 300,
                                   ),
-                                  Text('4.5',
+                                  Text("place.vistorsRating",
                                       style: theme.font8.copyWith(fontSize: 13))
                                 ],
                               )
@@ -174,7 +171,7 @@ class OverviewTab extends StatelessWidget {
                                   SizedBox(
                                     height: s.height / 300,
                                   ),
-                                  Text('5 hours',
+                                  Text('${place.tripTime} hours',
                                       style: theme.font8.copyWith(fontSize: 13))
                                 ],
                               )
@@ -197,8 +194,15 @@ class OverviewTab extends StatelessWidget {
                                   SizedBox(
                                     height: s.height / 300,
                                   ),
-                                  Text('Popular, Trending',
-                                      style: theme.font8.copyWith(fontSize: 13))
+                                  ListView.builder(
+                                      itemCount: place.tags.length,
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return Text("${place.tags[index]} ",
+                                            style: theme.font8
+                                                .copyWith(fontSize: 13));
+                                      }),
                                 ],
                               )
                             ],
@@ -220,7 +224,7 @@ class OverviewTab extends StatelessWidget {
                                   SizedBox(
                                     height: s.height / 300,
                                   ),
-                                  Text('Sept. to March',
+                                  Text(place.bestTime,
                                       style: theme.font8.copyWith(fontSize: 13))
                                 ],
                               )
@@ -298,14 +302,15 @@ class OverviewTab extends StatelessWidget {
                                   child: RichText(
                                     textScaleFactor: 1.1,
                                     text: TextSpan(
-                                      text: ' Trekking: ',
+                                      text:
+                                          ' ${place.thingsToDo[index].title}: ',
                                       style: theme.font8.copyWith(
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold),
                                       children: [
                                         TextSpan(
                                             text:
-                                                ' Explore Skandagiri, Brahmagiri, Chennarayana Durga. ',
+                                                ' ${place.thingsToDo[index].description} ',
                                             style: theme.font8.copyWith(
                                               fontSize: 14,
                                             )),
