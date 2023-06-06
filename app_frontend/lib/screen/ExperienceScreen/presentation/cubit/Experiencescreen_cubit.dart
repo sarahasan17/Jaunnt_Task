@@ -11,10 +11,10 @@ class ExperienceCubit extends Cubit<ExperienceState> {
   void getProfile() async {
     emit(ExperienceLoading());
 
-    var res = await _experienceScreenRepo.getProfile();
+    var res = await _experienceScreenRepo.getexp();
     res.fold((l) => emit(ExperienceError(l.message)), (r) async {
       SharedPreferences pref = await SharedPreferences.getInstance();
-      pref.setString(USER_ID_KEY, "");
+      //pref.setString(USER_ID_KEY, "");
       emit(ExperienceSuccess(r));
     });
   }

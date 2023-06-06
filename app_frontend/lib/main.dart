@@ -18,6 +18,7 @@ import 'constant/navigation/autorouter.dart';
 import 'constant/theme/themehelper.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   initGetIt();
   getIt.registerSingleton<AppRouter>(AppRouter());
   await Hive.initFlutter();

@@ -12,7 +12,7 @@ class EditExperienceRepo {
   final NetworkInfoImpl _networkInfo = NetworkInfoImpl();
   Future<Either<Failure, Map<String, dynamic>>> editexperience(
       File files) async {
-    String url = "";
+    String url = "http://localhost:8080/exp/640b56391e5921443408a7e9";
 
     if (await _networkInfo.isConnected()) {
       try {

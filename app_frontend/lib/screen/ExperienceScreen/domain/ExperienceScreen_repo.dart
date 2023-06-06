@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:app_frontend/url_contants.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,11 +13,14 @@ class ExperienceScreenRepo {
   final Dio _dio = Dio();
   final NetworkInfoImpl _networkInfo = NetworkInfoImpl();
 
-  Future<Either<Failure, ExperienceResponse>> getProfile() async {
+  Future<Either<Failure, ExperienceResponse>> getexp() async {
     String token;
     SharedPreferences _prefs = await SharedPreferences.getInstance();
-    token = _prefs.getString(TOKEN_KEY) ?? "";
-    String url = "";
+    //token = _prefs.getString(TOKEN_KEY) ?? "";
+    token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NTlmNGFhMWUyODhkMzc3NTkwYzY0NyIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY4NjA1MjEwOSwiZXhwIjoxNjg2NjU2OTA5fQ.447NjA-0sMKMDKWUukyhAdm2B6yKJUI0ASkViEnw1Xk";
+
+    String url = "${getexp}647ccedec77cc64bf3388b1f";
 
     if (await _networkInfo.isConnected()) {
       try {
@@ -30,7 +34,7 @@ class ExperienceScreenRepo {
         var body = response.data as Map<String, dynamic>;
         switch (response.statusCode) {
           case 200:
-          //return Right(ExperienceResponse.fromJson(body));
+            return Right(ExperienceResponse.fromJson(body));
 
           default:
             return Left(UnidentifiedFailure());

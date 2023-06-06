@@ -5,7 +5,7 @@ import '../common/image_carousel.dart';
 
 const double avatarRadius = 20;
 
-class ExperienceCard extends StatelessWidget {
+class ExperienceCard extends StatefulWidget {
   const ExperienceCard(
       {super.key,
       required this.images,
@@ -18,6 +18,11 @@ class ExperienceCard extends StatelessWidget {
   final String placeName;
   final String description;
 
+  @override
+  State<ExperienceCard> createState() => _ExperienceCardState();
+}
+
+class _ExperienceCardState extends State<ExperienceCard> {
   Widget _getBottomInfoWidget() {
     return Builder(
       builder: (BuildContext context) {
@@ -35,7 +40,7 @@ class ExperienceCard extends StatelessWidget {
                     backgroundColor: primaryColor,
                     radius: avatarRadius,
                     child: Text(
-                      profileName[0],
+                      widget.profileName[0],
                       style: TextStyle(color: textColorWhite, fontSize: 28),
                     ),
                   ),
@@ -49,7 +54,7 @@ class ExperienceCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            profileName,
+                            widget.profileName,
                             style: TextStyle(
                                 color: textColorWhite,
                                 fontSize: 18,
@@ -58,7 +63,7 @@ class ExperienceCard extends StatelessWidget {
                             maxLines: 1,
                           ),
                           Text(
-                            placeName,
+                            widget.placeName,
                             style: TextStyle(
                                 color: textColorWhite,
                                 fontSize: 14,
@@ -72,12 +77,12 @@ class ExperienceCard extends StatelessWidget {
                   ),
                 ],
               ),
-              (description == "")
+              (widget.description == "")
                   ? const SizedBox.shrink()
                   : Container(
                       padding: const EdgeInsets.fromLTRB(12, 6, 0, 0),
                       child: Text(
-                        description,
+                        widget.description,
                         style: TextStyle(
                             color: textColorWhite,
                             fontSize: 12,
@@ -96,7 +101,7 @@ class ExperienceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if ((profileName == "") || (images.isEmpty)) {
+    if ((widget.profileName == "") || (widget.images.isEmpty)) {
       // Empty Widget
       return const SizedBox.shrink();
     }
@@ -105,7 +110,7 @@ class ExperienceCard extends StatelessWidget {
       child: BasicElevatedCard(
         margin: const EdgeInsets.symmetric(vertical: 8),
         child: ImageCarousel(
-          images: images,
+          images: widget.images,
           bottomInfoWidget: _getBottomInfoWidget(),
         ),
       ),

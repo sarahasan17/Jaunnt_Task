@@ -3,7 +3,7 @@ import '../../config/colors.dart';
 import '../common/basic_elevated_card.dart';
 import '../common/image_carousel.dart';
 
-class PlaceCard extends StatelessWidget {
+class PlaceCard extends StatefulWidget {
   const PlaceCard(
       {super.key,
       required this.images,
@@ -16,6 +16,11 @@ class PlaceCard extends StatelessWidget {
   final String description;
   final String tags;
 
+  @override
+  State<PlaceCard> createState() => _PlaceCardState();
+}
+
+class _PlaceCardState extends State<PlaceCard> {
   Widget _getBottomInfoWidget() {
     return Builder(
       builder: (BuildContext context) {
@@ -31,7 +36,7 @@ class PlaceCard extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: Text(
-                      placeName,
+                      widget.placeName,
                       style: TextStyle(
                           color: textColorWhite,
                           fontSize: 18,
@@ -47,7 +52,7 @@ class PlaceCard extends StatelessWidget {
                 ],
               ),
               Text(
-                description,
+                widget.description,
                 style: TextStyle(
                     color: textColorWhite,
                     fontSize: 12,
@@ -66,7 +71,7 @@ class PlaceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if ((placeName == "") || (images.isEmpty)) {
+    if ((widget.placeName == "") || (widget.images.isEmpty)) {
       // Empty Widget
       return const SizedBox.shrink();
     }
@@ -75,7 +80,7 @@ class PlaceCard extends StatelessWidget {
       child: BasicElevatedCard(
         margin: const EdgeInsets.symmetric(vertical: 8),
         child: ImageCarousel(
-          images: images,
+          images: widget.images,
           bottomInfoWidget: _getBottomInfoWidget(),
         ),
       ),

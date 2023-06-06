@@ -6,9 +6,15 @@ import 'package:flutter/material.dart';
 import '../../config/colors.dart';
 import '../common/basic_elevated_card.dart';
 
-class OverviewTab extends StatelessWidget {
+class OverviewTab extends StatefulWidget {
   OverviewTab({super.key, required this.place});
   Place_DetailedResponse place;
+
+  @override
+  State<OverviewTab> createState() => _OverviewTabState();
+}
+
+class _OverviewTabState extends State<OverviewTab> {
   @override
   Widget build(BuildContext context) {
     ThemeHelper theme = ThemeHelper();
@@ -35,7 +41,7 @@ class OverviewTab extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(place.placeName,
+                  Text(widget.place.placeName,
                       style: theme.font8
                           .copyWith(fontSize: 24, fontWeight: FontWeight.bold)),
                   const SizedBox(
@@ -43,7 +49,7 @@ class OverviewTab extends StatelessWidget {
                   ),
                   Container(
                     child: Text(
-                      place.description,
+                      widget.place.description,
                       style: theme.font7.copyWith(fontSize: 14),
                     ),
                   )
@@ -91,7 +97,7 @@ class OverviewTab extends StatelessWidget {
                                   SizedBox(
                                     height: s.height / 300,
                                   ),
-                                  Text(place.distance.toString(),
+                                  Text(widget.place.distance.toString(),
                                       style: theme.font8.copyWith(fontSize: 13))
                                 ],
                               )
@@ -117,7 +123,7 @@ class OverviewTab extends StatelessWidget {
                                   SizedBox(
                                     height: s.height / 300,
                                   ),
-                                  Text(place.transportMode,
+                                  Text(widget.place.transportMode,
                                       style: theme.font8.copyWith(fontSize: 13))
                                 ],
                               )
@@ -171,7 +177,7 @@ class OverviewTab extends StatelessWidget {
                                   SizedBox(
                                     height: s.height / 300,
                                   ),
-                                  Text('${place.tripTime} hours',
+                                  Text('${widget.place.tripTime} hours',
                                       style: theme.font8.copyWith(fontSize: 13))
                                 ],
                               )
@@ -195,11 +201,11 @@ class OverviewTab extends StatelessWidget {
                                     height: s.height / 300,
                                   ),
                                   ListView.builder(
-                                      itemCount: place.tags.length,
+                                      itemCount: widget.place.tags.length,
                                       scrollDirection: Axis.horizontal,
                                       itemBuilder:
                                           (BuildContext context, int index) {
-                                        return Text("${place.tags[index]} ",
+                                        return Text("${widget.place.tags[index]} ",
                                             style: theme.font8
                                                 .copyWith(fontSize: 13));
                                       }),
@@ -224,7 +230,7 @@ class OverviewTab extends StatelessWidget {
                                   SizedBox(
                                     height: s.height / 300,
                                   ),
-                                  Text(place.bestTime,
+                                  Text(widget.place.bestTime,
                                       style: theme.font8.copyWith(fontSize: 13))
                                 ],
                               )
@@ -303,14 +309,14 @@ class OverviewTab extends StatelessWidget {
                                     textScaleFactor: 1.1,
                                     text: TextSpan(
                                       text:
-                                          ' ${place.thingsToDo[index].title}: ',
+                                          ' ${widget.place.thingsToDo[index].title}: ',
                                       style: theme.font8.copyWith(
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold),
                                       children: [
                                         TextSpan(
                                             text:
-                                                ' ${place.thingsToDo[index].description} ',
+                                                ' ${widget.place.thingsToDo[index].description} ',
                                             style: theme.font8.copyWith(
                                               fontSize: 14,
                                             )),

@@ -396,7 +396,6 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                                           Planner(
                                             controller: hour,
                                             s: s,
-                                            key: _hourFormKey,
                                             theme: theme,
                                             unit: 'hours',
                                             count: count1,

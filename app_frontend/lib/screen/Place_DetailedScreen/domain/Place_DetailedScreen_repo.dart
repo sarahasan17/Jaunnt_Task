@@ -16,7 +16,9 @@ class Place_DetailedScreenRepo {
   Future<Either<Failure, Place_DetailedResponse>> getProfile() async {
     String token;
     SharedPreferences _prefs = await SharedPreferences.getInstance();
-    token = _prefs.getString(TOKEN_KEY) ?? "";
+    //token = _prefs.getString(TOKEN_KEY) ?? "";
+    token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NTlmNGFhMWUyODhkMzc3NTkwYzY0NyIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY4NjA1MjEwOSwiZXhwIjoxNjg2NjU2OTA5fQ.447NjA-0sMKMDKWUukyhAdm2B6yKJUI0ASkViEnw1Xk";
     String url = getplace + "6438083e57420d8c86804f1f";
 
     if (await _networkInfo.isConnected()) {
@@ -31,7 +33,7 @@ class Place_DetailedScreenRepo {
         var body = response.data as Map<String, dynamic>;
         switch (response.statusCode) {
           case 200:
-          //return Right(ExperienceResponse.fromJson(body));
+            return Right(Place_DetailedResponse.fromJson(body));
 
           default:
             return Left(UnidentifiedFailure());

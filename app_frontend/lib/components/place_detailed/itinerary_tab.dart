@@ -20,16 +20,21 @@ const double circleBarWidth = 4;
 const double cardRadius = 16;
 const double cardElevation = 8;
 
-class ItineraryTab extends StatelessWidget {
+class ItineraryTab extends StatefulWidget {
   ItineraryTab({super.key, required this.place});
   Place_DetailedResponse place;
 
+  @override
+  State<ItineraryTab> createState() => _ItineraryTabState();
+}
+
+class _ItineraryTabState extends State<ItineraryTab> {
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 8, 16, 16),
       child: ListView.builder(
-        itemCount: place.itenirary.length,
+        itemCount: widget.place.itenirary.length,
         itemBuilder: (BuildContext context, int index) {
           return Stack(
             children: <Widget>[
@@ -43,7 +48,7 @@ class ItineraryTab extends StatelessWidget {
                     borderRadius: BorderRadius.vertical(
                       top: Radius.circular((index == 0) ? cardRadius : 0),
                       bottom: Radius.circular(
-                          (index == place.itenirary.length - 1)
+                          (index == widget.place.itenirary.length - 1)
                               ? cardRadius
                               : 0),
                     ),
@@ -58,26 +63,26 @@ class ItineraryTab extends StatelessWidget {
                           style: DefaultTextStyle.of(context).style,
                           children: <TextSpan>[
                             TextSpan(
-                                text: "${place.itenirary[index].time}:  ",
+                                text: "${widget.place.itenirary[index].time}:  ",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     fontSize: 16,
                                     color: textColorBlack)),
                             TextSpan(
-                                text: place.itenirary[index].title,
+                                text: widget.place.itenirary[index].title,
                                 style: TextStyle(
                                     fontSize: 16, color: textColorBlack)),
                           ],
                         ),
                       ),
                       collapsed: const SizedBox.shrink(),
-                      expanded: (place.itenirary[index].description == "")
+                      expanded: (widget.place.itenirary[index].description == "")
                           ? const SizedBox.shrink()
                           : Column(
                               children: <Widget>[
                                 const SizedBox(height: 8),
                                 Text(
-                                  place.itenirary[index].description,
+                                  widget.place.itenirary[index].description,
                                   style: TextStyle(
                                       color: textColorBlack, fontSize: 14),
                                 ),

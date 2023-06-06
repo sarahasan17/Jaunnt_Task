@@ -11,7 +11,7 @@ class AddExperienceRepo {
   final NetworkInfoImpl _networkInfo = NetworkInfoImpl();
   Future<Either<Failure, Map<String, dynamic>>> addexp(
       AddExperienceRequest request) async {
-    String url = "";
+    String url = "http://localhost:8080/exp/create";
 
     if (await _networkInfo.isConnected()) {
       try {

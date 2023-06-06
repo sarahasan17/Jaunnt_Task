@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../config/colors.dart';
 
-class TabButton extends StatelessWidget {
+class TabButton extends StatefulWidget {
   const TabButton(
       {super.key,
       required this.text,
@@ -14,20 +14,26 @@ class TabButton extends StatelessWidget {
   final void Function() onPressed;
 
   @override
+  State<TabButton> createState() => _TabButtonState();
+}
+
+class _TabButtonState extends State<TabButton> {
+  @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onPressed,
+      onPressed: widget.onPressed,
       style: ElevatedButton.styleFrom(
         shape: const StadiumBorder(),
-        backgroundColor: active ? primaryDarkColor : Colors.white,
+        backgroundColor: widget.active ? primaryDarkColor : Colors.white,
         padding: const EdgeInsets.symmetric(horizontal: 32),
         animationDuration: const Duration(milliseconds: 300),
         foregroundColor: primaryColor,
       ),
       child: Text(
-        text,
+        widget.text,
         style: TextStyle(
-            color: active ? textColorWhite : textColorBlack, fontSize: 12),
+            color: widget.active ? textColorWhite : textColorBlack,
+            fontSize: 12),
         textAlign: TextAlign.center,
       ),
     );

@@ -16,7 +16,7 @@ class ExperienceOfPlaceRepo {
     String token;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NTlmNGFhMWUyODhkMzc3NTkwYzY0NyIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY4NTk2MzIyNSwiZXhwIjoxNjg2NTY4MDI1fQ.T1JT0yIQIebSGgWrQPuvd5HHX8LVxnkoXlTHObFQsK0";
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NTlmNGFhMWUyODhkMzc3NTkwYzY0NyIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY4NjA1MjEwOSwiZXhwIjoxNjg2NjU2OTA5fQ.447NjA-0sMKMDKWUukyhAdm2B6yKJUI0ASkViEnw1Xk";
     String request = exp_of_place + "6438083e57420d8c86804f1f";
 
     if (await _networkInfo.isConnected()) {

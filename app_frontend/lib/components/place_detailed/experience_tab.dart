@@ -4,15 +4,20 @@ import 'package:flutter/material.dart';
 import '../../config/colors.dart';
 import '../common/basic_elevated_card.dart';
 
-class ExperienceTab extends StatelessWidget {
+class ExperienceTab extends StatefulWidget {
   ExperienceTab({super.key, required this.place});
   ExperienceOfPlaceResponse place;
 
   @override
+  State<ExperienceTab> createState() => _ExperienceTabState();
+}
+
+class _ExperienceTabState extends State<ExperienceTab> {
+  @override
   Widget build(BuildContext context) {
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: place.experienceOfPlaceResponse.length,
+        itemCount: widget.place.experienceOfPlaceResponse.length,
         scrollDirection: Axis.vertical,
         itemBuilder: (BuildContext context, int index) {
           return Container(
@@ -25,7 +30,7 @@ class ExperienceTab extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        place.experienceOfPlaceResponse[index].postedBy,
+                        widget.place.experienceOfPlaceResponse[index].postedBy,
                         style: TextStyle(
                             color: textColorPrimaryDark,
                             fontSize: 24,
@@ -33,7 +38,8 @@ class ExperienceTab extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        place.experienceOfPlaceResponse[index].discription,
+                        widget
+                            .place.experienceOfPlaceResponse[index].discription,
                         style: TextStyle(
                             color: textColorBlack,
                             fontSize: 14,
