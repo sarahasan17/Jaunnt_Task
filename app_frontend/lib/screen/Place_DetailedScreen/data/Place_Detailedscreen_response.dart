@@ -4,15 +4,15 @@ class Place_DetailedResponse {
   String placeLocation;
   String description;
   String transportMode;
-  int tripTime;
+  String tripTime;
   String bestTime;
-  String groupSize;
+  int groupSize;
   String coverPhoto;
   List<String> images;
   List<String> category;
   List<String> tags;
-  int distance;
-  int length;
+  int? distance;
+  int? length;
   List<ThingsToDo> thingsToDo;
   List<Itenirary> itenirary;
   List<String> similarPlaces;
@@ -21,8 +21,8 @@ class Place_DetailedResponse {
   Place_DetailedResponse(
       {required this.description,
       required this.id,
-      required this.length,
-      required this.distance,
+      this.length,
+      this.distance,
       required this.updatedAt,
       required this.createdAt,
       required this.category,
@@ -38,45 +38,51 @@ class Place_DetailedResponse {
       required this.tags,
       required this.thingsToDo,
       required this.transportMode});
-  factory Place_DetailedResponse.fromJson(Map<String, dynamic> json) =>
-      Place_DetailedResponse(
-          description: json["description"],
-          id: json["_id"],
-          length: json["length"],
-          distance: json["distance"],
-          updatedAt: json["updatedAt"],
-          createdAt: json["createdAt"],
-          category: json["category"],
-          tripTime: json["tripTime"],
-          groupSize: json["groupSize"],
-          bestTime: json["bestTime"],
-          coverPhoto: json["coverPhoto"],
-          images: json["images"],
-          itenirary: List<Itenirary>.from(
-              json["itenirary"].map((x) => Itenirary.fromJson(x))),
-          placeLocation: json["placeLocation"],
-          placeName: json["placeName"],
-          similarPlaces: json["similarPlaces"],
-          tags: json["tags"],
-          thingsToDo: List<ThingsToDo>.from(
-              json["thingsToDo"].map((x) => ThingsToDo.fromJson(x))),
-          transportMode: json["similarPlaces"]);
+  factory Place_DetailedResponse.fromJson(Map<String, dynamic> json) {
+    print(json);
+    return Place_DetailedResponse(
+      description: json["description"],
+      id: json["_id"],
+      length: json["length"] as int,
+      distance: 0,
+      updatedAt: json["updatedAt"],
+      createdAt: json["createdAt"],
+      category: List<String>.from(json["category"].map((x) => x.toString())),
+      tripTime: json["tripTime"],
+      groupSize: json["groupSize"],
+      bestTime: json["bestTime"],
+      coverPhoto: json["coverPhoto"],
+      images: List<String>.from(json["images"].map((x) => x.toString())),
+      itenirary: List<Itenirary>.from(
+          json["itenirary"].map((x) => Itenirary.fromJson(x))),
+      placeLocation: json["placeLocation"],
+      placeName: json["placeName"],
+      similarPlaces:
+          List<String>.from(json["similarPlaces"].map((x) => x.toString())),
+      tags: List<String>.from(json["tags"].map((x) => x.toString())),
+      thingsToDo: List<ThingsToDo>.from(
+          json["thingsToDo"].map((x) => ThingsToDo.fromJson(x))),
+      transportMode: json["transportMode"],
+    );
+  }
+
   Map<String, dynamic> toJson() => {
         "description": description,
         "_id": id,
         "transportMode": transportMode,
-        "tags": tags,
-        "similarPlaces": similarPlaces,
+        "tags": List<dynamic>.from(tags.map((x) => x.toString())),
+        "similarPlaces":
+            List<dynamic>.from(similarPlaces.map((x) => x.toString())),
         "placeName": placeName,
         "placeLocation": placeLocation,
         "updatedAt": updatedAt,
         "createdAt": createdAt,
-        "category": category,
+        "category": List<dynamic>.from(category.map((x) => x.toString())),
         "tripTime": tripTime,
         "groupSize": groupSize,
         "bestTime": bestTime,
         "coverPhoto": coverPhoto,
-        "images": images,
+        "images": List<dynamic>.from(images.map((x) => x.toString())),
         "length": length,
         "distance": distance,
         "thingsToDo": List<dynamic>.from(thingsToDo.map((x) => x.toJson())),

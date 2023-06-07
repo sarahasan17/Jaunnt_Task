@@ -65,9 +65,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => IsFriendCubit(),
         ),
-        BlocProvider(
-          create: (context) => Place_DetailedCubit(),
-        ),
+        BlocProvider(create: (context) {
+          print("place detail main.dart");
+          return Place_DetailedCubit();
+        }),
         BlocProvider(
           create: (context) => ExperienceOfPlaceCubit(),
         ),

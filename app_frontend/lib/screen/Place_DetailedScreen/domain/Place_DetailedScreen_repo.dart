@@ -12,14 +12,15 @@ import '../data/Place_Detailedscreen_response.dart';
 class Place_DetailedScreenRepo {
   final Dio _dio = Dio();
   final NetworkInfoImpl _networkInfo = NetworkInfoImpl();
-
-  Future<Either<Failure, Place_DetailedResponse>> getProfile() async {
+  Future<Either<Failure, Place_DetailedResponse>> place() async {
+    print("repo called");
     String token;
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    //SharedPreferences _prefs = await SharedPreferences.getInstance();
     //token = _prefs.getString(TOKEN_KEY) ?? "";
     token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NTlmNGFhMWUyODhkMzc3NTkwYzY0NyIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY4NjA1MjEwOSwiZXhwIjoxNjg2NjU2OTA5fQ.447NjA-0sMKMDKWUukyhAdm2B6yKJUI0ASkViEnw1Xk";
-    String url = getplace + "6438083e57420d8c86804f1f";
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MGI1MTJlMDgxNWIyZWI2MGZmYzBkOCIsImlhdCI6MTY3ODQ2MzQ3MywiZXhwIjoxNjc4NTQ5ODczfQ.Xi88oMZW3jduRg6XJyFX3-vjeB6dmTCIQJTxCExQkw8";
+    String url =
+        "https://jaunnt-app-production.up.railway.app/places/6438083e57420d8c86804f1f";
 
     if (await _networkInfo.isConnected()) {
       try {
@@ -33,14 +34,17 @@ class Place_DetailedScreenRepo {
         var body = response.data as Map<String, dynamic>;
         switch (response.statusCode) {
           case 200:
+            print("Done");
             return Right(Place_DetailedResponse.fromJson(body));
 
           default:
+            print("Default");
             return Left(UnidentifiedFailure());
         }
       } catch (e) {
         log(e.toString());
         if (e is DioError) {
+          print(e);
           log(e.response?.data.toString() ?? '');
           switch (e.response?.statusCode) {
             case 500:

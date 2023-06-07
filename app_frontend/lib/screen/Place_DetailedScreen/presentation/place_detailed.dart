@@ -96,77 +96,80 @@ class _PlaceDetailedState extends State<PlaceDetailed> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => Place_DetailedCubit(),
-        child: BlocConsumer<Place_DetailedCubit, Place_DetailedState>(
-            listener: (context, state) {
-          if (state is Place_DetailedError) {
-            ErrorPopup(context, state.message);
+    return BlocConsumer<Place_DetailedCubit, Place_DetailedState>(
+        listener: (context, state) {
+      //print(state);
+      if (state is Place_DetailedError) {
+        ErrorPopup(context, state.message);
+      }
+      if (state is Place_DetailedInitial) {
+        print("Initial");
+      }
+    }, builder: (context, state) {
+      print(state);
+      if (state is Place_DetailedLoading) {
+        return const LoadingWidget();
+      } else if (state is Place_DetailedSuccess) {
+        var place = state.response;
+        print("place");
+        return Scaffold(
+            body: SafeArea(
+                child: BlocConsumer<ExperienceOfPlaceCubit,
+                    ExperienceOfPlaceState>(listener: (context, state) {
+          if (state is ExperienceOfPlaceError) {
+            ErrorPopup(context, state.msg);
           }
         }, builder: (context, state) {
-          if (state is Place_DetailedLoading) {
+          if (state is ExperienceOfPlaceLoading) {
             return const LoadingWidget();
-          } else if (state is Place_DetailedSuccess) {
-            var place = state.response;
-            return BlocConsumer<ExperienceOfPlaceCubit, ExperienceOfPlaceState>(
-                listener: (context, state) {
-              if (state is ExperienceOfPlaceError) {
-                ErrorPopup(context, state.msg);
-              }
-            }, builder: (context, state) {
-              if (state is ExperienceOfPlaceLoading) {
-                return const LoadingWidget();
-              } else if (state is ExperienceOfPlaceSuccess) {
-                var place2 = state.response;
-                final List<Widget> _tabs = [
-                  OverviewTab(place: place),
-                  ItineraryTab(place: place),
-                  ExperienceTab(place: place2),
-                ];
-                return Scaffold(
-                  body: SafeArea(
-                    child: Container(
-                      child: Column(
-                        //shrinkWrap: true,
-                        children: [
-                          ImageCarousel(
-                            images: place.images,
-                            bottomInfoWidget: const SizedBox.shrink(),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 8),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: _getTabHeaders(),
-                            ),
-                          ),
-                          Expanded(
-                            child: PageView.builder(
-                              controller: _controller,
-                              onPageChanged: (int newPage) {
-                                setState(() {
-                                  _activePage = newPage;
-                                });
-                              },
-                              itemCount: _numTabs,
-                              itemBuilder: (BuildContext context, int index) {
-                                return _tabs[index % _numTabs];
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
+          } else if (state is ExperienceOfPlaceSuccess) {
+            print("experience of place");
+            var place2 = state.response;
+            final List<Widget> _tabs = [
+              OverviewTab(place: place),
+              ItineraryTab(place: place),
+              ExperienceTab(place: place2),
+            ];
+            return Container(
+              child: Column(
+                //shrinkWrap: true,
+                children: [
+                  ImageCarousel(
+                    images: place.images,
+                    bottomInfoWidget: const SizedBox.shrink(),
+                  ),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: _getTabHeaders(),
                     ),
                   ),
-                );
-              } else {
-                return const SizedBox();
-              }
-            });
+                  Expanded(
+                    child: PageView.builder(
+                      controller: _controller,
+                      onPageChanged: (int newPage) {
+                        setState(() {
+                          _activePage = newPage;
+                        });
+                      },
+                      itemCount: _numTabs,
+                      itemBuilder: (BuildContext context, int index) {
+                        return _tabs[index % _numTabs];
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            );
           } else {
             return const SizedBox();
           }
-        }));
+        })));
+      } else {
+        return const SizedBox();
+      }
+    });
   }
 }

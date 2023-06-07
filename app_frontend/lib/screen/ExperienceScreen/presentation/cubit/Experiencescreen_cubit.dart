@@ -6,16 +6,24 @@ import '../../domain/ExperienceScreen_repo.dart';
 part 'Experiencescreen_state.dart';
 
 class ExperienceCubit extends Cubit<ExperienceState> {
-  ExperienceCubit() : super(ExperienceInitial());
-  final ExperienceScreenRepo _experienceScreenRepo = ExperienceScreenRepo();
-  void getProfile() async {
-    emit(ExperienceLoading());
-
-    var res = await _experienceScreenRepo.getexp();
-    res.fold((l) => emit(ExperienceError(l.message)), (r) async {
-      SharedPreferences pref = await SharedPreferences.getInstance();
-      //pref.setString(USER_ID_KEY, "");
-      emit(ExperienceSuccess(r));
-    });
+  final ExperienceScreenRepo _ExperienceRepo = ExperienceScreenRepo();
+  ExperienceCubit() : super(ExperienceInitial()) {
+    expnew();
+  }
+  void expnew() async {
+    try {
+      print("place detail cubit");
+      emit(ExperienceLoading());
+      var res = await _ExperienceRepo.getexp();
+      res.fold((l) => emit(ExperienceError(l.message)), (r) async {
+        //SharedPreferences pref = await SharedPreferences.getInstance();
+        //pref.setString(USER_ID_KEY, "");
+        emit(ExperienceSuccess(r));
+      });
+      print("loading place");
+    } catch (e) {
+      emit(ExperienceError(e.toString()));
+      print("place error");
+    }
   }
 }

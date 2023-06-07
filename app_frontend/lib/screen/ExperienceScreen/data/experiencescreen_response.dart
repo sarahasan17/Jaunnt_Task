@@ -43,65 +43,64 @@ class Exp {
     required this.updatedAt,
     required this.V,
   });
-  late final String id;
-  late final String postedBy;
-  late final String location;
-  late final String discription;
-  late final List<String> images;
-  late final List<dynamic> category;
-  late final List<String> tags;
-  late final String travelMode;
-  late final int groupSize;
-  late final String budget;
-  late final String tripTime;
-  late final String dateOfTrip;
-  late final int likes;
-  late final String placeId;
-  late final String createdAt;
-  late final String updatedAt;
-  late final int V;
+  final String id;
+  final String postedBy;
+  final String location;
+  final String discription;
+  final List<String> images;
+  final List<String> category;
+  final List<String> tags;
+  final String travelMode;
+  final int groupSize;
+  final String budget;
+  final String tripTime;
+  final String dateOfTrip;
+  final int likes;
+  final String placeId;
+  final String createdAt;
+  final String updatedAt;
+  final int V;
 
-  Exp.fromJson(Map<String, dynamic> json) {
-    id = json['_id'];
-    postedBy = json['postedBy'];
-    location = json['location'];
-    discription = json['discription'];
-    images = List.castFrom<dynamic, String>(json['images']);
-    category = List.castFrom<dynamic, dynamic>(json['category']);
-    tags = List.castFrom<dynamic, String>(json['tags']);
-    travelMode = json['travelMode'];
-    groupSize = json['groupSize'];
-    budget = json['budget'];
-    tripTime = json['tripTime'];
-    dateOfTrip = json['dateOfTrip'];
-    likes = json['likes'];
-    placeId = json['placeId'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
-    V = json['__v'];
+  factory Exp.fromJson(Map<String, dynamic> json) {
+    return Exp(
+        id: json['_id'],
+        postedBy: json['postedBy'],
+        location: json['location'],
+        discription: json['discription'],
+        images: List<String>.from(json["images"].map((x) => x.toString())),
+        category: List<String>.from(json["category"].map((x) => x.toString())),
+        tags: List<String>.from(json["tags"].map((x) => x.toString())),
+        travelMode: json['travelMode'],
+        groupSize: json['groupSize'],
+        budget: json['budget'],
+        tripTime: json['tripTime'],
+        dateOfTrip: json['dateOfTrip'],
+        likes: json['likes'],
+        placeId: json['placeId'],
+        createdAt: json['createdAt'],
+        updatedAt: json['updatedAt'],
+        V: json['__v']);
   }
 
-  Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['_id'] = id;
-    _data['postedBy'] = postedBy;
-    _data['location'] = location;
-    _data['discription'] = discription;
-    _data['images'] = images;
-    _data['category'] = category;
-    _data['tags'] = tags;
-    _data['travelMode'] = travelMode;
-    _data['groupSize'] = groupSize;
-    _data['budget'] = budget;
-    _data['tripTime'] = tripTime;
-    _data['dateOfTrip'] = dateOfTrip;
-    _data['likes'] = likes;
-    _data['placeId'] = placeId;
-    _data['createdAt'] = createdAt;
-    _data['updatedAt'] = updatedAt;
-    _data['__v'] = V;
-    return _data;
-  }
+  Map<String, dynamic> toJson() => {
+        '_id': id,
+        'postedBy': postedBy,
+        'location': location,
+        'discription': discription,
+        'images': List<dynamic>.from(images.map((x) => x.toString())),
+        'category': List<dynamic>.from(category.map((x) => x.toString())),
+        'tags': List<dynamic>.from(tags.map((x) => x.toString())),
+        'travelMode': travelMode,
+        'groupSize': groupSize,
+        'budget': budget,
+        'tripTime': tripTime,
+        'dateOfTrip': dateOfTrip,
+        'likes': likes,
+        'placeId': placeId,
+        'createdAt': createdAt,
+        'updatedAt': updatedAt,
+        '__v': V,
+      };
 }
 
 class User {

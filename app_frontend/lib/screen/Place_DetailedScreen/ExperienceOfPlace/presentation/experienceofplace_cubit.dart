@@ -6,13 +6,23 @@ import '../domain/experienceofplace_repo.dart';
 part 'experienceofplace_state.dart';
 
 class ExperienceOfPlaceCubit extends Cubit<ExperienceOfPlaceState> {
-  ExperienceOfPlaceCubit() : super(ExperienceOfPlaceInitial());
-  final ExperienceOfPlaceRepo _ExperienceOfPlaceRepo = ExperienceOfPlaceRepo();
-  void ExperienceOfPlace() async {
-    emit(ExperienceOfPlaceLoading());
-    var res = await _ExperienceOfPlaceRepo.follower();
-    res.fold((l) => emit(ExperienceOfPlaceError(l.message)), (r) async {
-      emit(ExperienceOfPlaceSuccess(r));
-    });
+  ExperienceOfPlaceCubit() : super(ExperienceOfPlaceInitial()) {
+    expnew();
   }
+  void expnew() async {
+    try {
+      print("place detail cubit");
+      emit(ExperienceOfPlaceLoading());
+      var res = await _ExperienceOfPlaceRepo.resp();
+      res.fold((l) => emit(ExperienceOfPlaceError(l.message)), (r) async {
+        //SharedPreferences pref = await SharedPreferences.getInstance();
+        //pref.setString(USER_ID_KEY, "");
+        emit(ExperienceOfPlaceSuccess(r));
+      });
+    } catch (e) {
+      emit(ExperienceOfPlaceError(e.toString()));
+    }
+  }
+
+  final ExperienceOfPlaceRepo _ExperienceOfPlaceRepo = ExperienceOfPlaceRepo();
 }

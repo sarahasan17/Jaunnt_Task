@@ -12,28 +12,32 @@ import '../data/experienceofplace_response.dart';
 class ExperienceOfPlaceRepo {
   final Dio _dio = Dio();
   final NetworkTool _networkInfo = NetworkInfoImpl();
-  Future<Either<Failure, ExperienceOfPlaceResponse>> follower() async {
+  Future<Either<Failure, ExperienceOfPlaceResponse>> resp() async {
     String token;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //SharedPreferences prefs = await SharedPreferences.getInstance();
     token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NTlmNGFhMWUyODhkMzc3NTkwYzY0NyIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY4NjA1MjEwOSwiZXhwIjoxNjg2NjU2OTA5fQ.447NjA-0sMKMDKWUukyhAdm2B6yKJUI0ASkViEnw1Xk";
-    String request = exp_of_place + "6438083e57420d8c86804f1f";
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MGI1MTJlMDgxNWIyZWI2MGZmYzBkOCIsImlhdCI6MTY3ODQ2MzQ3MywiZXhwIjoxNjc4NTQ5ODczfQ.Xi88oMZW3jduRg6XJyFX3-vjeB6dmTCIQJTxCExQkw8";
+    String request =
+        "https://jaunnt-app-production.up.railway.app/exp/place/6438083e57420d8c86804f1f";
 
     if (await _networkInfo.isConnected()) {
       try {
         final Response response = await _dio.get(request,
             options: Options(
               headers: {
-                HttpHeaders.authorizationHeader: "Bearer ",
+                HttpHeaders.authorizationHeader: "Bearer $token",
               },
             ));
-        var body = response.data as Map<String, dynamic>;
+        var body = response.data as List<dynamic>;
         switch (response.statusCode) {
           case 200:
+            print("success experience of place response");
             return Right(ExperienceOfPlaceResponse.fromJson(body));
           case 404:
+            print("user not found");
             return Left(UserNotFound());
           default:
+            print("default");
             return Left(UnidentifiedFailure());
         }
       } catch (e) {

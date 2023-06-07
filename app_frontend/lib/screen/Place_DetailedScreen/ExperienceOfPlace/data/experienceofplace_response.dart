@@ -1,10 +1,10 @@
 class ExperienceOfPlaceResponse {
   List<ExperienceOfPlaceResponse2> experienceOfPlaceResponse;
   ExperienceOfPlaceResponse({required this.experienceOfPlaceResponse});
-  factory ExperienceOfPlaceResponse.fromJson(Map<String, dynamic> json) =>
+  factory ExperienceOfPlaceResponse.fromJson(List<dynamic> json) =>
       ExperienceOfPlaceResponse(
           experienceOfPlaceResponse: List<ExperienceOfPlaceResponse2>.from(
-        json[""].map((x) => ExperienceOfPlaceResponse2.fromJson(x)),
+        json.map((x) => ExperienceOfPlaceResponse2.fromJson(x)),
       ));
   Map<String, dynamic> toJson() => {
         "": List<dynamic>.from(
@@ -28,16 +28,14 @@ class ExperienceOfPlaceResponse2 {
       ExperienceOfPlaceResponse2(
         sId: json['_id'],
         postedBy: json['postedBy'],
-        discription: json['discription'],
-        tags: json['tags'].cast<String>(),
+        discription: "amma",
+        tags: List<String>.from(json["tags"].map((x) => x.toString())),
       );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['postedBy'] = this.postedBy;
-    data['discription'] = this.discription;
-    data['tags'] = this.tags;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        '_id': sId,
+        'postedBy': postedBy,
+        'discription': discription,
+        'tags': List<dynamic>.from(tags.map((x) => x.toString())),
+      };
 }

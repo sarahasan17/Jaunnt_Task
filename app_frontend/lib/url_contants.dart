@@ -1,4 +1,4 @@
-String url = "http://localhost:8080";
+String url = "https://jaunnt-app-production.up.railway.app";
 String homeScreen =
     url + "/?lat=12.971599&lng=77.594566&queryPage=1&queryLimit=20";
 String explore = url + "/places/all";
