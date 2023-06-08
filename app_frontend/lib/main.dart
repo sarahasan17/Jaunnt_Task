@@ -3,6 +3,7 @@ import 'package:app_frontend/screen/AddExperienceScreen/presentation/cubits/Edit
 import 'package:app_frontend/screen/ExperienceScreen/Similar%20Places/presentation/similarplaces_cubit.dart';
 import 'package:app_frontend/screen/ExperienceScreen/presentation/cubit/Experiencescreen_cubit.dart';
 import 'package:app_frontend/screen/Explore/BOOKMARK/presentation/cubit/bookmark_cubit.dart';
+import 'package:app_frontend/screen/Explore/Presentation/cubit/ExploreScreen_cubit.dart';
 import 'package:app_frontend/screen/Place_DetailedScreen/ExperienceOfPlace/presentation/experienceofplace_cubit.dart';
 import 'package:app_frontend/screen/Place_DetailedScreen/presentation/cubit/place_detailedScreen_cubit.dart';
 import 'package:app_frontend/screen/ProfileScreen/AddFriend/presentation/addfriend_cubit.dart';
@@ -73,6 +74,12 @@ class MyApp extends StatelessWidget {
         }),
         BlocProvider(create: (context) {
           return ExperienceCubit();
+        }),
+        BlocProvider(create: (context) {
+          return ExploreCubit();
+        }),
+        BlocProvider(create: (context) {
+          return BookmarkCubit();
         }),
         BlocProvider(create: (context) {
           return SimilarPlacesCubit();

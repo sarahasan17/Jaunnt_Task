@@ -6,16 +6,21 @@ import '../../Data/ExploreScreen_response.dart';
 part 'ExploreScreen_state.dart';
 
 class ExploreCubit extends Cubit<ExploreState> {
-  ExploreCubit() : super(ExploreInitial());
-  final ExploreScreenRepo _exploreScreenRepo = ExploreScreenRepo();
-  void getProfile() async {
-    emit(ExploreLoading());
-
-    var res = await _exploreScreenRepo.getProfile();
-    res.fold((l) => emit(ExploreError(l.message)), (r) async {
-      SharedPreferences pref = await SharedPreferences.getInstance();
-      pref.setString(USER_ID_KEY,"");
-      emit(ExploreSuccess(r));
-    });
+  final ExploreScreenRepo _ExploreScreenRepo = ExploreScreenRepo();
+  ExploreCubit() : super(ExploreInitial()) {
+    explore();
+  }
+  void explore() async {
+    try {
+      emit(ExploreLoading());
+      var res = await _ExploreScreenRepo.explore();
+      res.fold((l) => emit(ExploreError(l.message)), (r) async {
+        //SharedPreferences pref = await SharedPreferences.getInstance();
+        //pref.setString(USER_ID_KEY, "");
+        emit(ExploreSuccess(r));
+      });
+    } catch (e) {
+      emit(ExploreError(e.toString()));
+    }
   }
 }

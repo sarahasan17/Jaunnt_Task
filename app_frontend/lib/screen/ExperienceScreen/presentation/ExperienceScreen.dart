@@ -134,7 +134,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                                       decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(25.0),
-                                          image: DecorationImage(
+                                          image: const DecorationImage(
                                               image: NetworkImage(
                                                   "https://jaunnt.dev.s3.ap-south-1.amazonaws.com/experincesPhotos/cf483e66-d680-4569-9d4b-2b4f5cbe185e.jpeg"))),
                                     ),

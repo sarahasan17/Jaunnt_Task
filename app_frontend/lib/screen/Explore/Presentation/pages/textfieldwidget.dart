@@ -5,6 +5,94 @@ import 'package:flutter/rendering.dart';
 
 import '../../../../constant/theme/themehelper.dart';
 
+/**void searchplace(
+    String query, int trip_time, int distance, List<String> text1) {
+    setState(() {
+    if (trip_time >= values1.start.round() &&
+    trip_time <= values1.end.round() &&
+    distance >= values2.start.round() &&
+    distance <= values2.end.round()) {
+    print(values1.start.round());
+    print(values1.end.round());
+    int a = text1.length;
+    int c = text.length;
+    for (int i = 0; i < text.length; i++) {
+    if (text[i] == '') {
+    c = c - 1;
+    }
+    }
+    int b = 0;
+    for (int i = 0; i < a; i++) {
+    for (int j = 0; j < c; j++) {
+    if (text1[i] == text[j]) {
+    b = b + 1;
+    }
+    }
+    }
+    if (b == c) {
+    getItems = items
+    .where((element) =>
+    element.toLowerCase().contains(query.toLowerCase()))
+    .toList();
+    } else {
+    getItems = [];
+    }
+    } else {
+    getItems = [];
+    }
+    });
+    }**/
+/**bool? searchplacemain(
+    String query, int trip_time, int distance, List<String> text1) {
+    if (query == '') {
+    return true;
+    } else {
+    if (trip_time >= values1.start.round() &&
+    trip_time <= values1.end.round() &&
+    distance >= values2.start.round() &&
+    distance <= values2.end.round()) {
+    int c = text.length;
+    for (int i = 0; i < text.length; i++) {
+    if (text[i] == '') {
+    c = c - 1;
+    }
+    }
+    if (c == 0) {
+    if (query == '') {
+    return true;
+    } else {
+    if (query.contains(search.text)) {
+    return true;
+    } else {
+    return false;
+    }
+    }
+    } else {
+    int b = 0;
+    for (int i = 0; i < text1.length; i++) {
+    for (int j = 0; j < text.length; j++) {
+    if (text[j] == text1[i]) {
+    b = b + 1;
+    }
+    }
+    }
+    if (b == c) {
+    if (query == '') {
+    return true;
+    } else {
+    if (query.toLowerCase().contains(search.text.toLowerCase())) {
+    return true;
+    } else {
+    return false;
+    }
+    }
+    }
+    }
+    } else {
+    return false;
+    }
+    }
+    }**/
 class TextFieldWidget2 extends StatefulWidget {
   TextFieldWidget2(
       {Key? key,

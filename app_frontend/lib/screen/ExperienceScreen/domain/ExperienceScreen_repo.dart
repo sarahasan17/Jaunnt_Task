@@ -14,11 +14,10 @@ class ExperienceScreenRepo {
   final NetworkInfoImpl _networkInfo = NetworkInfoImpl();
 
   Future<Either<Failure, ExperienceResponse>> getexp() async {
-    String token;
+    //String token;
     //SharedPreferences _prefs = await SharedPreferences.getInstance();
     //token = _prefs.getString(TOKEN_KEY) ?? "";
-    token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MGI1MTJlMDgxNWIyZWI2MGZmYzBkOCIsImlhdCI6MTY3ODQ2MzQ3MywiZXhwIjoxNjc4NTQ5ODczfQ.Xi88oMZW3jduRg6XJyFX3-vjeB6dmTCIQJTxCExQkw8";
+    //token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MGI1MTJlMDgxNWIyZWI2MGZmYzBkOCIsImlhdCI6MTY3ODQ2MzQ3MywiZXhwIjoxNjc4NTQ5ODczfQ.Xi88oMZW3jduRg6XJyFX3-vjeB6dmTCIQJTxCExQkw8";
 
     String url =
         "https://jaunnt-app-production.up.railway.app/exp/647ccedec77cc64bf3388b1f";

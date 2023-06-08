@@ -13,10 +13,9 @@ class SimilarPlacesRepo {
   final Dio _dio = Dio();
   final NetworkTool _networkInfo = NetworkInfoImpl();
   Future<Either<Failure, SimilarPlaceResponse>> similarplaces() async {
-    String token;
+    //String token;
     //SharedPreferences prefs = await SharedPreferences.getInstance();
-    token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MGI1MTJlMDgxNWIyZWI2MGZmYzBkOCIsImlhdCI6MTY3ODQ2MzQ3MywiZXhwIjoxNjc4NTQ5ODczfQ.Xi88oMZW3jduRg6XJyFX3-vjeB6dmTCIQJTxCExQkw8";
+    //token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MGI1MTJlMDgxNWIyZWI2MGZmYzBkOCIsImlhdCI6MTY3ODQ2MzQ3MywiZXhwIjoxNjc4NTQ5ODczfQ.Xi88oMZW3jduRg6XJyFX3-vjeB6dmTCIQJTxCExQkw8";
     String request =
         "https://jaunnt-app-production.up.railway.app/places/similar/6438083e57420d8c86804f1f?lat=12.9961162&lng=.7177572";
 

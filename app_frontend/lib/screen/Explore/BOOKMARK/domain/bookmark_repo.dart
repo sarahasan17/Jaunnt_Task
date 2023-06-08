@@ -8,16 +8,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../constant/errors/Failure.dart';
 import '../../../../constant/network_info.dart';
 import '../../../../constant/sharedpref_keys.dart';
+import '../../../../url_contants.dart';
 
 class BookmarkRepo {
   final Dio _dio = Dio();
   final NetworkInfoImpl _networkInfo = NetworkInfoImpl();
 
   Future<Either<Failure, String>> bookmark() async {
-    String token;
+    //String token;
     SharedPreferences _prefs = await SharedPreferences.getInstance();
-    token = _prefs.getString(TOKEN_KEY) ?? "";
-    String url = "";
+    //token = _prefs.getString(TOKEN_KEY) ?? "";
+    String url =
+        "https://jaunnt-app-production.up.railway.app/places/bookmark/6438083e57420d8c86804f1f";
 
     if (await _networkInfo.isConnected()) {
       try {

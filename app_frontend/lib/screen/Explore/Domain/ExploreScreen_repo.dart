@@ -6,17 +6,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../constant/errors/Failure.dart';
 import '../../../constant/network_info.dart';
 import '../../../constant/sharedpref_keys.dart';
+import '../../../url_contants.dart';
 import '../Data/ExploreScreen_response.dart';
 
 class ExploreScreenRepo {
   final Dio _dio = Dio();
   final NetworkInfoImpl _networkInfo = NetworkInfoImpl();
 
-  Future<Either<Failure, ExploreResponse>> getProfile() async {
-    String token;
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    token = _prefs.getString(TOKEN_KEY) ?? "";
-    String url = "";
+  Future<Either<Failure, ExploreResponse>> explore() async {
+    //String token;
+    //SharedPreferences _prefs = await SharedPreferences.getInstance();
+    //token = _prefs.getString(TOKEN_KEY) ?? "";
+    String url = "https://jaunnt-app-production.up.railway.app/places/all";
 
     if (await _networkInfo.isConnected()) {
       try {
@@ -27,7 +28,7 @@ class ExploreScreenRepo {
               },
             ));
 
-        var body = response.data as Map<String, dynamic>;
+        var body = response.data as List<dynamic>;
         switch (response.statusCode) {
           case 200:
             return Right(ExploreResponse.fromJson(body));

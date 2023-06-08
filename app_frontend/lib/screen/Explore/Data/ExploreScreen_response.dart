@@ -1,10 +1,11 @@
+import 'package:app_frontend/screen/Place_DetailedScreen/data/Place_Detailedscreen_response.dart';
+
 class ExploreResponse {
-  List<ExploreResponse2> response;
+  List<Place_DetailedResponse> response;
   ExploreResponse({required this.response});
-  factory ExploreResponse.fromJson(Map<String, dynamic> json) =>
-      ExploreResponse(
-          response: List<ExploreResponse2>.from(
-              json[""].map((x) => ExploreResponse.fromJson(x))));
+  factory ExploreResponse.fromJson(List<dynamic> json) => ExploreResponse(
+      response: List<Place_DetailedResponse>.from(
+          json.map((x) => Place_DetailedResponse.fromJson(x))));
   Map<String, dynamic> toJson() => {
         "": List<dynamic>.from(response.map((x) => x.toJson())),
       };

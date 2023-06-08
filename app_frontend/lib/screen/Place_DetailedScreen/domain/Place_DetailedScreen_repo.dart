@@ -14,11 +14,10 @@ class Place_DetailedScreenRepo {
   final NetworkInfoImpl _networkInfo = NetworkInfoImpl();
   Future<Either<Failure, Place_DetailedResponse>> place() async {
     print("repo called");
-    String token;
+    //String token;
     //SharedPreferences _prefs = await SharedPreferences.getInstance();
     //token = _prefs.getString(TOKEN_KEY) ?? "";
-    token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NTlmNGFhMWUyODhkMzc3NTkwYzY0NyIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY4NjE2NzE5MCwiZXhwIjoxNjg2NzcxOTkwfQ.eGC3X9snkXLo5pVyXytilERILyVqHtVZTUVlZbV2cB4";
+    //token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NTlmNGFhMWUyODhkMzc3NTkwYzY0NyIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY4NjE2NzE5MCwiZXhwIjoxNjg2NzcxOTkwfQ.eGC3X9snkXLo5pVyXytilERILyVqHtVZTUVlZbV2cB4";
     String url =
         "https://jaunnt-app-production.up.railway.app/places/6438083e57420d8c86804f1f";
 
