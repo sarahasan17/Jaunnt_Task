@@ -1,6 +1,3 @@
-
-
-
 import 'dart:developer';
 import 'dart:io';
 
@@ -17,11 +14,13 @@ class BookmarkedExperienceRepo {
   final Dio _dio = Dio();
   final NetworkInfoImpl _networkInfo = NetworkInfoImpl();
 
-  Future<Either<Failure, BookmarkedExperienceResponse>> BookmarkedExperience() async {
+  Future<Either<Failure, BookmarkedPlaceResponse>>
+      BookmarkedExperience() async {
     String token;
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     token = _prefs.getString(TOKEN_KEY) ?? "";
-    String url = "";
+    String url =
+        "https://jaunnt-app-production.up.railway.app//users/bookmarks";
 
     if (await _networkInfo.isConnected()) {
       try {
@@ -32,10 +31,10 @@ class BookmarkedExperienceRepo {
               },
             ));
 
-        var body = response.data as Map<String, dynamic>;
+        var body = response.data as List<dynamic>;
         switch (response.statusCode) {
           case 200:
-          //return Right(HomeResponse.fromJson(body));
+            return Right(BookmarkedPlaceResponse.fromJson(body));
 
           default:
             return Left(UnidentifiedFailure());

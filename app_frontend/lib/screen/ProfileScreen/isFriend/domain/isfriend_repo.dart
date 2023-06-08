@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
 import '../../../../constant/errors/Failure.dart';
 import '../../../../constant/network_info.dart';
+import '../../../../url_contants.dart';
 
 class IsFriendResponse {
   bool result;
@@ -19,14 +21,17 @@ class IsFriendRepo {
   final Dio _dio = Dio();
   final NetworkInfoImpl _networkInfo = NetworkInfoImpl();
   Future<Either<Failure, IsFriendResponse>> isfriend(String id) async {
-    String url = "";
+    String url = "https://jaunnt-app-production.up.railway.app/users/isfriend";
 
     if (await _networkInfo.isConnected()) {
       try {
-        final Response response = await _dio.post(
-          url,
-          data: jsonEncode({"friendId": id}),
-        );
+        final Response response = await _dio.post(url,
+            data: jsonEncode({"friendId": id}),
+            options: Options(
+              headers: {
+                HttpHeaders.authorizationHeader: "Bearer $token",
+              },
+            ));
 
         var body = response.data;
         switch (response.statusCode) {

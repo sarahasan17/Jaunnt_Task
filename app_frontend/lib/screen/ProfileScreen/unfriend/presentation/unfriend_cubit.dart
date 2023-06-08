@@ -8,7 +8,7 @@ part 'unfriend_state.dart';
 class UnFriendCubit extends Cubit<UnFriendState> {
   UnFriendCubit() : super(UnFriendInitial());
   final UnFriendRepo _UnFriendRepo = UnFriendRepo();
-  void unfriend(String id) async {
+  unfriend(String id) async {
     emit(UnFriendLoading());
 
     var res = await _UnFriendRepo.unfriend(id);

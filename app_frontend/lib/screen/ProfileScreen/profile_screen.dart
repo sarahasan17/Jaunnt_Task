@@ -476,9 +476,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   labelStyle: theme.font2,
                                   isScrollable: true,
                                   indicatorColor: theme.buttoncolor,
-                                  tabs: [
-                                    Tab(text: "Experiences ${val * 2}"),
-                                    const Tab(text: "Saved places"),
+                                  tabs: const [
+                                    Tab(text: "Experiences"),
+                                    Tab(text: "Saved places"),
                                   ]),
                             ),
                           ),
@@ -526,7 +526,7 @@ class TabBars extends StatelessWidget {
           } else if (state is ExperienceByUserSuccess) {
             var ExperienceByUser = state.response;
             return ListView.builder(
-                itemCount: 5,
+                itemCount: state.response.response.length,
                 scrollDirection: Axis.vertical,
                 itemBuilder: (BuildContext context, int index) {
                   return Row(
@@ -547,9 +547,9 @@ class TabBars extends StatelessWidget {
                               ],
                               borderRadius: BorderRadius.circular(20.0),
                               color: theme.white,
-                              image: const DecorationImage(
-                                  image:
-                                      AssetImage("assets/images/profile.png"),
+                              image: DecorationImage(
+                                  image: NetworkImage(state
+                                      .response.response[index].exp.images[0]),
                                   fit: BoxFit.cover)),
                           margin: const EdgeInsets.all(7),
                           width: s.width / 2.28,
@@ -568,7 +568,8 @@ class TabBars extends StatelessWidget {
                                         bottomLeft: Radius.circular(15.0),
                                         bottomRight: Radius.circular(15.0))),
                                 child: Text(
-                                  'Chunchi Falls',
+                                  state
+                                      .response.response[index].place.placeName,
                                   style: theme.font2.copyWith(
                                       color: theme.white, fontSize: 12),
                                 ),
@@ -592,9 +593,9 @@ class TabBars extends StatelessWidget {
                               ],
                               borderRadius: BorderRadius.circular(20.0),
                               color: theme.white,
-                              image: const DecorationImage(
-                                  image:
-                                      AssetImage("assets/images/profile.png"),
+                              image: DecorationImage(
+                                  image: NetworkImage(state.response
+                                      .response[index + 1].exp.images[0]),
                                   fit: BoxFit.cover)),
                           margin: const EdgeInsets.all(7),
                           width: s.width / 2.3,
@@ -613,7 +614,8 @@ class TabBars extends StatelessWidget {
                                         bottomLeft: Radius.circular(15.0),
                                         bottomRight: Radius.circular(15.0))),
                                 child: Text(
-                                  'Chunchi Falls',
+                                  state.response.response[index + 1].place
+                                      .placeName,
                                   style: theme.font2.copyWith(
                                       color: theme.white, fontSize: 12),
                                 ),
@@ -653,7 +655,7 @@ class TabBars2 extends StatelessWidget {
           } else if (state is BookmarkedExperienceSuccess) {
             var BookmarkedExperienceUser = state.response;
             return ListView.builder(
-                itemCount: 5,
+                itemCount: state.response.response.length,
                 scrollDirection: Axis.vertical,
                 itemBuilder: (BuildContext context, int index) {
                   return Row(
@@ -674,9 +676,9 @@ class TabBars2 extends StatelessWidget {
                               ],
                               borderRadius: BorderRadius.circular(20.0),
                               color: theme.white,
-                              image: const DecorationImage(
-                                  image:
-                                      AssetImage("assets/images/profile.png"),
+                              image: DecorationImage(
+                                  image: NetworkImage(state
+                                      .response.response[index].coverPhoto),
                                   fit: BoxFit.cover)),
                           margin: const EdgeInsets.all(7),
                           width: s.width / 2.28,
@@ -695,7 +697,7 @@ class TabBars2 extends StatelessWidget {
                                         bottomLeft: Radius.circular(15.0),
                                         bottomRight: Radius.circular(15.0))),
                                 child: Text(
-                                  'Chunchi Falls',
+                                  state.response.response[index].placeName,
                                   style: theme.font2.copyWith(
                                       color: theme.white, fontSize: 12),
                                 ),
@@ -719,9 +721,9 @@ class TabBars2 extends StatelessWidget {
                               ],
                               borderRadius: BorderRadius.circular(20.0),
                               color: theme.white,
-                              image: const DecorationImage(
-                                  image:
-                                      AssetImage("assets/images/profile.png"),
+                              image: DecorationImage(
+                                  image: NetworkImage(state
+                                      .response.response[index].coverPhoto),
                                   fit: BoxFit.cover)),
                           margin: const EdgeInsets.all(7),
                           width: s.width / 2.3,
@@ -740,7 +742,7 @@ class TabBars2 extends StatelessWidget {
                                         bottomLeft: Radius.circular(15.0),
                                         bottomRight: Radius.circular(15.0))),
                                 child: Text(
-                                  'Chunchi Falls',
+                                  state.response.response[index].placeName,
                                   style: theme.font2.copyWith(
                                       color: theme.white, fontSize: 12),
                                 ),

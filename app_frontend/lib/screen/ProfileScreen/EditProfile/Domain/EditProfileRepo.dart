@@ -12,7 +12,8 @@ class EditProfileRepo {
   final NetworkInfoImpl _networkInfo = NetworkInfoImpl();
   Future<Either<Failure, Map<String, dynamic>>> editprofile(
       String bio, File files) async {
-    String url = "";
+    String url =
+        "https://jaunnt-app-production.up.railway.app/users/6459f4aa1e288d377590c647";
 
     if (await _networkInfo.isConnected()) {
       try {

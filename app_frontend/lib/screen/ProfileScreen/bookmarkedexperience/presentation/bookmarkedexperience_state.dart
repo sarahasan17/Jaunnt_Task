@@ -7,7 +7,7 @@ class BookmarkedExperienceInitial extends BookmarkedExperienceState {}
 class BookmarkedExperienceLoading extends BookmarkedExperienceState {}
 
 class BookmarkedExperienceSuccess extends BookmarkedExperienceState {
-  final BookmarkedExperienceResponse response;
+  final BookmarkedPlaceResponse response;
   BookmarkedExperienceSuccess(this.response);
 }
 

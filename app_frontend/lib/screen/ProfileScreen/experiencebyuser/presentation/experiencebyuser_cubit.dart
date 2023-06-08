@@ -7,16 +7,23 @@ import '../domain/experiencebyuser_repo.dart';
 part 'experiencebyuser_state.dart';
 
 class ExperienceByUserCubit extends Cubit<ExperienceByUserState> {
-  ExperienceByUserCubit() : super(ExperienceByUserInitial());
   final ExperienceByUserRepo _ExperienceByUserRepo = ExperienceByUserRepo();
-  void getProfile() async {
-    emit(ExperienceByUserLoading());
 
-    var res = await _ExperienceByUserRepo.ExperienceByUser();
-    res.fold((l) => emit(ExperienceByUserError(l.message)), (r) async {
-      SharedPreferences pref = await SharedPreferences.getInstance();
-      pref.setString(USER_ID_KEY, "");
-      emit(ExperienceByUserSuccess(r));
-    });
+  ExperienceByUserCubit() : super(ExperienceByUserInitial()) {
+    ExperienceByUser();
+  }
+
+  void ExperienceByUser() async {
+    try {
+      emit(ExperienceByUserLoading());
+      var res = await _ExperienceByUserRepo.ExperienceByUser();
+      res.fold((l) => emit(ExperienceByUserError(l.message)), (r) async {
+        //SharedPreferences pref = await SharedPreferences.getInstance();
+        //pref.setString(USER_ID_KEY, "");
+        emit(ExperienceByUserSuccess(r));
+      });
+    } catch (e) {
+      emit(ExperienceByUserError(e.toString()));
+    }
   }
 }

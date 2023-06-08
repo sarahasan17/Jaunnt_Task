@@ -7,16 +7,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constant/errors/Failure.dart';
 import '../../../constant/sharedpref_keys.dart';
+import '../../../url_contants.dart';
 import '../data/following_response.dart';
 
 class FollowingRepo {
   final Dio _dio = Dio();
   final NetworkTool _networkInfo = NetworkInfoImpl();
   Future<Either<Failure, FollowingResponse>> following() async {
-    String token;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString(TOKEN_KEY) ?? "";
-    String request = "";
+    //String token;
+    //SharedPreferences prefs = await SharedPreferences.getInstance();
+    //token = prefs.getString(TOKEN_KEY) ?? "";
+    String request =
+        "https://jaunnt-app-production.up.railway.app/users/following";
 
     if (await _networkInfo.isConnected()) {
       try {

@@ -8,7 +8,6 @@ import '../../../constant/loading_widget.dart';
 import '../../ProfileScreen/AddFriend/presentation/addfriend_cubit.dart';
 import '../../ProfileScreen/isFriend/cubit/isfriend_cubit.dart';
 import '../../ProfileScreen/unfriend/presentation/unfriend_cubit.dart';
-import 'followers_cubit/followercubit.dart';
 import 'following_cubit/followingcubit.dart';
 
 class ProfileFollowersScreen extends StatefulWidget {
@@ -75,7 +74,7 @@ class _ProfileFollowersScreenState extends State<ProfileFollowersScreen>
                         borderRadius: BorderRadius.circular(28),
                       ),
                       tabs: const [
-                        Tab(text: "Following"),
+                        Tab(text: "Friends"),
                         // Tab(text: "Followers"),
                       ]),
                 ),

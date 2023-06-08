@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 import 'dart:io';
 
@@ -19,7 +18,8 @@ class ExperienceByUserRepo {
     String token;
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     token = _prefs.getString(TOKEN_KEY) ?? "";
-    String url = "";
+    String url =
+        "https://jaunnt-app-production.up.railway.app/exp/user/6459f4aa1e288d377590c647";
 
     if (await _networkInfo.isConnected()) {
       try {
@@ -30,10 +30,10 @@ class ExperienceByUserRepo {
               },
             ));
 
-        var body = response.data as Map<String, dynamic>;
+        var body = response.data as List<dynamic>;
         switch (response.statusCode) {
           case 200:
-          //return Right(HomeResponse.fromJson(body));
+            return Right(ExperienceByUserResponse.fromJson(body));
 
           default:
             return Left(UnidentifiedFailure());

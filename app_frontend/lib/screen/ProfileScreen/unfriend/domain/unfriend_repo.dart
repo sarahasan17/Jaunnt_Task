@@ -13,7 +13,7 @@ class UnFriendRepo {
   final Dio _dio = Dio();
   final NetworkInfoImpl _networkInfo = NetworkInfoImpl();
   Future<Either<Failure, Map<String, dynamic>>> unfriend(String id) async {
-    String url = "https://jaunnt-app-production.up.railway.app/users/addFriend";
+    String url = "https://jaunnt-app-production.up.railway.app/users/unFriend";
 
     if (await _networkInfo.isConnected()) {
       try {
