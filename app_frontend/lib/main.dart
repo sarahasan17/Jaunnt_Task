@@ -1,5 +1,7 @@
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/cubits/AddExperience_Cubit.dart';
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/cubits/EditExperience/EditExperience_cubit.dart';
+import 'package:app_frontend/screen/ExperienceScreen/Similar%20Places/presentation/similarplaces_cubit.dart';
+import 'package:app_frontend/screen/ExperienceScreen/presentation/cubit/Experiencescreen_cubit.dart';
 import 'package:app_frontend/screen/Explore/BOOKMARK/presentation/cubit/bookmark_cubit.dart';
 import 'package:app_frontend/screen/Place_DetailedScreen/ExperienceOfPlace/presentation/experienceofplace_cubit.dart';
 import 'package:app_frontend/screen/Place_DetailedScreen/presentation/cubit/place_detailedScreen_cubit.dart';
@@ -68,6 +70,12 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) {
           print("place detail main.dart");
           return Place_DetailedCubit();
+        }),
+        BlocProvider(create: (context) {
+          return ExperienceCubit();
+        }),
+        BlocProvider(create: (context) {
+          return SimilarPlacesCubit();
         }),
         BlocProvider(
           create: (context) => ExperienceOfPlaceCubit(),

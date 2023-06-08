@@ -40,7 +40,7 @@ class _OverviewTabState extends State<OverviewTab> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.place.placeName!,
+                Text(widget.place.placeName ?? "not found",
                     style: theme.font8
                         .copyWith(fontSize: 24, fontWeight: FontWeight.bold)),
                 const SizedBox(
@@ -48,7 +48,7 @@ class _OverviewTabState extends State<OverviewTab> {
                 ),
                 Container(
                   child: Text(
-                    widget.place.description!,
+                    widget.place.description ?? "not found",
                     style: theme.font7.copyWith(fontSize: 14),
                   ),
                 )
@@ -96,7 +96,9 @@ class _OverviewTabState extends State<OverviewTab> {
                                 SizedBox(
                                   height: s.height / 300,
                                 ),
-                                Text(widget.place.distance.toString(),
+                                Text(
+                                    widget.place.distance.toString() ??
+                                        "not found",
                                     style: theme.font8.copyWith(fontSize: 13))
                               ],
                             )
@@ -122,7 +124,7 @@ class _OverviewTabState extends State<OverviewTab> {
                                 SizedBox(
                                   height: s.height / 300,
                                 ),
-                                Text(widget.place.transportMode!,
+                                Text(widget.place.transportMode ?? "not found",
                                     style: theme.font8.copyWith(fontSize: 13))
                               ],
                             )
@@ -199,16 +201,8 @@ class _OverviewTabState extends State<OverviewTab> {
                                 SizedBox(
                                   height: s.height / 300,
                                 ),
-                                ListView.builder(
-                                    itemCount: widget.place.tags.length,
-                                    scrollDirection: Axis.horizontal,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Text(
-                                          "${widget.place.tags[index]} ",
-                                          style: theme.font8
-                                              .copyWith(fontSize: 13));
-                                    }),
+                                Text("${widget.place.tags[0]}",
+                                    style: theme.font8.copyWith(fontSize: 13)),
                               ],
                             )
                           ],
@@ -268,7 +262,7 @@ class _OverviewTabState extends State<OverviewTab> {
               ),
               ListView.builder(
                   shrinkWrap: true,
-                  itemCount: 5,
+                  itemCount: widget.place.thingsToDo.length,
                   scrollDirection: Axis.vertical,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(

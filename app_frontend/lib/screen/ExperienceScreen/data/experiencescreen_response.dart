@@ -4,14 +4,16 @@ class ExperienceResponse {
     required this.user,
     required this.place,
   });
-  late final Exp exp;
-  late final User user;
-  late final Place place;
+  final Exp exp;
+  final User user;
+  final Place place;
 
-  ExperienceResponse.fromJson(Map<String, dynamic> json) {
-    exp = Exp.fromJson(json['exp']);
-    user = User.fromJson(json['user']);
-    place = Place.fromJson(json['place']);
+  factory ExperienceResponse.fromJson(Map<String, dynamic> json) {
+    print(json);
+    return ExperienceResponse(
+        exp: Exp.fromJson(json['exp']),
+        user: User.fromJson(json['user']),
+        place: Place.fromJson(json['place']));
   }
 
   Map<String, dynamic> toJson() {
@@ -68,7 +70,7 @@ class Exp {
         location: json['location'],
         discription: json['discription'],
         images: List<String>.from(json["images"].map((x) => x.toString())),
-        category: List<String>.from(json["category"].map((x) => x.toString())),
+        category: ["ok", "good"],
         tags: List<String>.from(json["tags"].map((x) => x.toString())),
         travelMode: json['travelMode'],
         groupSize: json['groupSize'],
@@ -87,9 +89,9 @@ class Exp {
         'postedBy': postedBy,
         'location': location,
         'discription': discription,
-        'images': List<dynamic>.from(images.map((x) => x.toString())),
-        'category': List<dynamic>.from(category.map((x) => x.toString())),
-        'tags': List<dynamic>.from(tags.map((x) => x.toString())),
+        'images': List<String>.from(images.map((x) => x.toString())),
+        'category': List<String>.from(category.map((x) => x.toString())),
+        'tags': List<String>.from(tags.map((x) => x.toString())),
         'travelMode': travelMode,
         'groupSize': groupSize,
         'budget': budget,
@@ -144,16 +146,18 @@ class Place {
   late final int groupSize;
   late final String coverPhoto;
   late final List<String> category;
-  late final List<dynamic> distance;
+  int distance;
 
-  Place.fromJson(Map<String, dynamic> json) {
-    id = json['_id'];
-    placeName = json['placeName'];
-    tripTime = json['tripTime'];
-    groupSize = json['groupSize'];
-    coverPhoto = json['coverPhoto'];
-    category = List.castFrom<dynamic, String>(json['category']);
-    distance = List.castFrom<dynamic, dynamic>(json['distance']);
+  factory Place.fromJson(Map<String, dynamic> json) {
+    return Place(
+      id: json['_id'],
+      placeName: json['placeName'],
+      tripTime: json['tripTime'],
+      groupSize: json['groupSize'],
+      coverPhoto: json['coverPhoto'],
+      category: List<String>.from(json["category"].map((x) => x.toString())),
+      distance: 0,
+    );
   }
 
   Map<String, dynamic> toJson() {

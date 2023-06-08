@@ -63,7 +63,8 @@ class _ItineraryTabState extends State<ItineraryTab> {
                           style: DefaultTextStyle.of(context).style,
                           children: <TextSpan>[
                             TextSpan(
-                                text: "${widget.place.itenirary[index].time}:  ",
+                                text:
+                                    "${widget.place.itenirary[index].time.toString()}:  ",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     fontSize: 16,
@@ -76,18 +77,19 @@ class _ItineraryTabState extends State<ItineraryTab> {
                         ),
                       ),
                       collapsed: const SizedBox.shrink(),
-                      expanded: (widget.place.itenirary[index].description == "")
-                          ? const SizedBox.shrink()
-                          : Column(
-                              children: <Widget>[
-                                const SizedBox(height: 8),
-                                Text(
-                                  widget.place.itenirary[index].description,
-                                  style: TextStyle(
-                                      color: textColorBlack, fontSize: 14),
+                      expanded:
+                          (widget.place.itenirary[index].description == "")
+                              ? const SizedBox.shrink()
+                              : Column(
+                                  children: <Widget>[
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      widget.place.itenirary[index].description,
+                                      style: TextStyle(
+                                          color: textColorBlack, fontSize: 14),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
                       theme: const ExpandableThemeData(
                           iconPadding: EdgeInsets.all(0),
                           headerAlignment:

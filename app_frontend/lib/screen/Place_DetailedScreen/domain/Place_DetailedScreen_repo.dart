@@ -18,7 +18,7 @@ class Place_DetailedScreenRepo {
     //SharedPreferences _prefs = await SharedPreferences.getInstance();
     //token = _prefs.getString(TOKEN_KEY) ?? "";
     token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MGI1MTJlMDgxNWIyZWI2MGZmYzBkOCIsImlhdCI6MTY3ODQ2MzQ3MywiZXhwIjoxNjc4NTQ5ODczfQ.Xi88oMZW3jduRg6XJyFX3-vjeB6dmTCIQJTxCExQkw8";
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NTlmNGFhMWUyODhkMzc3NTkwYzY0NyIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY4NjE2NzE5MCwiZXhwIjoxNjg2NzcxOTkwfQ.eGC3X9snkXLo5pVyXytilERILyVqHtVZTUVlZbV2cB4";
     String url =
         "https://jaunnt-app-production.up.railway.app/places/6438083e57420d8c86804f1f";
 

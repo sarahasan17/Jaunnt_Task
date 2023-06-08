@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class Place_DetailedResponse {
   String id;
   String placeName;
@@ -11,17 +13,21 @@ class Place_DetailedResponse {
   List<String> images;
   List<String> category;
   List<String> tags;
-  int? distance;
-  int? length;
+  double? distance;
+  double length;
   List<ThingsToDo> thingsToDo;
   List<Itenirary> itenirary;
   List<String> similarPlaces;
   String createdAt;
   String updatedAt;
+  double lat;
+  double lng;
   Place_DetailedResponse(
-      {required this.description,
+      {required this.lat,
+      required this.lng,
+      required this.description,
       required this.id,
-      this.length,
+      required this.length,
       this.distance,
       required this.updatedAt,
       required this.createdAt,
@@ -41,9 +47,11 @@ class Place_DetailedResponse {
   factory Place_DetailedResponse.fromJson(Map<String, dynamic> json) {
     print(json);
     return Place_DetailedResponse(
+      lat: json["lat"],
+      lng: json["lng"],
       description: json["description"],
       id: json["_id"],
-      length: json["length"] as int,
+      length: json["length"],
       distance: 0,
       updatedAt: json["updatedAt"],
       createdAt: json["createdAt"],
@@ -85,8 +93,10 @@ class Place_DetailedResponse {
         "images": List<dynamic>.from(images.map((x) => x.toString())),
         "length": length,
         "distance": distance,
-        "thingsToDo": List<dynamic>.from(thingsToDo.map((x) => x.toJson())),
-        "itenirary": List<dynamic>.from(itenirary.map((x) => x.toJson())),
+        "thingsToDo": List<ThingsToDo>.from(thingsToDo.map((x) => x.toJson())),
+        "itenirary": List<Itenirary>.from(itenirary.map((x) => x.toJson())),
+        "lat": lat,
+        "lng": lng
       };
 }
 
@@ -96,8 +106,8 @@ class ThingsToDo {
   String id;
   ThingsToDo(
       {required this.title, required this.description, required this.id});
-  factory ThingsToDo.fromJson(Map<String, dynamic> json) =>
-      ThingsToDo(title: "title", description: "description", id: "_id");
+  factory ThingsToDo.fromJson(Map<String, dynamic> json) => ThingsToDo(
+      title: json["title"], description: json["description"], id: json["_id"]);
   Map<String, dynamic> toJson() => {
         "title": title,
         "description": description,
@@ -118,11 +128,11 @@ class Itenirary {
       required this.id,
       required this.subtitle});
   factory Itenirary.fromJson(Map<String, dynamic> json) => Itenirary(
-      time: "time",
-      title: "title",
-      description: "description",
-      id: "_id",
-      subtitle: "subtitle");
+      time: json["time"],
+      title: json["title"],
+      description: json["description"],
+      id: json["_id"],
+      subtitle: json["subtitle"]);
   Map<String, dynamic> toJson() => {
         "time": time,
         "title": title,

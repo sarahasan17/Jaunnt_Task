@@ -102,16 +102,14 @@ class _PlaceDetailedState extends State<PlaceDetailed> {
       if (state is Place_DetailedError) {
         ErrorPopup(context, state.message);
       }
-      if (state is Place_DetailedInitial) {
-        print("Initial");
-      }
+      if (state is Place_DetailedInitial) {}
     }, builder: (context, state) {
       print(state);
       if (state is Place_DetailedLoading) {
         return const LoadingWidget();
       } else if (state is Place_DetailedSuccess) {
         var place = state.response;
-        print("place");
+        //place.images.add(place.coverPhoto);
         return Scaffold(
             body: SafeArea(
                 child: BlocConsumer<ExperienceOfPlaceCubit,
