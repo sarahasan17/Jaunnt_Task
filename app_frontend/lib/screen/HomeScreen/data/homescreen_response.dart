@@ -2,11 +2,11 @@ class HomeResponse {
   List<ExperienceSubResponse> exp;
   List<PlaceHomeResponse> place;
   HomeResponse({required this.place, required this.exp});
-  factory HomeResponse.fromJson(Map<String, dynamic> json) => HomeResponse(
+  factory HomeResponse.fromJson(List<dynamic> json) => HomeResponse(
       place: List<PlaceHomeResponse>.from(
-          json[""].map((x) => PlaceHomeResponse.fromJson(x))),
+          json.map((x) => PlaceHomeResponse.fromJson(x))),
       exp: List<ExperienceSubResponse>.from(
-          json[""].map((x) => ExperienceSubResponse.fromJson(x))));
+          json.map((x) => ExperienceSubResponse.fromJson(x))));
   Map<String, dynamic> toJson() => {
         "": List<dynamic>.from(exp.map((x) => x.toJson())),
         "": List<dynamic>.from(place.map((x) => x.toJson())),
