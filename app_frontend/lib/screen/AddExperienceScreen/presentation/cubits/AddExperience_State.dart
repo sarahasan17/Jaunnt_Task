@@ -7,7 +7,8 @@ class AddExperienceInitial extends AddExperienceState {}
 class AddExperienceLoading extends AddExperienceState {}
 
 class AddExperienceSuccess extends AddExperienceState {
-  AddExperienceSuccess();
+  AddExperienceSuccess({required this.response});
+  AddExperienceResponse response;
 }
 
 class AddExperienceError extends AddExperienceState {

@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../constant/errors/Failure.dart';
 import '../../../constant/network_info.dart';
 import '../../../constant/sharedpref_keys.dart';
+import '../../../url_contants.dart';
 import '../data/profileresponse.dart';
 
 class ProfileScreenRepo {
@@ -14,10 +15,11 @@ class ProfileScreenRepo {
   final NetworkInfoImpl _networkInfo = NetworkInfoImpl();
 
   Future<Either<Failure, ProfileResponse>> getProfile() async {
-    String token;
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    token = _prefs.getString(TOKEN_KEY) ?? "";
-    String url = "";
+    //String token;
+    //SharedPreferences _prefs = await SharedPreferences.getInstance();
+    //token = _prefs.getString(TOKEN_KEY) ?? "";
+    String url =
+        "https://jaunnt-app-production.up.railway.app/users/6459f4aa1e288d377590c647";
 
     if (await _networkInfo.isConnected()) {
       try {

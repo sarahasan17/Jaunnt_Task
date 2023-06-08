@@ -51,7 +51,7 @@ class Place_DetailedResponse {
       lng: json["lng"],
       description: json["description"],
       id: json["_id"],
-      length: json["length"],
+      length: 10,
       distance: 5,
       updatedAt: json["updatedAt"],
       createdAt: json["createdAt"],

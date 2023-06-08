@@ -121,6 +121,8 @@ class _AddExperienceScreenState extends State<AddExperienceScreen> {
                         }, builder: (context, state) {
                           if (state is AddExperienceLoading) {
                             return const LoadingWidget();
+                          } else if (state is AddExperienceSuccess) {
+                            print("Success");
                           }
                           return BlocConsumer<EditExperienceCubit,
                               EditExperienceState>(listener: (context, state) {

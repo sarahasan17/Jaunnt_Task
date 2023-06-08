@@ -5,58 +5,56 @@ class ProfileResponse {
   String email;
   String userRole;
   bool isVerified;
-  String verifyOtp;
   bool isActive;
+  List<String> friends;
   List<String> bookMarks;
-  List<String> following;
-  List<String> followers;
-  int followingCount;
-  int followersCount;
   String profilePhoto;
   List<String> posts;
   String createdAt;
   String updatedAt;
   int v;
-  ProfileResponse(
-      {required this.id,
-      required this.fullName,
-      required this.phoneNumber,
-      required this.email,
-      required this.userRole,
-      required this.isVerified,
-      required this.profilePhoto,
-      required this.bookMarks,
-      required this.createdAt,
-      required this.followers,
-      required this.followersCount,
-      required this.following,
-      required this.followingCount,
-      required this.isActive,
-      required this.posts,
-      required this.updatedAt,
-      required this.v,
-      required this.verifyOtp});
-  factory ProfileResponse.fromJson(Map<String, dynamic> json) =>
-      ProfileResponse(
-          id: json["_id"],
-          fullName: json["fullName"],
-          phoneNumber: json["phoneNumber"],
-          email: json["email"],
-          userRole: json["userRole"],
-          isVerified: json["isVerified"],
-          profilePhoto: json["profilePhoto"],
-          createdAt: json["createdAt"],
-          followers: json["followers"],
-          followersCount: json["followersCount"],
-          following: json["following"],
-          followingCount: json["followingCount"],
-          isActive: json["isActive"],
-          posts: json["posts"],
-          updatedAt: json["updatedAt"],
-          verifyOtp: json["verifyOtp"],
-          v: json["__v"],
-          bookMarks: ["bookMarks"]);
+  ProfileResponse({
+    required this.friends,
+    required this.id,
+    required this.fullName,
+    required this.phoneNumber,
+    required this.email,
+    required this.userRole,
+    required this.isVerified,
+    required this.profilePhoto,
+    required this.bookMarks,
+    required this.createdAt,
+    required this.isActive,
+    required this.posts,
+    required this.updatedAt,
+    required this.v,
+  });
+  factory ProfileResponse.fromJson(Map<String, dynamic> json) {
+    print(json);
+    return ProfileResponse(
+      id: json["_id"],
+      fullName: json["fullName"],
+      phoneNumber: json["phoneNumber"],
+      email: json["email"],
+      userRole: json["userRole"],
+      isVerified: json["isVerified"],
+      profilePhoto: json["profilePhoto"],
+      createdAt: json["createdAt"],
+      friends:
+          List<String>.from(json["friends"].map((x) => x.toString())) ?? ["ok"],
+      isActive: json["isActive"],
+      posts:
+          List<String>.from(json["posts"].map((x) => x.toString())) ?? ["ok"],
+      updatedAt: json["updatedAt"],
+      v: json["__v"] ?? "account exists",
+      bookMarks:
+          List<String>.from(json["bookmarks"].map((x) => x.toString())) ??
+              ["ok"],
+    );
+  }
+
   Map<String, dynamic> toJson() => {
+        "bookmarks": List<String>.from(bookMarks.map((x) => x.toString())),
         "_id": id,
         "fullName": fullName,
         "phoneNumber": phoneNumber,
@@ -65,14 +63,10 @@ class ProfileResponse {
         "isVerified": isVerified,
         "profilePhoto": profilePhoto,
         "createdAt": createdAt,
-        "followers": followers,
-        "followersCount": followersCount,
-        "following": following,
-        "followingCount": followingCount,
+        "friends": List<String>.from(friends.map((x) => x.toString())),
         "isActive": isActive,
-        "posts": posts,
+        "posts": List<String>.from(posts.map((x) => x.toString())),
         "updatedAt": updatedAt,
-        "verifyOtp": verifyOtp,
         "__v": v
       };
 }

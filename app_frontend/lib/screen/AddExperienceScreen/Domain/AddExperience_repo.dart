@@ -1,29 +1,37 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
+import 'package:app_frontend/screen/AddExperienceScreen/Data/AddExperience_repsonse,dart.dart';
 import 'package:app_frontend/screen/AddExperienceScreen/Data/AddExperience_request.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import '../../../constant/errors/Failure.dart';
 import '../../../constant/network_info.dart';
+import '../../../url_contants.dart';
 
 class AddExperienceRepo {
   final Dio _dio = Dio();
   final NetworkInfoImpl _networkInfo = NetworkInfoImpl();
-  Future<Either<Failure, Map<String, dynamic>>> addexp(
+  Future<Either<Failure, AddExperienceResponse>> addexp(
       AddExperienceRequest request) async {
-    String url = "http://localhost:8080/exp/create";
+    String url = "https://jaunnt-app-production.up.railway.app/exp/create";
 
     if (await _networkInfo.isConnected()) {
       try {
         final Response response = await _dio.post(
           url,
           data: jsonEncode({request.toJson()}),
+          options: Options(
+            headers: {
+              HttpHeaders.authorizationHeader: "Bearer $token",
+            },
+          ),
         );
 
         var body = response.data as Map<String, dynamic>;
         switch (response.statusCode) {
           case 200:
-            return Right(body);
+            return Right(AddExperienceResponse.fromJson(body));
           case 404:
             return Left(UserNotFound());
           default:

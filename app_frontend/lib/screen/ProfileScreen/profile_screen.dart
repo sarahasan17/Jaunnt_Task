@@ -184,7 +184,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           : Container(
                                               width: s.width / 1.7,
                                               child: Text(
-                                                edit_bio1!,
+                                                edit_bio1 ?? "no bio",
                                                 style: theme.font2
                                                     .copyWith(fontSize: 14),
                                               ),
@@ -208,7 +208,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            GestureDetector(
+                                            /**GestureDetector(
                                               onTap: () {
                                                 Navigator.push(
                                                     context,
@@ -265,7 +265,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                   )
                                                 ],
                                               ),
-                                            ),
+                                            ),**/
                                             Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
