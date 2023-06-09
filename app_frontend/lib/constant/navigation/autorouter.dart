@@ -17,6 +17,10 @@ import 'package:app_frontend/screen/Bottomnavbarscreen/bottomnavbar.dart'
     as _i8;
 import 'package:app_frontend/screen/LoginScreen/presentation/LoginScreen.dart'
     as _i11;
+import 'package:app_frontend/screen/ResetPassword/presentation/pages/ResetPasswordScreen.dart'
+    as _i12;
+
+import 'autorouter.dart';
 
 class AppRouter extends _iB.RootStackRouter {
   AppRouter([_iA.GlobalKey<_iA.NavigatorState>? navigatorKey])
@@ -48,6 +52,10 @@ class AppRouter extends _iB.RootStackRouter {
       return _iB.MaterialPageX<dynamic>(
           routeData: routeData, child: _i11.LoginScreen());
     },
+    ResetPasswordScreen.name: (routeData) {
+      return _iB.MaterialPageX<dynamic>(
+          routeData: routeData, child: _i12.RestPasswordScreen());
+    },
   };
   @override
   // TODO: implement routes
@@ -58,6 +66,7 @@ class AppRouter extends _iB.RootStackRouter {
         _iB.RouteConfig(BottomNavbar.name, path: '/BottomNavbar'),
         _iB.RouteConfig(SplashScreen.name, path: '/SplashScreen'),
         _iB.RouteConfig(LoginScreen.name, path: '/LoginScreen'),
+        _iB.RouteConfig(ResetPasswordScreen.name, path: '/ResetPasswordScreen'),
       ];
 }
 
@@ -108,4 +117,13 @@ class LoginScreen extends _iB.PageRouteInfo<void> {
   const LoginScreen() : super(LoginScreen.name, path: '/LoginScreen');
 
   static const String name = 'LoginScreen';
+}
+
+/// generated route for
+/// [_i12.ResetPasswordScreen]
+class ResetPasswordScreen extends _iB.PageRouteInfo<void> {
+  const ResetPasswordScreen()
+      : super(ResetPasswordScreen.name, path: '/ResetPasswordScreen');
+
+  static const String name = 'ResetPasswordScreen';
 }

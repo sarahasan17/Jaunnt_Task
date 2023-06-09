@@ -11,6 +11,7 @@ class ThemeHelper {
   Color backgroundfollowercolor = const Color(0xFF6C95A2);
   Color buttoncolor2 = const Color(0xFF366B7E);
   Color transparentcolor = const Color(0xFF000000);
+  Color textfieldColor = const Color(0xFF0A3530);
   final TextStyle font1 = const TextStyle(
       fontFamily: 'Raleway',
       color: Color(0xFF3D405B),
