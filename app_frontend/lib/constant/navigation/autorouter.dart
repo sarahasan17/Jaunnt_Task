@@ -1,6 +1,8 @@
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/ImagePickerScreen/ImagePickerScreen.dart'
     as _i2;
 import 'package:app_frontend/screen/ProfileScreen/profile_screen.dart' as _i3;
+import 'package:app_frontend/screen/SplashScreen/presentation/SplashScreen.dart'
+    as _i10;
 import 'package:flutter/material.dart' as _iA;
 import 'package:auto_route/auto_route.dart' as _iB;
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/AddExperienceScreen.dart'
@@ -13,6 +15,8 @@ import 'package:app_frontend/screen/ExperienceScreen/presentation/ExperienceScre
     as _i7;
 import 'package:app_frontend/screen/Bottomnavbarscreen/bottomnavbar.dart'
     as _i8;
+import 'package:app_frontend/screen/LoginScreen/presentation/LoginScreen.dart'
+    as _i11;
 
 class AppRouter extends _iB.RootStackRouter {
   AppRouter([_iA.GlobalKey<_iA.NavigatorState>? navigatorKey])
@@ -36,6 +40,14 @@ class AppRouter extends _iB.RootStackRouter {
       return _iB.MaterialPageX<dynamic>(
           routeData: routeData, child: _i7.ExperienceScreen());
     },
+    SplashScreen.name: (routeData) {
+      return _iB.MaterialPageX<dynamic>(
+          routeData: routeData, child: _i10.SplashScreen());
+    },
+    LoginScreen.name: (routeData) {
+      return _iB.MaterialPageX<dynamic>(
+          routeData: routeData, child: _i11.LoginScreen());
+    },
   };
   @override
   // TODO: implement routes
@@ -44,6 +56,8 @@ class AppRouter extends _iB.RootStackRouter {
         _iB.RouteConfig(PlaceDetailed.name, path: '/place'),
         _iB.RouteConfig(ExperienceScreen.name, path: '/experience'),
         _iB.RouteConfig(BottomNavbar.name, path: '/BottomNavbar'),
+        _iB.RouteConfig(SplashScreen.name, path: '/SplashScreen'),
+        _iB.RouteConfig(LoginScreen.name, path: '/LoginScreen'),
       ];
 }
 
@@ -78,4 +92,20 @@ class BottomNavbar extends _iB.PageRouteInfo<void> {
   const BottomNavbar() : super(BottomNavbar.name, path: '/BottomNavbar');
 
   static const String name = 'BottomNavbar';
+}
+
+/// generated route for
+/// [_i10.SplashScreen]
+class SplashScreen extends _iB.PageRouteInfo<void> {
+  const SplashScreen() : super(SplashScreen.name, path: '/SplashScreen');
+
+  static const String name = 'SplashScreen';
+}
+
+/// generated route for
+/// [_i11.LoginScreen]
+class LoginScreen extends _iB.PageRouteInfo<void> {
+  const LoginScreen() : super(LoginScreen.name, path: '/LoginScreen');
+
+  static const String name = 'LoginScreen';
 }

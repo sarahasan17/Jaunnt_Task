@@ -16,6 +16,11 @@ class ThemeHelper {
       color: Color(0xFF3D405B),
       fontSize: 14,
       fontWeight: FontWeight.w700);
+  final TextStyle font10 = const TextStyle(
+      fontFamily: 'Raleway',
+      color: Color(0xFF00425A),
+      fontSize: 40,
+      fontWeight: FontWeight.w600);
   final TextStyle font2 = const TextStyle(
       fontFamily: 'Raleway_main',
       color: Color(0xFF3D405B),
