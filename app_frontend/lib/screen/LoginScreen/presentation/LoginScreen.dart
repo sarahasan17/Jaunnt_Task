@@ -1,7 +1,10 @@
 import 'package:app_frontend/constant/screen_width.dart';
 import 'package:app_frontend/constant/theme/themehelper.dart';
+import 'package:app_frontend/screen/HomeScreen/presentation/home.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../../constant/navigation/autorouter.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -174,14 +177,19 @@ class _LoginScreenState extends State<LoginScreen> {
                               ],
                             ),
                           ),
-                          Container(
-                            //margin: const EdgeInsets.symmetric(horizontal: 30),
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Forgot Password?',
-                              style: theme.font10.copyWith(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.start,
+                          GestureDetector(
+                            onTap: () {
+                              context.router.push(const ResetPasswordScreen());
+                            },
+                            child: Container(
+                              //margin: const EdgeInsets.symmetric(horizontal: 30),
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Forgot Password?',
+                                style: theme.font10.copyWith(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.start,
+                              ),
                             ),
                           )
                         ],
@@ -206,44 +214,54 @@ class _LoginScreenState extends State<LoginScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        offset: Offset(0, 3),
-                                        blurRadius: 3,
-                                        spreadRadius: 1)
-                                  ],
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  color: theme.backgroundColor,
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 30),
-                                child: Text(
-                                  'Sign Up',
-                                  style: theme.font10.copyWith(fontSize: 16),
+                              GestureDetector(
+                                onTap: () {
+                                  context.router.push(const SignUpScreen());
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          offset: Offset(0, 3),
+                                          blurRadius: 3,
+                                          spreadRadius: 1)
+                                    ],
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    color: theme.backgroundColor,
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 30),
+                                  child: Text(
+                                    'Sign Up',
+                                    style: theme.font10.copyWith(fontSize: 16),
+                                  ),
                                 ),
                               ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        offset: const Offset(0, 3),
-                                        blurRadius: 3,
-                                        spreadRadius: 1)
-                                  ],
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  color: theme.searchcolor,
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 40),
-                                child: Text(
-                                  'Login',
-                                  style: theme.font10.copyWith(
-                                      fontSize: 16,
-                                      color: theme.backgroundColor),
+                              GestureDetector(
+                                onTap: () {
+                                  context.router.push(const BottomNavbar());
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          offset: const Offset(0, 3),
+                                          blurRadius: 3,
+                                          spreadRadius: 1)
+                                    ],
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    color: theme.searchcolor,
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 40),
+                                  child: Text(
+                                    'Login',
+                                    style: theme.font10.copyWith(
+                                        fontSize: 16,
+                                        color: theme.backgroundColor),
+                                  ),
                                 ),
                               )
                             ],

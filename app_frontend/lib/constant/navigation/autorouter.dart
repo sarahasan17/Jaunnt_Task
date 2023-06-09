@@ -1,5 +1,6 @@
 import 'package:app_frontend/screen/AddExperienceScreen/presentation/ImagePickerScreen/ImagePickerScreen.dart'
     as _i2;
+import 'package:app_frontend/screen/SignUpScreen/presentation/pages/SignUpScreen.dart' as _i13;
 import 'package:app_frontend/screen/ProfileScreen/profile_screen.dart' as _i3;
 import 'package:app_frontend/screen/SplashScreen/presentation/SplashScreen.dart'
     as _i10;
@@ -54,7 +55,11 @@ class AppRouter extends _iB.RootStackRouter {
     },
     ResetPasswordScreen.name: (routeData) {
       return _iB.MaterialPageX<dynamic>(
-          routeData: routeData, child: _i12.RestPasswordScreen());
+          routeData: routeData, child: _i12.ResetPasswordScreen());
+    },
+    SignUpScreen.name: (routeData) {
+      return _iB.MaterialPageX<dynamic>(
+          routeData: routeData, child: _i13.SignUpScreen());
     },
   };
   @override
@@ -67,6 +72,7 @@ class AppRouter extends _iB.RootStackRouter {
         _iB.RouteConfig(SplashScreen.name, path: '/SplashScreen'),
         _iB.RouteConfig(LoginScreen.name, path: '/LoginScreen'),
         _iB.RouteConfig(ResetPasswordScreen.name, path: '/ResetPasswordScreen'),
+    _iB.RouteConfig(SignUpScreen.name, path: '/SignUpScreen'),
       ];
 }
 
@@ -126,4 +132,13 @@ class ResetPasswordScreen extends _iB.PageRouteInfo<void> {
       : super(ResetPasswordScreen.name, path: '/ResetPasswordScreen');
 
   static const String name = 'ResetPasswordScreen';
+}
+
+/// generated route for
+/// [_i13.SignUpScreen]
+class SignUpScreen extends _iB.PageRouteInfo<void> {
+  const SignUpScreen()
+      : super(SignUpScreen.name, path: '/SignUpScreen');
+
+  static const String name = 'SignUpScreen';
 }

@@ -3,14 +3,14 @@ import 'package:app_frontend/constant/theme/themehelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class RestPasswordScreen extends StatefulWidget {
-  const RestPasswordScreen({Key? key}) : super(key: key);
+class ResetPasswordScreen extends StatefulWidget {
+  const ResetPasswordScreen({Key? key}) : super(key: key);
 
   @override
-  State<RestPasswordScreen> createState() => _RestPasswordScreenState();
+  State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
 }
 
-class _RestPasswordScreenState extends State<RestPasswordScreen> {
+class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController otp = TextEditingController();
@@ -204,7 +204,7 @@ class _RestPasswordScreenState extends State<RestPasswordScreen> {
                                   border: Border.all(
                                       color: condition
                                           ? theme.searchcolor
-                                          : Colors.grey)),
+                                          : Colors.grey.shade400)),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -226,7 +226,7 @@ class _RestPasswordScreenState extends State<RestPasswordScreen> {
                                           hintStyle: theme.font2.copyWith(
                                               color: condition
                                                   ? theme.buttoncolor2
-                                                  : Colors.grey,
+                                                  : Colors.grey.shade400,
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600)),
                                       onChanged: (value) {
@@ -258,7 +258,7 @@ class _RestPasswordScreenState extends State<RestPasswordScreen> {
                                           : CupertinoIcons.eye_slash,
                                       color: condition
                                           ? theme.searchcolor
-                                          : Colors.grey,
+                                          : Colors.grey.shade300,
                                     ),
                                   )
                                 ],
