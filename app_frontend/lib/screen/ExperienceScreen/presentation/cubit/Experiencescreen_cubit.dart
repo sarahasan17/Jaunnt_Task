@@ -1,3 +1,4 @@
+import 'package:app_frontend/constant/sharedpreferences/constants.dart';
 import 'package:bloc/bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../constant/sharedpref_keys.dart';
@@ -12,18 +13,17 @@ class ExperienceCubit extends Cubit<ExperienceState> {
   }
   void expnew() async {
     try {
-      print("place detail cubit");
       emit(ExperienceLoading());
+      print("exp loading");
       var res = await _ExperienceRepo.getexp();
       res.fold((l) => emit(ExperienceError(l.message)), (r) async {
-        //SharedPreferences pref = await SharedPreferences.getInstance();
-        //pref.setString(USER_ID_KEY, "");
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        pref.setString(place_id, r.place.id);
         emit(ExperienceSuccess(r));
+        print('exp success');
       });
-      print("loading place");
     } catch (e) {
       emit(ExperienceError(e.toString()));
-      print("place error");
     }
   }
 }

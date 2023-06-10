@@ -9,6 +9,7 @@ import '../../../components/common/image_carousel.dart';
 import '../../../components/place_detailed/tab_button.dart';
 import '../../../constant/errors/error_popup.dart';
 import '../../../constant/loading_widget.dart';
+import '../../Place_DetailedScreen/presentation/cubit/place_detailedScreen_cubit.dart';
 import 'cubit/Experiencescreen_cubit.dart';
 
 const List<String> dummyImages = [
@@ -77,571 +78,626 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
         return const LoadingWidget();
       } else if (state is ExperienceSuccess) {
         var exp = state.response;
-        return Scaffold(
-          body: SafeArea(
-            child: Stack(
-              children: [
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  child: ImageCarousel(
-                    images: exp.exp.images,
-                    bottomInfoWidget: SizedBox.shrink(),
-                  ),
-                ),
-                Positioned(
-                  top: 218,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: theme.selectbackgroundcolor,
-                        borderRadius: const BorderRadius.only(
-                            topRight: Radius.circular(20.0),
-                            topLeft: Radius.circular(20.0))),
-                    child: ListView(
-                      shrinkWrap: true,
-                      children: [
-                        Container(
-                            margin: const EdgeInsets.only(
-                                top: 15, left: 15, right: 15),
-                            padding: const EdgeInsets.all(20.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12.0),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  spreadRadius: 3,
-                                  blurRadius: 3,
-                                  offset: const Offset(
-                                      0, 0), // changes position of shadow
+        return BlocConsumer<Place_DetailedCubit, Place_DetailedState>(
+            listener: (context, state) {
+          if (state is Place_DetailedError) {
+            ErrorPopup(context, state.message);
+          }
+          if (state is Place_DetailedInitial) {}
+        }, builder: (context, state) {
+          print(state);
+          if (state is Place_DetailedLoading) {
+            return const LoadingWidget();
+          } else if (state is Place_DetailedSuccess) {
+            var place = state.response;
+            //place.images.add(place.coverPhoto);
+            return Scaffold(
+              body: SafeArea(
+                child: Stack(
+                  children: [
+                    Positioned(
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      child: ImageCarousel(
+                        images: exp.images!,
+                        bottomInfoWidget: SizedBox.shrink(),
+                      ),
+                    ),
+                    Positioned(
+                      top: 218,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: theme.selectbackgroundcolor,
+                            borderRadius: const BorderRadius.only(
+                                topRight: Radius.circular(20.0),
+                                topLeft: Radius.circular(20.0))),
+                        child: ListView(
+                          shrinkWrap: true,
+                          children: [
+                            Container(
+                                margin: const EdgeInsets.only(
+                                    top: 15, left: 15, right: 15),
+                                padding: const EdgeInsets.all(20.0),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.2),
+                                      spreadRadius: 3,
+                                      blurRadius: 3,
+                                      offset: const Offset(
+                                          0, 0), // changes position of shadow
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      height: 50,
-                                      width: 50,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(25.0),
-                                          image: const DecorationImage(
-                                              image: NetworkImage(
-                                                  "https://jaunnt.dev.s3.ap-south-1.amazonaws.com/experincesPhotos/cf483e66-d680-4569-9d4b-2b4f5cbe185e.jpeg"))),
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          child: Text(
-                                            exp.user.fullName,
-                                            style: theme.font8.copyWith(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.w700),
-                                            textAlign: TextAlign.start,
-                                          ),
-                                        ),
-                                        Text(
-                                          exp.place.placeName,
-                                          style: theme.font8.copyWith(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w400),
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      width: s.width / 10,
-                                    ),
-                                    Column(
+                                    Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 5, horizontal: 10),
+                                          height: 50,
+                                          width: 50,
                                           decoration: BoxDecoration(
                                               borderRadius:
-                                                  BorderRadius.circular(3.0),
-                                              color: theme.searchcolor),
-                                          child: Text(
-                                            'Experience',
-                                            style: theme.font8.copyWith(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w600,
-                                                color: theme.white),
-                                          ),
+                                                  BorderRadius.circular(25.0),
+                                              image: const DecorationImage(
+                                                  image: NetworkImage(
+                                                      "https://jaunnt.dev.s3.ap-south-1.amazonaws.com/experincesPhotos/cf483e66-d680-4569-9d4b-2b4f5cbe185e.jpeg"))),
                                         ),
-                                        const SizedBox(
-                                          height: 5,
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              child: Text(
+                                                "exp.user!.name",
+                                                style: theme.font8.copyWith(
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.w700),
+                                                textAlign: TextAlign.start,
+                                              ),
+                                            ),
+                                            Text(
+                                              place.placeName,
+                                              style: theme.font8.copyWith(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w400),
+                                            )
+                                          ],
                                         ),
-                                        Text(
-                                          exp.exp.dateOfTrip,
-                                          style: theme.font8.copyWith(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w400),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: s.height / 100,
-                                ),
-                                Container(
-                                    child: Text(
-                                  exp.exp.discription,
-                                  style: theme.font8.copyWith(fontSize: 14),
-                                ))
-                              ],
-                            )),
-                        Container(
-                            margin: const EdgeInsets.all(15),
-                            padding: const EdgeInsets.all(20.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12.0),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  spreadRadius: 3,
-                                  blurRadius: 3,
-                                  offset: const Offset(
-                                      0, 0), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
+                                        SizedBox(
+                                          width: s.width / 10,
+                                        ),
+                                        Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Image.asset(
-                                              'assets/images/pic-1.png',
-                                              width: s.width / 12,
+                                            Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 5,
+                                                      horizontal: 10),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          3.0),
+                                                  color: theme.searchcolor),
+                                              child: Text(
+                                                'Experience',
+                                                style: theme.font8.copyWith(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: theme.white),
+                                              ),
                                             ),
-                                            SizedBox(width: s.width / 50),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text('Distance',
-                                                    style: theme.font8.copyWith(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 13)),
-                                                SizedBox(
-                                                  height: s.height / 300,
-                                                ),
-                                                Text("exp.place.distance",
-                                                    style: theme.font8
-                                                        .copyWith(fontSize: 13))
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: s.height / 60,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Image.asset(
-                                              'assets/images/img.png',
-                                              width: s.width / 12,
+                                            const SizedBox(
+                                              height: 5,
                                             ),
-                                            SizedBox(width: s.width / 50),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text('Mode of Transport',
-                                                    style: theme.font8.copyWith(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 13)),
-                                                SizedBox(
-                                                  height: s.height / 300,
-                                                ),
-                                                Text(exp.exp.travelMode,
-                                                    style: theme.font8
-                                                        .copyWith(fontSize: 13))
-                                              ],
+                                            Text(
+                                              "${exp.dateOfTrip!.day}/${exp.dateOfTrip!.month}/${exp.dateOfTrip!.year}",
+                                              style: theme.font8.copyWith(
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w400),
                                             )
                                           ],
                                         ),
                                       ],
                                     ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Image.asset(
-                                                'assets/images/Vector.png'),
-                                            SizedBox(width: s.width / 50),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text('Group Size',
-                                                    style: theme.font8.copyWith(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 13)),
-                                                SizedBox(
-                                                  height: s.height / 300,
-                                                ),
-                                                Text(
-                                                    exp.exp.groupSize
-                                                        .toString(),
-                                                    style: theme.font8
-                                                        .copyWith(fontSize: 13))
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: s.height / 60,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Image.asset(
-                                              'assets/images/Inner Plugin Iframe.png',
-                                              width: s.width / 12,
-                                            ),
-                                            SizedBox(width: s.width / 50),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text('Trip Time',
-                                                    style: theme.font8.copyWith(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 13)),
-                                                SizedBox(
-                                                  height: s.height / 300,
-                                                ),
-                                                Text(
-                                                    '${exp.exp.tripTime} hours',
-                                                    style: theme.font8
-                                                        .copyWith(fontSize: 13))
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      ],
+                                    SizedBox(
+                                      height: s.height / 100,
+                                    ),
+                                    Container(
+                                        child: Text(
+                                      exp.description!,
+                                      style: theme.font8.copyWith(fontSize: 14),
+                                    ))
+                                  ],
+                                )),
+                            Container(
+                                margin: const EdgeInsets.all(15),
+                                padding: const EdgeInsets.all(20.0),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.2),
+                                      spreadRadius: 3,
+                                      blurRadius: 3,
+                                      offset: const Offset(
+                                          0, 0), // changes position of shadow
                                     ),
                                   ],
-                                )
-                              ],
-                            )),
-                        Container(
-                          margin: const EdgeInsets.only(
-                              left: 15, right: 15, bottom: 15),
-                          height: 217,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          child: Stack(
-                            children: [
-                              Positioned.fill(
-                                child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    child: PageView.builder(
-                                        controller: _controller,
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: exp.exp.images.length,
-                                        onPageChanged: (int page) {
-                                          setState(() {
-                                            _activepage = page;
-                                          });
-                                        },
-                                        itemBuilder: (_, index) {
-                                          index1 = index;
-                                          return Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(0.0),
-                                                image: const DecorationImage(
-                                                    image: NetworkImage(
-                                                        'https://jaunnt.dev.s3.ap-south-1.amazonaws.com/experincesPhotos/cf483e66-d680-4569-9d4b-2b4f5cbe185e.jpeg'))),
-                                          );
-                                        })),
-                              ),
-                              Positioned(
-                                top: 0,
-                                bottom: 0,
-                                left: 0,
-                                right: 0,
-                                child: Container(
-                                  padding: const EdgeInsets.only(
-                                    top: 10,
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          DotsIndicator(
-                                            dotsCount: 1,
-                                            position: index1.toDouble(),
-                                            decorator: DotsDecorator(
-                                              activeSize: const Size(15, 7),
-                                              activeShape:
-                                                  RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(4),
-                                              ),
-                                              size: const Size(7, 7),
-                                              color: Colors
-                                                  .white30, // Inactive color
-                                              activeColor: Colors.white,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Image.asset(
+                                                  'assets/images/pic-1.png',
+                                                  width: s.width / 12,
+                                                ),
+                                                SizedBox(width: s.width / 50),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text('Distance',
+                                                        style: theme.font8
+                                                            .copyWith(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 13)),
+                                                    SizedBox(
+                                                      height: s.height / 300,
+                                                    ),
+                                                    Text(exp.distance!,
+                                                        style: theme.font8
+                                                            .copyWith(
+                                                                fontSize: 13))
+                                                  ],
+                                                )
+                                              ],
                                             ),
-                                          ),
-                                        ],
+                                            SizedBox(
+                                              height: s.height / 60,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                  'assets/images/img.png',
+                                                  width: s.width / 12,
+                                                ),
+                                                SizedBox(width: s.width / 50),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text('Mode of Transport',
+                                                        style: theme.font8
+                                                            .copyWith(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 13)),
+                                                    SizedBox(
+                                                      height: s.height / 300,
+                                                    ),
+                                                    Text(exp.travelMode!,
+                                                        style: theme.font8
+                                                            .copyWith(
+                                                                fontSize: 13))
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                    'assets/images/Vector.png'),
+                                                SizedBox(width: s.width / 50),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text('Group Size',
+                                                        style: theme.font8
+                                                            .copyWith(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 13)),
+                                                    SizedBox(
+                                                      height: s.height / 300,
+                                                    ),
+                                                    Text(
+                                                        exp.groupSize
+                                                            .toString(),
+                                                        style: theme.font8
+                                                            .copyWith(
+                                                                fontSize: 13))
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: s.height / 60,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                  'assets/images/Inner Plugin Iframe.png',
+                                                  width: s.width / 12,
+                                                ),
+                                                SizedBox(width: s.width / 50),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text('Trip Time',
+                                                        style: theme.font8
+                                                            .copyWith(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 13)),
+                                                    SizedBox(
+                                                      height: s.height / 300,
+                                                    ),
+                                                    Text(
+                                                        '${exp.tripDuration} hours',
+                                                        style: theme.font8
+                                                            .copyWith(
+                                                                fontSize: 13))
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                )),
+                            Container(
+                              margin: const EdgeInsets.only(
+                                  left: 15, right: 15, bottom: 15),
+                              height: 217,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              child: Stack(
+                                children: [
+                                  Positioned.fill(
+                                    child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                        child: PageView.builder(
+                                            controller: _controller,
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount: exp.images!.length,
+                                            onPageChanged: (int page) {
+                                              setState(() {
+                                                _activepage = page;
+                                              });
+                                            },
+                                            itemBuilder: (_, index) {
+                                              index1 = index;
+                                              return Container(
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            0.0),
+                                                    image: const DecorationImage(
+                                                        image: NetworkImage(
+                                                            'https://jaunnt.dev.s3.ap-south-1.amazonaws.com/experincesPhotos/cf483e66-d680-4569-9d4b-2b4f5cbe185e.jpeg'))),
+                                              );
+                                            })),
+                                  ),
+                                  Positioned(
+                                    top: 0,
+                                    bottom: 0,
+                                    left: 0,
+                                    right: 0,
+                                    child: Container(
+                                      padding: const EdgeInsets.only(
+                                        top: 10,
                                       ),
-                                      Container(
-                                        padding: const EdgeInsets.all(10.0),
-                                        height: 70,
-                                        decoration: BoxDecoration(
-                                            color: theme.transparentcolor
-                                                .withOpacity(0.4),
-                                            borderRadius:
-                                                const BorderRadius.only(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              DotsIndicator(
+                                                dotsCount: 1,
+                                                position: index1.toDouble(),
+                                                decorator: DotsDecorator(
+                                                  activeSize: const Size(15, 7),
+                                                  activeShape:
+                                                      RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            4),
+                                                  ),
+                                                  size: const Size(7, 7),
+                                                  color: Colors
+                                                      .white30, // Inactive color
+                                                  activeColor: Colors.white,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Container(
+                                            padding: const EdgeInsets.all(10.0),
+                                            height: 70,
+                                            decoration: BoxDecoration(
+                                                color: theme.transparentcolor
+                                                    .withOpacity(0.4),
+                                                borderRadius: const BorderRadius
+                                                        .only(
                                                     bottomLeft:
                                                         Radius.circular(20.0),
                                                     bottomRight:
                                                         Radius.circular(20.0))),
-                                        child: Column(
-                                          children: [
-                                            Expanded(
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    exp.place.placeName,
-                                                    style: theme.font3.copyWith(
-                                                        color: Colors.white,
-                                                        fontSize: 18),
+                                            child: Column(
+                                              children: [
+                                                Expanded(
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        place.placeName,
+                                                        style: theme.font3
+                                                            .copyWith(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 18),
+                                                      ),
+                                                      GestureDetector(
+                                                          onTap: () {
+                                                            setState(() {
+                                                              bookmark =
+                                                                  !bookmark;
+                                                            });
+                                                          },
+                                                          child: Icon(
+                                                            bookmark == false
+                                                                ? Icons
+                                                                    .bookmark_border
+                                                                : Icons
+                                                                    .bookmark,
+                                                            color: Colors.white,
+                                                          ))
+                                                    ],
                                                   ),
-                                                  GestureDetector(
-                                                      onTap: () {
+                                                ),
+                                                Expanded(
+                                                    child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      '${place.tripTime} hours trip time',
+                                                      style: theme.font6
+                                                          .copyWith(
+                                                              color:
+                                                                  Colors.white),
+                                                    ),
+                                                    Text(
+                                                      'I',
+                                                      style: theme.font6
+                                                          .copyWith(
+                                                              color:
+                                                                  Colors.white),
+                                                    ),
+                                                    Text(
+                                                      '${place.distance} km from you',
+                                                      style: theme.font6
+                                                          .copyWith(
+                                                              color:
+                                                                  Colors.white),
+                                                    ),
+                                                    Text(
+                                                      'I',
+                                                      style: theme.font6
+                                                          .copyWith(
+                                                              color:
+                                                                  Colors.white),
+                                                    ),
+                                                    Text(
+                                                      'place.category[0]',
+                                                      style: theme.font6
+                                                          .copyWith(
+                                                              color:
+                                                                  Colors.white),
+                                                    ),
+                                                  ],
+                                                ))
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                const Expanded(child: Divider(thickness: 1.5)),
+                                Text(
+                                  '  More places like this  ',
+                                  style: theme.font8,
+                                ),
+                                const Expanded(
+                                    child: Divider(
+                                  thickness: 1.5,
+                                )),
+                              ],
+                            ),
+                            BlocConsumer<SimilarPlacesCubit, SimilarPlaceState>(
+                                listener: (context, state) {
+                              if (state is SimilarPlacesError) {
+                                ErrorPopup(context, state.message);
+                              }
+                            }, builder: (context, state) {
+                              if (state is SimilarPlacesLoading) {
+                                return const LoadingWidget();
+                              } else if (state is SimilarPlaceSuccess) {
+                                var similar = state.response;
+                                return ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: similar.similarplace.length,
+                                    scrollDirection: Axis.vertical,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      int i = index;
+
+                                      return Container(
+                                        margin: const EdgeInsets.all(15.0),
+                                        height: 217,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20.0),
+                                        ),
+                                        child: Stack(
+                                          children: [
+                                            Positioned(
+                                                top: 0,
+                                                bottom: 0,
+                                                right: 0,
+                                                left: 0,
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15.0),
+                                                  child: PageView.builder(
+                                                      controller: _controller2,
+                                                      scrollDirection:
+                                                          Axis.horizontal,
+                                                      itemCount: similar
+                                                          .similarplace[i]
+                                                          .images
+                                                          .length,
+                                                      onPageChanged:
+                                                          (int page) {
                                                         setState(() {
-                                                          bookmark = !bookmark;
+                                                          _activepage = page;
                                                         });
                                                       },
-                                                      child: Icon(
-                                                        bookmark == false
-                                                            ? Icons
-                                                                .bookmark_border
-                                                            : Icons.bookmark,
-                                                        color: Colors.white,
-                                                      ))
-                                                ],
-                                              ),
-                                            ),
-                                            Expanded(
-                                                child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  '${exp.place.tripTime} hours trip time',
-                                                  style: theme.font6.copyWith(
-                                                      color: Colors.white),
-                                                ),
-                                                Text(
-                                                  'I',
-                                                  style: theme.font6.copyWith(
-                                                      color: Colors.white),
-                                                ),
-                                                Text(
-                                                  '${exp.place.distance} km from you',
-                                                  style: theme.font6.copyWith(
-                                                      color: Colors.white),
-                                                ),
-                                                Text(
-                                                  'I',
-                                                  style: theme.font6.copyWith(
-                                                      color: Colors.white),
-                                                ),
-                                                Text(
-                                                  '${exp.place.category[0]}',
-                                                  style: theme.font6.copyWith(
-                                                      color: Colors.white),
-                                                ),
-                                              ],
-                                            ))
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            const Expanded(child: Divider(thickness: 1.5)),
-                            Text(
-                              '  More places like this  ',
-                              style: theme.font8,
-                            ),
-                            const Expanded(
-                                child: Divider(
-                              thickness: 1.5,
-                            )),
-                          ],
-                        ),
-                        BlocConsumer<SimilarPlacesCubit, SimilarPlaceState>(
-                            listener: (context, state) {
-                          if (state is SimilarPlacesError) {
-                            ErrorPopup(context, state.message);
-                          }
-                        }, builder: (context, state) {
-                          if (state is SimilarPlacesLoading) {
-                            return const LoadingWidget();
-                          } else if (state is SimilarPlaceSuccess) {
-                            var similar = state.response;
-                            return ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: similar.similarplace.length,
-                                scrollDirection: Axis.vertical,
-                                itemBuilder: (BuildContext context, int index) {
-                                  int i = index;
-
-                                  return Container(
-                                    margin: const EdgeInsets.all(15.0),
-                                    height: 217,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                    child: Stack(
-                                      children: [
-                                        Positioned(
-                                            top: 0,
-                                            bottom: 0,
-                                            right: 0,
-                                            left: 0,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(15.0),
-                                              child: PageView.builder(
-                                                  controller: _controller2,
-                                                  scrollDirection:
-                                                      Axis.horizontal,
-                                                  itemCount: similar
-                                                      .similarplace[i]
-                                                      .images
-                                                      .length,
-                                                  onPageChanged: (int page) {
-                                                    setState(() {
-                                                      _activepage = page;
-                                                    });
-                                                  },
-                                                  itemBuilder: (_, index) {
-                                                    index4[i] = index;
-                                                    return Container(
-                                                      decoration: BoxDecoration(
-                                                          image: DecorationImage(
-                                                              image: NetworkImage(
-                                                                  similar
+                                                      itemBuilder: (_, index) {
+                                                        index4[i] = index;
+                                                        return Container(
+                                                          decoration: BoxDecoration(
+                                                              image: DecorationImage(
+                                                                  image: NetworkImage(similar
                                                                           .similarplace[
                                                                               i]
                                                                           .images[
                                                                       index]))),
-                                                    );
-                                                  }),
-                                            )),
-                                        Positioned(
-                                          top: 0,
-                                          bottom: 0,
-                                          left: 0,
-                                          right: 0,
-                                          child: Container(
-                                            padding: const EdgeInsets.only(
-                                              top: 10,
-                                            ),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Row(
+                                                        );
+                                                      }),
+                                                )),
+                                            Positioned(
+                                              top: 0,
+                                              bottom: 0,
+                                              left: 0,
+                                              right: 0,
+                                              child: Container(
+                                                padding: const EdgeInsets.only(
+                                                  top: 10,
+                                                ),
+                                                child: Column(
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment.center,
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
-                                                    DotsIndicator(
-                                                      dotsCount: similar
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        DotsIndicator(
+                                                          dotsCount: similar
                                                                   .similarplace[
                                                                       i]
                                                                   .images
-                                                                  .length ==
-                                                              0
-                                                          ? 1
-                                                          : similar
-                                                              .similarplace[i]
-                                                              .images
-                                                              .length,
-                                                      position:
-                                                          index2.toDouble(),
-                                                      decorator: DotsDecorator(
-                                                        activeSize:
-                                                            const Size(15, 7),
-                                                        activeShape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(4),
+                                                                  .isEmpty
+                                                              ? 1
+                                                              : similar
+                                                                  .similarplace[
+                                                                      i]
+                                                                  .images
+                                                                  .length,
+                                                          position:
+                                                              index2.toDouble(),
+                                                          decorator:
+                                                              DotsDecorator(
+                                                            activeSize:
+                                                                const Size(
+                                                                    15, 7),
+                                                            activeShape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          4),
+                                                            ),
+                                                            size: const Size(
+                                                                7, 7),
+                                                            color: Colors
+                                                                .white30, // Inactive color
+                                                            activeColor:
+                                                                Colors.white,
+                                                          ),
                                                         ),
-                                                        size: const Size(7, 7),
-                                                        color: Colors
-                                                            .white30, // Inactive color
-                                                        activeColor:
-                                                            Colors.white,
-                                                      ),
+                                                      ],
                                                     ),
-                                                  ],
-                                                ),
-                                                Container(
-                                                  padding: const EdgeInsets.all(
-                                                      10.0),
-                                                  height: 70,
-                                                  decoration: BoxDecoration(
-                                                      color: theme
-                                                          .transparentcolor
-                                                          .withOpacity(0.4),
-                                                      borderRadius:
-                                                          const BorderRadius
+                                                    Container(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              10.0),
+                                                      height: 70,
+                                                      decoration: BoxDecoration(
+                                                          color: theme
+                                                              .transparentcolor
+                                                              .withOpacity(0.4),
+                                                          borderRadius: const BorderRadius
                                                                   .only(
                                                               bottomLeft: Radius
                                                                   .circular(
@@ -649,114 +705,126 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                                                               bottomRight: Radius
                                                                   .circular(
                                                                       20.0))),
-                                                  child: Column(
-                                                    children: [
-                                                      Expanded(
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Text(
-                                                              similar
-                                                                  .similarplace[
-                                                                      index]
-                                                                  .placeName,
-                                                              style: theme.font3
-                                                                  .copyWith(
+                                                      child: Column(
+                                                        children: [
+                                                          Expanded(
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Text(
+                                                                  similar
+                                                                      .similarplace[
+                                                                          index]
+                                                                      .placeName,
+                                                                  style: theme
+                                                                      .font3
+                                                                      .copyWith(
+                                                                          color: Colors
+                                                                              .white,
+                                                                          fontSize:
+                                                                              18),
+                                                                ),
+                                                                GestureDetector(
+                                                                    onTap: () {
+                                                                      setState(
+                                                                          () {
+                                                                        bookmark =
+                                                                            !bookmark;
+                                                                      });
+                                                                    },
+                                                                    child: Icon(
+                                                                      bookmark ==
+                                                                              false
+                                                                          ? Icons
+                                                                              .bookmark_border
+                                                                          : Icons
+                                                                              .bookmark,
                                                                       color: Colors
                                                                           .white,
-                                                                      fontSize:
-                                                                          18),
+                                                                    ))
+                                                              ],
                                                             ),
-                                                            GestureDetector(
-                                                                onTap: () {
-                                                                  setState(() {
-                                                                    bookmark =
-                                                                        !bookmark;
-                                                                  });
-                                                                },
-                                                                child: Icon(
-                                                                  bookmark == false
-                                                                      ? Icons
-                                                                          .bookmark_border
-                                                                      : Icons
-                                                                          .bookmark,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ))
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      Expanded(
-                                                          child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            '${similar.similarplace[index].tripTime} hours trip time',
-                                                            style: theme.font6
-                                                                .copyWith(
-                                                                    color: Colors
-                                                                        .white),
                                                           ),
-                                                          Text(
-                                                            'I',
-                                                            style: theme.font6
-                                                                .copyWith(
-                                                                    color: Colors
-                                                                        .white),
-                                                          ),
-                                                          Text(
-                                                            '${similar.similarplace[index].distance} km from you',
-                                                            style: theme.font6
-                                                                .copyWith(
-                                                                    color: Colors
-                                                                        .white),
-                                                          ),
-                                                          Text(
-                                                            'I',
-                                                            style: theme.font6
-                                                                .copyWith(
-                                                                    color: Colors
-                                                                        .white),
-                                                          ),
-                                                          Text(
-                                                            similar
-                                                                .similarplace[
-                                                                    index]
-                                                                .tags[0],
-                                                            style: theme.font6
-                                                                .copyWith(
-                                                                    color: Colors
-                                                                        .white),
-                                                          ),
+                                                          Expanded(
+                                                              child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Text(
+                                                                '${similar.similarplace[index].tripTime} hours trip time',
+                                                                style: theme
+                                                                    .font6
+                                                                    .copyWith(
+                                                                        color: Colors
+                                                                            .white),
+                                                              ),
+                                                              Text(
+                                                                'I',
+                                                                style: theme
+                                                                    .font6
+                                                                    .copyWith(
+                                                                        color: Colors
+                                                                            .white),
+                                                              ),
+                                                              Text(
+                                                                '${similar.similarplace[index].distance} km from you',
+                                                                style: theme
+                                                                    .font6
+                                                                    .copyWith(
+                                                                        color: Colors
+                                                                            .white),
+                                                              ),
+                                                              Text(
+                                                                'I',
+                                                                style: theme
+                                                                    .font6
+                                                                    .copyWith(
+                                                                        color: Colors
+                                                                            .white),
+                                                              ),
+                                                              Text(
+                                                                similar
+                                                                    .similarplace[
+                                                                        index]
+                                                                    .tags[0],
+                                                                style: theme
+                                                                    .font6
+                                                                    .copyWith(
+                                                                        color: Colors
+                                                                            .white),
+                                                              ),
+                                                            ],
+                                                          ))
                                                         ],
-                                                      ))
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  );
-                                });
-                          } else {
-                            return const SizedBox();
-                          }
-                        }),
-                      ],
+                                      );
+                                    });
+                              } else {
+                                return const SizedBox();
+                              }
+                            }),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-        );
+              ),
+            );
+          } else {
+            return const SizedBox();
+          }
+        });
       } else {
         return const SizedBox();
       }

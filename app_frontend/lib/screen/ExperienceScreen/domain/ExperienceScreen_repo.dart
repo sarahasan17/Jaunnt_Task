@@ -20,7 +20,7 @@ class ExperienceScreenRepo {
     //token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MGI1MTJlMDgxNWIyZWI2MGZmYzBkOCIsImlhdCI6MTY3ODQ2MzQ3MywiZXhwIjoxNjc4NTQ5ODczfQ.Xi88oMZW3jduRg6XJyFX3-vjeB6dmTCIQJTxCExQkw8";
 
     String url =
-        "https://jaunnt-app-production.up.railway.app/exp/647ccedec77cc64bf3388b1f";
+        "https://jaunnt-app-production.up.railway.app/experience/64841fe59ff2e8afb1ce2cf9";
 
     if (await _networkInfo.isConnected()) {
       try {

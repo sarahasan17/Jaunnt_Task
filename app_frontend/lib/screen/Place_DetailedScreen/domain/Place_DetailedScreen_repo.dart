@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:app_frontend/constant/sharedpreferences/constants.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,8 +19,10 @@ class Place_DetailedScreenRepo {
     //SharedPreferences _prefs = await SharedPreferences.getInstance();
     //token = _prefs.getString(TOKEN_KEY) ?? "";
     //token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NTlmNGFhMWUyODhkMzc3NTkwYzY0NyIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY4NjE2NzE5MCwiZXhwIjoxNjg2NzcxOTkwfQ.eGC3X9snkXLo5pVyXytilERILyVqHtVZTUVlZbV2cB4";
-    String url =
-        "https://jaunnt-app-production.up.railway.app/places/6438083e57420d8c86804f1f";
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String place = prefs.getString(place_id) ?? "";
+    String url = "https://jaunnt-app-production.up.railway.app/place/$place";
+    print(url);
 
     if (await _networkInfo.isConnected()) {
       try {

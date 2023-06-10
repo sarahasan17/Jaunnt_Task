@@ -549,7 +549,7 @@ class TabBars extends StatelessWidget {
                               color: theme.white,
                               image: DecorationImage(
                                   image: NetworkImage(state
-                                      .response.response[index].exp.images[0]),
+                                      .response.response[index].images![0]),
                                   fit: BoxFit.cover)),
                           margin: const EdgeInsets.all(7),
                           width: s.width / 2.28,
@@ -568,8 +568,7 @@ class TabBars extends StatelessWidget {
                                         bottomLeft: Radius.circular(15.0),
                                         bottomRight: Radius.circular(15.0))),
                                 child: Text(
-                                  state
-                                      .response.response[index].place.placeName,
+                                  "state.response.response[index].place!.name",
                                   style: theme.font2.copyWith(
                                       color: theme.white, fontSize: 12),
                                 ),
@@ -594,8 +593,8 @@ class TabBars extends StatelessWidget {
                               borderRadius: BorderRadius.circular(20.0),
                               color: theme.white,
                               image: DecorationImage(
-                                  image: NetworkImage(state.response
-                                      .response[index + 1].exp.images[0]),
+                                  image: NetworkImage(state
+                                      .response.response[index + 1].images![0]),
                                   fit: BoxFit.cover)),
                           margin: const EdgeInsets.all(7),
                           width: s.width / 2.3,
@@ -614,8 +613,7 @@ class TabBars extends StatelessWidget {
                                         bottomLeft: Radius.circular(15.0),
                                         bottomRight: Radius.circular(15.0))),
                                 child: Text(
-                                  state.response.response[index + 1].place
-                                      .placeName,
+                                  " state.response.response[index + 1].place!.name",
                                   style: theme.font2.copyWith(
                                       color: theme.white, fontSize: 12),
                                 ),
@@ -677,8 +675,8 @@ class TabBars2 extends StatelessWidget {
                               borderRadius: BorderRadius.circular(20.0),
                               color: theme.white,
                               image: DecorationImage(
-                                  image: NetworkImage(state
-                                      .response.response[index].coverPhoto),
+                                  image: NetworkImage(
+                                      state.response.response[index].images[0]),
                                   fit: BoxFit.cover)),
                           margin: const EdgeInsets.all(7),
                           width: s.width / 2.28,
@@ -722,8 +720,8 @@ class TabBars2 extends StatelessWidget {
                               borderRadius: BorderRadius.circular(20.0),
                               color: theme.white,
                               image: DecorationImage(
-                                  image: NetworkImage(state
-                                      .response.response[index].coverPhoto),
+                                  image: NetworkImage(
+                                      state.response.response[index].images[0]),
                                   fit: BoxFit.cover)),
                           margin: const EdgeInsets.all(7),
                           width: s.width / 2.3,

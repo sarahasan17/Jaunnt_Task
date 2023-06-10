@@ -1,3 +1,5 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
 String url = "https://jaunnt-app-production.up.railway.app";
 String homeScreen =
     url + "/?lat=12.971599&lng=77.594566&queryPage=1&queryLimit=20";
